@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/JSegundo/elclubdelplan#readme",
   "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.2.8",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
     "react-native": "^0.67.4"
   }
 }
