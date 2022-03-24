@@ -8,15 +8,19 @@ import CatalogScreen from '../screens/CatalogScreen';
 import NewPLanScreen from '../screens/NewPlanScreen';
 import UserProfileScreen from '../screens/UserProfileScreen';
 
-import homeimage from '../assets/download.jpeg';
-
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   return (
     <Tab.Navigator
-      tabBarOptions={{
-        showLabel: false,
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarStyle: [
+          {
+            display: 'flex',
+            height: 60,
+          },
+        ],
       }}>
       <Tab.Screen
         name="Home"
@@ -24,7 +28,6 @@ const Tabs = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <View>
-              <Image source={{uri: {homeimage}}} style={styles.image} />
               <Text>Home</Text>
             </View>
           ),
