@@ -49,10 +49,12 @@ const Search = () => {
           onPress={() => handleSearch()}
         />
       </View>
-      {/* <View style={styles.container}>
+
+      <View style={styles.containerSearch}>
+
         <FlatList
           data={results}
-          style={styles.container}
+          style={styles.containerSearch}
           renderItem={({item}) => renderItem(item)}
           numColumns={2}
         />
@@ -62,7 +64,7 @@ const Search = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerSearch: {
     flex: 1,
     backgroundColor: '#0D0D0D',
     alignItems: 'center',
@@ -90,15 +92,6 @@ const styles = StyleSheet.create({
     marginRight: 7,
   },
   buttonSearch: {backgroundColor: '#229783', marginBottom: 27},
-  cardImage: {
-    display: 'flex',
-    width: '49.5%',
-    margin: 4,
-    justifyContent: 'space-between',
-    backgroundColor: '#2C292C',
-    borderWidth: 0,
-    borderRadius: 5,
-  },
 });
 
 export default Search;
