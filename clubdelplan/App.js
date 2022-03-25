@@ -6,7 +6,7 @@ import {Text, View, ScrollView, Image, StyleSheet} from 'react-native';
 
 import Tabs from './src/navigation/Tabs.js';
 
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
