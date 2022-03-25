@@ -368,6 +368,7 @@ const eventos = [
     privado: false,
     price: '900',
   },
+  
 ];
 
 module.exports = eventos;
