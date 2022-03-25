@@ -1,8 +1,8 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
 import NewPLanScreen from '../screens/NewPlanScreen';
@@ -15,21 +15,25 @@ const Tabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
-        tabBarStyle: [
-          {
-            display: 'flex',
-            height: 60,
-          },
-        ],
-      }}>
+        tabBarStyle: {
+          position : 'absolute',
+          bottom : 25,
+          left : 20,
+          right : 20,
+          elevation : 0,
+          backgroundColor : '#ffffff',
+          borderRadius : 15,
+          height : 90,
+          ...styles.shadow
+        }
+      }}
+      >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({focused}) => (
-            <View>
-              <Text>Home</Text>
-            </View>
+          tabBarIcon: ({color}) => (
+            <Ionicons name="home-outline" size={22} color="#900" />
           ),
         }}
       />
@@ -37,10 +41,8 @@ const Tabs = () => {
         name="Catalog"
         component={CatalogScreen}
         options={{
-          tabBarIcon: ({focused}) => (
-            <View>
-              <Text>Catalog</Text>
-            </View>
+          tabBarIcon: () => (
+            <Ionicons name="search" size={30} color="#900" />
           ),
         }}
       />
@@ -48,21 +50,18 @@ const Tabs = () => {
         name="New Plan"
         component={NewPLanScreen}
         options={{
-          tabBarIcon: ({focused}) => (
-            <View>
-              <Text>New Plan</Text>
-            </View>
+          tabBarIcon: () => (
+            <Ionicons name="add" size={30} color="#900" />
           ),
         }}
+
       />
       <Tab.Screen
         name="Profile"
         component={UserProfileScreen}
         options={{
-          tabBarIcon: ({focused}) => (
-            <View>
-              <Text>Profile</Text>
-            </View>
+          tabBarIcon: ({color}) => (
+            <Ionicons name="person-outline" size={22} color="#900" />
           ),
         }}
       />
@@ -71,11 +70,17 @@ const Tabs = () => {
 };
 
 const styles = StyleSheet.create({
-  image: {
-    width: 40,
-    height: 20,
-    fontSize: 20,
-  },
+  shadow: {
+    shadowColor: '#7F5DF0',
+    shadowOffset : {
+      width : 0,
+      height: 10,
+    },
+    shadowOpacity : 0.25,
+    shadowRadius : 3.5,
+    elevation: 5
+
+  }
 });
 
 export default Tabs;
