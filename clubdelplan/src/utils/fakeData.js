@@ -30,6 +30,7 @@ const eventos = [
     hora: '16:00',
     Ubicación: 'Tecnópolis, Buenos Aires',
     Categoría: 'Concierto',
+    privado: false,
   },
   {
     id: 4,
@@ -40,6 +41,7 @@ const eventos = [
     hora: '18:00',
     Ubicación: 'Estadio River Plate, Buenos Aires',
     Categoría: 'Concierto',
+    privado: false,
   },
   {
     id: 5,
@@ -50,6 +52,7 @@ const eventos = [
     hora: '21:00',
     Ubicación: 'Antares Nueva Córdoba -  San Lorenzo 79, Córdoba',
     Categoría: 'Fiesta Privada',
+    privado: true,
   },
   {
     id: 6,
@@ -60,6 +63,7 @@ const eventos = [
     hora: '22:00',
     Ubicación: 'Vidón-Bar - Achával Rodríguez 152, Córdoba',
     Categoría: 'Fiesta Privada',
+    privado: true,
   },
   {
     id: 7,
@@ -71,6 +75,7 @@ const eventos = [
     Ubicación:
       'Cruz Espacio -  Av. Ramón Cárcano 120, Chateau Carreras, Córdoba',
     Categoría: 'Fiesta Privada',
+    privado: true,
   },
   {
     id: 8,
@@ -81,6 +86,7 @@ const eventos = [
     hora: '20:30',
     Ubicación: 'Cervecería Capitán - Achával Rodríguez 244, Córdoba',
     Categoría: 'Fiesta Privada',
+    privado: true,
   },
   {
     id: 9,
@@ -91,6 +97,7 @@ const eventos = [
     hora: '20:30',
     Ubicación: 'Cervecería BarBeer - Hipólito Yrigoyen 81, Córdoba',
     Categoría: 'Evento Social',
+    privado: true,
   },
   {
     id: 10,
@@ -101,6 +108,7 @@ const eventos = [
     hora: '17:30',
     Ubicación: 'Cervecería Capitán - Achával Rodríguez 244, Córdoba',
     Categoría: 'Evento Social',
+    privado: true,
   },
   {
     id: 11,
@@ -111,6 +119,7 @@ const eventos = [
     hora: '20:30',
     Ubicación: 'Los Infernales - General Manuel Belgrano 631, Córdoba',
     Categoría: 'Evento Social',
+    privado: true,
   },
   {
     id: 12,
@@ -121,6 +130,7 @@ const eventos = [
     hora: '21:00',
     Ubicación: 'La Gran 7 -  Concepción Arenal, Córdoba',
     Categoría: 'Deportes',
+    privado: true,
   },
   {
     id: 13,
@@ -131,6 +141,7 @@ const eventos = [
     hora: '20:00',
     Ubicación: 'La Gran 7 -  Concepción Arenal, Córdoba',
     Categoría: 'Deportes',
+    privado: true,
   },
   {
     id: 14,
@@ -141,6 +152,7 @@ const eventos = [
     hora: '21:00',
     Ubicación: 'La Gran 7 -  Concepción Arenal, Córdoba',
     Categoría: 'Deportes',
+    privado: true,
   },
   {
     id: 15,
@@ -151,6 +163,7 @@ const eventos = [
     hora: '20:00',
     Ubicación: 'La Gran 7 -  Concepción Arenal, Córdoba',
     Categoría: 'Deportes',
+    privado: true,
   },
   {
     id: 16,
@@ -161,6 +174,7 @@ const eventos = [
     hora: '22:00',
     Ubicación: 'Le Parc -  Av Vélez Sarsfield 753, Córdoba',
     Categoría: 'Bar Experience',
+    privado: true,
   },
   {
     id: 17,
@@ -171,6 +185,7 @@ const eventos = [
     hora: '22:00',
     Ubicación: 'Bartó -   Av. Marcelo T. de Alvear 635, Córdoba',
     Categoría: 'Bar Experience',
+    privado: true,
   },
   {
     id: 18,
@@ -181,6 +196,7 @@ const eventos = [
     hora: '20:00',
     Ubicación: 'María María -  Av. Marcelo T. de Alvear 386, Córdoba',
     Categoría: 'Bar Experience',
+    privado: true,
   },
   {
     id: 19,
@@ -191,6 +207,7 @@ const eventos = [
     hora: '22:15',
     Ubicación: 'Hoyts Patio Olmos, Córdoba',
     Categoría: 'Cine',
+    privado: false,
   },
   {
     id: 20,
@@ -201,6 +218,7 @@ const eventos = [
     hora: '23:25',
     Ubicación: 'Hoyts Nuevo Centro, Córdoba',
     Categoría: 'Cine',
+    privado: false,
   },
 ];
 
