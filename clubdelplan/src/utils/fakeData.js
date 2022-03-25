@@ -9,6 +9,7 @@ const eventos = [
     Ubicación: 'Hipódromo de Palermo, Buenos Aires',
     Categoría: 'Concierto',
     privado: false,
+    destacado: true,
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ const eventos = [
     Ubicación: 'Aeroclub Santa María de Punilla, Córdoba',
     Categoría: 'Concierto',
     privado: false,
+    destacado: true,
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ const eventos = [
     Ubicación: 'Tecnópolis, Buenos Aires',
     Categoría: 'Concierto',
     privado: false,
+    destacado: true,
   },
   {
     id: 4,
@@ -42,6 +45,7 @@ const eventos = [
     Ubicación: 'Estadio River Plate, Buenos Aires',
     Categoría: 'Concierto',
     privado: false,
+    destacado: true,
   },
   {
     id: 5,
@@ -53,6 +57,7 @@ const eventos = [
     Ubicación: 'Antares Nueva Córdoba -  San Lorenzo 79, Córdoba',
     Categoría: 'Fiesta Privada',
     privado: true,
+    destacado: false,
   },
   {
     id: 6,
@@ -64,6 +69,7 @@ const eventos = [
     Ubicación: 'Vidón-Bar - Achával Rodríguez 152, Córdoba',
     Categoría: 'Fiesta Privada',
     privado: true,
+    destacado: false,
   },
   {
     id: 7,
@@ -76,6 +82,7 @@ const eventos = [
       'Cruz Espacio -  Av. Ramón Cárcano 120, Chateau Carreras, Córdoba',
     Categoría: 'Fiesta Privada',
     privado: true,
+    destacado: false,
   },
   {
     id: 8,
@@ -87,6 +94,7 @@ const eventos = [
     Ubicación: 'Cervecería Capitán - Achával Rodríguez 244, Córdoba',
     Categoría: 'Fiesta Privada',
     privado: true,
+    destacado: false,
   },
   {
     id: 9,
@@ -98,6 +106,7 @@ const eventos = [
     Ubicación: 'Cervecería BarBeer - Hipólito Yrigoyen 81, Córdoba',
     Categoría: 'Evento Social',
     privado: true,
+    destacado: false,
   },
   {
     id: 10,
@@ -109,6 +118,7 @@ const eventos = [
     Ubicación: 'Cervecería Capitán - Achával Rodríguez 244, Córdoba',
     Categoría: 'Evento Social',
     privado: true,
+    destacado: false,
   },
   {
     id: 11,
@@ -120,6 +130,7 @@ const eventos = [
     Ubicación: 'Los Infernales - General Manuel Belgrano 631, Córdoba',
     Categoría: 'Evento Social',
     privado: true,
+    destacado: false,
   },
   {
     id: 12,
@@ -131,6 +142,7 @@ const eventos = [
     Ubicación: 'La Gran 7 -  Concepción Arenal, Córdoba',
     Categoría: 'Deportes',
     privado: true,
+    destacado: false,
   },
   {
     id: 13,
@@ -142,6 +154,7 @@ const eventos = [
     Ubicación: 'La Gran 7 -  Concepción Arenal, Córdoba',
     Categoría: 'Deportes',
     privado: true,
+    destacado: false,
   },
   {
     id: 14,
@@ -153,6 +166,7 @@ const eventos = [
     Ubicación: 'La Gran 7 -  Concepción Arenal, Córdoba',
     Categoría: 'Deportes',
     privado: true,
+    destacado: false,
   },
   {
     id: 15,
@@ -164,6 +178,7 @@ const eventos = [
     Ubicación: 'La Gran 7 -  Concepción Arenal, Córdoba',
     Categoría: 'Deportes',
     privado: true,
+    destacado: false,
   },
   {
     id: 16,
@@ -175,6 +190,7 @@ const eventos = [
     Ubicación: 'Le Parc -  Av Vélez Sarsfield 753, Córdoba',
     Categoría: 'Bar Experience',
     privado: true,
+    destacado: false,
   },
   {
     id: 17,
@@ -186,6 +202,7 @@ const eventos = [
     Ubicación: 'Bartó -   Av. Marcelo T. de Alvear 635, Córdoba',
     Categoría: 'Bar Experience',
     privado: true,
+    destacado: false,
   },
   {
     id: 18,
@@ -197,6 +214,7 @@ const eventos = [
     Ubicación: 'María María -  Av. Marcelo T. de Alvear 386, Córdoba',
     Categoría: 'Bar Experience',
     privado: true,
+    destacado: false,
   },
   {
     id: 19,
@@ -208,18 +226,31 @@ const eventos = [
     Ubicación: 'Hoyts Patio Olmos, Córdoba',
     Categoría: 'Cine',
     privado: false,
+    destacado: true,
   },
   {
     id: 20,
     nombre: 'Batman',
     image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIWCNfj4tROoI0ZQRLa_dpI-_76pvNY-o5cQ&usqp=CAU',
+      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.rNWoTqiGrlXCznxK5vnRpwHaEK%26pid%3DApi&f=1',
     fecha: '01-04-2022',
     hora: '23:25',
     Ubicación: 'Hoyts Nuevo Centro, Córdoba',
     Categoría: 'Cine',
     privado: false,
+    destacado: true,
   },
+  // {
+  //   id: 21,
+  //   nombre: '',
+  //   image:
+  //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIWCNfj4tROoI0ZQRLa_dpI-_76pvNY-o5cQ&usqp=CAU',
+  //   fecha: '01-04-2022',
+  //   hora: '23:25',
+  //   Ubicación: 'Hoyts Nuevo Centro, Córdoba',
+  //   Categoría: 'Cine',
+  //   privado: false,
+  // },
 ];
 
 module.exports = eventos;
