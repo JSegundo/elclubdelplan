@@ -232,7 +232,7 @@ const eventos = [
     id: 20,
     nombre: 'Batman',
     image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIWCNfj4tROoI0ZQRLa_dpI-_76pvNY-o5cQ&usqp=CAU',
+      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.rNWoTqiGrlXCznxK5vnRpwHaEK%26pid%3DApi&f=1',
     fecha: '01-04-2022',
     hora: '23:25',
     Ubicación: 'Hoyts Nuevo Centro, Córdoba',

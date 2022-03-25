@@ -76,6 +76,9 @@ const styles = StyleSheet.create({
     height: 20,
     fontSize: 20,
   },
+  tab: {
+    marginTop: 20,
+  },
 });
 
 export default Tabs;

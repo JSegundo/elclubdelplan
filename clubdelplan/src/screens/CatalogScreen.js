@@ -16,9 +16,11 @@ const CatalogScreen = () => {
           }}
           style={styles.image}
         />
-        <Text>{nombre}</Text>
-        <Text>{Categoría}</Text>
-        <Text>{Ubicación}</Text>
+        <View style={styles.infoWrapper}>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>{nombre}</Text>
+          <Text style={{color: 'darkblue'}}>{Categoría}</Text>
+          <Text style={{fontSize: 12}}>{Ubicación}</Text>
+        </View>
       </View>
     ) : null;
   };
@@ -33,12 +35,12 @@ const CatalogScreen = () => {
 
 const styles = StyleSheet.create({
   itemWrapper: {
-    borderColor: 'blue',
     borderWidth: 2,
-    // flexDirection: 'row',
+    borderRadius: 12,
+    borderColor: 'transparent',
+    flexDirection: 'row',
     width: 300,
-    borderBottomColor: 'blue',
-    backgroundColor: 'lightblue',
+    height: 120,
     marginTop: 10,
     marginBottom: 10,
   },
@@ -47,18 +49,28 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: 'red',
+    marginBottom: 30,
+  },
+  infoWrapper: {
+    padding: 5,
+    width: 160,
   },
   title: {
     fontSize: 18,
     textAlign: 'center',
     padding: 10,
     fontWeight: 'bold',
+    borderBottomColor: 'lightblue',
+    borderWidth: 2,
+    borderColor: 'transparent',
   },
   image: {
-    width: 200,
-    height: 100,
-    borderRadius: 6,
+    width: 140,
+    height: '100%',
+    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 10,
+    resizeMode: 'cover',
+    overflow: 'hidden',
   },
 });
 
