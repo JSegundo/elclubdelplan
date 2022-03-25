@@ -11,7 +11,7 @@ import React, {useState, useEffect} from 'react';
 // import {Input, Button} from 'react-native-elements';
 
 import eventos from '../utils/fakeData';
-import { color } from 'react-native-elements/dist/helpers';
+import {color} from 'react-native-elements/dist/helpers';
 
 const CatalogScreen = () => {
   const renderItem = item => {
@@ -27,9 +27,11 @@ const CatalogScreen = () => {
           style={styles.image}
         />
         <View style={styles.infoWrapper}>
-          <Text style={{fontSize: 20, fontWeight: 'bold' ,color :'#900'}}>{nombre}</Text>
-          <Text style={{color: '#900'}}>{Categoría}</Text>
-          <Text style={{fontSize: 10 , color: '#900'}}>{Ubicación}</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color: '#900'}}>
+            {nombre}
+          </Text>
+          <Text style={{color: 'black'}}>{Categoría}</Text>
+          <Text style={{fontSize: 10, color: 'black'}}>{Ubicación}</Text>
         </View>
       </View>
     ) : null;
@@ -80,23 +82,22 @@ const styles = StyleSheet.create({
     marginBottom: 120,
   },
   itemWrapper: {
-    backgroundColor : 'white',
+    backgroundColor: 'white',
     borderWidth: 2,
     borderRadius: 12,
     borderColor: 'transparent',
     flexDirection: 'row',
     width: 300,
     height: 120,
-    marginTop: 10,
-    marginBottom: 10,
-
+    marginTop: 5,
+    marginBottom: 5,
   },
   contentWrapper: {
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 150,
+    marginBottom: 100,
   },
   infoWrapper: {
     padding: 5,
