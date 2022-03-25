@@ -13,7 +13,7 @@ const Search = () => {
     setResults(filterEvents);
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = (item) => {
     const {nombre, id, Categoría, fecha, hora, image, Ubicación, privado} =
       item;
 
@@ -53,7 +53,7 @@ const Search = () => {
         <FlatList
           data={results}
           style={styles.container}
-          renderItem={renderItem}
+          renderItem={({item}) => renderItem(item)}
           numColumns={2}
         />
       </View>
