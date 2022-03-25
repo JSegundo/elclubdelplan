@@ -1,15 +1,17 @@
-import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
+import {View, Text, FlatList, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 import eventos from '../utils/fakeData';
 import { color } from 'react-native-elements/dist/helpers';
 
-const CatalogScreen = () => {
+
+const CatalogScreen = ({navigation}) => {
   const renderItem = item => {
     const {nombre, id, Categoría, fecha, hora, image, Ubicación, privado} =
       item;
 
     return privado === false ? (
+      // <TouchableOpacity onPress={() => navigation.navigate("DetailsScreen")}>
       <View style={styles.itemWrapper}>
         <Image
           source={{
@@ -23,6 +25,7 @@ const CatalogScreen = () => {
           <Text style={{fontSize: 10 , color: '#900'}}>{Ubicación}</Text>
         </View>
       </View>
+      // </TouchableOpacity>
     ) : null;
   };
 
