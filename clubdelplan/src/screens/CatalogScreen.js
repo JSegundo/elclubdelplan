@@ -8,10 +8,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-// import {Input, Button} from 'react-native-elements';
 
 import eventos from '../utils/fakeData';
-import {color} from 'react-native-elements/dist/helpers';
 
 const CatalogScreen = () => {
   const renderItem = item => {
@@ -57,7 +55,6 @@ const CatalogScreen = () => {
   };
 
   return (
-
     <View style={styles.pageWrapper}>
       <View style={styles.searchSection}>
         <TextInput
@@ -76,6 +73,12 @@ const CatalogScreen = () => {
 
       <View style={styles.contentWrapper}>
         <Text style={styles.title}>Catalogo de eventos públicos</Text>
+        {results[0] ? (
+          <Text style={{padding: 5}}>
+            {results.length} resultados encontrados
+          </Text>
+        ) : null}
+
         <FlatList
           data={results[0] ? results : eventos}
           renderItem={({item}) => renderItem(item)}
