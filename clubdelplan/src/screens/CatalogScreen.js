@@ -66,14 +66,14 @@ const CatalogScreen = ({navigation}) => {
         <TextInput
           style={styles.searchInput}
           placeholder="Search by Category"
-          // placeholderTextColor={'black'}
+          placeholderTextColor={'black'}
           onChangeText={value => setSearchTerm(value)}
         />
         <TouchableOpacity
           style={styles.buttonSearch}
           title="Search"
           onPress={handleSearch}>
-          <Text>Search</Text>
+          <Text style = {{color : '#111'}}>Search</Text>
         </TouchableOpacity>
       </View>
 
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     textAlign: 'center',
-
+    color: '#111',
     padding: 10,
     fontWeight: 'bold',
     borderBottomColor: 'lightblue',
@@ -137,6 +137,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    color : '#111',
+    
   },
   buttonSearch: {
     borderWidth: 2,
@@ -146,12 +148,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 8,
     paddingVertical: 5,
+    color : '#111',
   },
   searchInput: {
     borderBottomWidth: 3,
     borderBottomColor: '#900',
     paddingHorizontal: 4,
-    color: 'black',
+    color: '#111',
     borderRadius: 3,
   },
 });

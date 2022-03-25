@@ -32,6 +32,7 @@ const Tabs = () => {
         name="Home"
         component={HomeScreen}
         options={{
+          headerShown:false,
           tabBarIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color="#900" />
           ),
@@ -48,6 +49,7 @@ const Tabs = () => {
         name="New Plan"
         component={NewPLanScreen}
         options={{
+          headerShown:false,
           tabBarIcon: () => <Ionicons name="add" size={30} color="#900" />,
         }}
       />
@@ -55,6 +57,7 @@ const Tabs = () => {
         name="Profile"
         component={UserProfileScreen}
         options={{
+          headerShown:false,
           tabBarIcon: ({color}) => (
             <Ionicons name="person-outline" size={22} color="#900" />
           ),

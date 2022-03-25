@@ -31,11 +31,11 @@ const HomeScreen = () => {
           <Text style={styles.text}>{Ubicación}</Text>
         </View>
       );
-    } 
+    }
   };
 
   return (
-    <View>
+    <View style={styles.pageWrapper}>
       <ScrollView>
         <View style={styles.contentWrapper}>
           <Text style={styles.title}>El Club del Plan</Text>
@@ -85,11 +85,14 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  pageWrapper: {
+    marginBottom: 60,
+  },
   itemWrapper: {
     width: 203,
     height: 320,
     marginHorizontal: 15,
-    padding: 2,
+    // padding: 2,
     borderRadius: 20,
     backgroundColor: '#FFFFFF',
   },
@@ -108,7 +111,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: '#000000',
-    marginTop: 20,
+    marginTop: 0,
     marginBottom: 0,
     marginLeft: 18,
     fontSize: 22,
@@ -132,6 +135,8 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
   },
 });
 
