@@ -26,6 +26,7 @@ const CatalogScreen = () => {
   };
 
   return (
+    
     <View style={styles.contentWrapper}>
       <Text style={styles.title}>Catalogo de eventos públicos</Text>
       <FlatList data={eventos} renderItem={({item}) => renderItem(item)} />
