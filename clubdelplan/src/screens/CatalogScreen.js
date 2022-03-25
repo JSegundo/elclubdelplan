@@ -57,6 +57,7 @@ const CatalogScreen = () => {
   };
 
   return (
+
     <View style={styles.pageWrapper}>
       <View style={styles.searchSection}>
         <TextInput
