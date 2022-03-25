@@ -1,5 +1,14 @@
-import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
+// import {Input, Button} from 'react-native-elements';
 
 import eventos from '../utils/fakeData';
 
@@ -25,15 +34,50 @@ const CatalogScreen = () => {
     ) : null;
   };
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
+
+  // useEffect(() => {
+  //   setSearchTerm('');
+  // }, [results]);
+
+  const handleSearch = () => {
+    const filterEvents = eventos.filter(e => e.Categoría === searchTerm);
+    setResults(filterEvents);
+  };
+
   return (
-    <View style={styles.contentWrapper}>
-      <Text style={styles.title}>Catalogo de eventos públicos</Text>
-      <FlatList data={eventos} renderItem={({item}) => renderItem(item)} />
+    <View style={styles.pageWrapper}>
+      <View style={styles.searchSection}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search by Category"
+          // placeholderTextColor={'black'}
+          onChangeText={value => setSearchTerm(value)}
+        />
+        <TouchableOpacity
+          style={styles.buttonSearch}
+          title="Search"
+          onPress={handleSearch}>
+          <Text>Search</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.contentWrapper}>
+        <Text style={styles.title}>Catalogo de eventos públicos</Text>
+        <FlatList
+          data={results[0] ? results : eventos}
+          renderItem={({item}) => renderItem(item)}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  pageWrapper: {
+    marginBottom: 120,
+  },
   itemWrapper: {
     borderWidth: 2,
     borderRadius: 12,
@@ -71,6 +115,28 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     resizeMode: 'cover',
     overflow: 'hidden',
+  },
+  // input
+  searchSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonSearch: {
+    borderWidth: 2,
+    borderColor: '#900',
+    marginLeft: 10,
+    borderRadius: 6,
+    marginTop: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+  },
+  searchInput: {
+    borderBottomWidth: 3,
+    borderBottomColor: '#900',
+    paddingHorizontal: 4,
+    color: 'black',
+    borderRadius: 3,
   },
 });
 
