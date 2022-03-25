@@ -10,6 +10,7 @@ const eventos = [
     Categoría: 'Concierto',
     privado: false,
     destacado: true,
+    price: '11.000',
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const eventos = [
     Categoría: 'Concierto',
     privado: false,
     destacado: true,
+    price: '9.000',
   },
   {
     id: 3,
@@ -34,6 +36,7 @@ const eventos = [
     Categoría: 'Concierto',
     privado: false,
     destacado: true,
+    price: '10.500',
   },
   {
     id: 4,
@@ -46,6 +49,7 @@ const eventos = [
     Categoría: 'Concierto',
     privado: false,
     destacado: true,
+    price: '15.000',
   },
   {
     id: 5,
@@ -227,6 +231,7 @@ const eventos = [
     Categoría: 'Cine',
     privado: false,
     destacado: true,
+    price: '900',
   },
   {
     id: 20,
@@ -239,6 +244,7 @@ const eventos = [
     Categoría: 'Cine',
     privado: false,
     destacado: true,
+    price: '900',
   },
   {
     id: 21,
@@ -250,6 +256,7 @@ const eventos = [
     Ubicación: 'Hoyts Nuevo Centro, Córdoba',
     Categoría: 'Cine',
     privado: false,
+    price: '800',
   },
   {
     id: 22,
@@ -260,6 +267,8 @@ const eventos = [
     Ubicación: 'Visión Festival - Neuquén',
     Categoría: 'Fiesta',
     privado: false,
+    price: '6.000',
+    destacado: true,
   },
   {
     id: 23,
@@ -271,6 +280,8 @@ const eventos = [
     Ubicación: 'Río Electronic Music - Buenos Aires',
     Categoría: 'Fiesta',
     privado: false,
+    price: '4.500',
+    destacado: true,
   },
   {
     id: 24,
@@ -282,6 +293,7 @@ const eventos = [
     Ubicación: 'Palermo - Buenos Aires',
     Categoría: 'Gastronomía',
     privado: false,
+    price: '2.100',
   },
   {
     id: 25,
@@ -293,6 +305,7 @@ const eventos = [
     Ubicación: 'Saavedra - Buenos Aires',
     Categoría: 'Fiesta',
     privado: false,
+    price: '6.000',
   },
   {
     id: 26,
@@ -304,6 +317,7 @@ const eventos = [
     Ubicación: 'Palermo - Buenos Aires',
     Categoría: 'Bar',
     privado: false,
+    price: '3.000',
   },
   {
     id: 27,
@@ -315,6 +329,7 @@ const eventos = [
     Ubicación: 'Recoleta - Buenos Aires',
     Categoría: 'Teatro',
     privado: false,
+    price: '1.400',
   },
   {
     id: 28,
@@ -326,6 +341,8 @@ const eventos = [
     Ubicación: 'Recoleta - Buenos Aires',
     Categoría: 'Restaurant',
     privado: false,
+    price: '600',
+    destacado: true,
   },
   {
     id: 29,
@@ -336,6 +353,8 @@ const eventos = [
     Ubicación: 'Cinemark Palermo - Buenos Aires',
     Categoría: 'Cine',
     privado: false,
+    price: '1.000',
+    destacado: true,
   },
   {
     id: 30,
@@ -347,6 +366,7 @@ const eventos = [
     Ubicación: 'IMAX - Buenos Aires',
     Categoría: 'Cine',
     privado: false,
+    price: '900',
   },
 ];
 

@@ -15,8 +15,17 @@ import {color} from 'react-native-elements/dist/helpers';
 
 const CatalogScreen = () => {
   const renderItem = item => {
-    const {nombre, id, Categoría, fecha, hora, image, Ubicación, privado} =
-      item;
+    const {
+      nombre,
+      id,
+      Categoría,
+      fecha,
+      hora,
+      image,
+      Ubicación,
+      privado,
+      price,
+    } = item;
 
     return privado === false ? (
       <View style={styles.itemWrapper}>
@@ -32,6 +41,8 @@ const CatalogScreen = () => {
           </Text>
           <Text style={{color: 'black'}}>{Categoría}</Text>
           <Text style={{fontSize: 10, color: 'black'}}>{Ubicación}</Text>
+          {/* <Text>{fecha}</Text> */}
+          <Text>${price}</Text>
         </View>
       </View>
     ) : null;
@@ -39,10 +50,6 @@ const CatalogScreen = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
-
-  // useEffect(() => {
-  //   setSearchTerm('');
-  // }, [results]);
 
   const handleSearch = () => {
     const filterEvents = eventos.filter(e => e.Categoría === searchTerm);
