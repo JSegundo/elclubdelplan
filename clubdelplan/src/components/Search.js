@@ -5,15 +5,15 @@ import {Input, Button} from 'react-native-elements';
 import eventos from '../utils/fakeData';
 
 const Search = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState([]);
+  // const [searchTerm, setSearchTerm] = useState('');
+  // const [results, setResults] = useState([]);
 
-  const handleSearch = () => {
-    const filterEvents = eventos.map(e => e.Categoría == searchTerm);
-    setResults(filterEvents);
-  };
+  // const handleSearch = () => {
+  //   const filterEvents = eventos.map(e => e.Categoría == searchTerm);
+  //   setResults(filterEvents);
+  // };
 
-  const renderItem = (item) => {
+  const renderItem = item => {
     const {nombre, id, Categoría, fecha, hora, image, Ubicación, privado} =
       item;
 
@@ -49,14 +49,16 @@ const Search = () => {
           onPress={() => handleSearch()}
         />
       </View>
+
       <View style={styles.containerSearch}>
+
         <FlatList
           data={results}
           style={styles.containerSearch}
           renderItem={({item}) => renderItem(item)}
           numColumns={2}
         />
-      </View>
+      </View> */}
     </>
   );
 };

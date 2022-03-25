@@ -1,65 +1,137 @@
-import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  Dimensions,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
-
 import eventos from '../utils/fakeData';
+
+// const width = Dimensions.get("window").width;
+// const height = Dimensions.get("window").height;
 
 const HomeScreen = () => {
   const renderItem = item => {
-    const {nombre, Categoría, image, Ubicación, destacado} =
-      item;
+    const {nombre, Categoría, image, Ubicación, destacado} = item;
 
-    return destacado === true ? (
-      <View style={styles.itemWrapper}>
-        <Image
-          source={{
-            uri: image,
-          }}
-          style={styles.image}
-        />
-        <Text>{nombre}</Text>
-        <Text>{Categoría}</Text>
-        <Text>{Ubicación}</Text>
-      </View>
-    ) : null;
+    if (destacado === true) {
+      return (
+        <View style={styles.itemWrapper}>
+          <Image
+            source={{
+              uri: image,
+            }}
+            style={styles.image}
+          />
+          <Text style={styles.nombreEvento}>{nombre}</Text>
+          <Text style={styles.text}>{Categoría}</Text>
+          <Text style={styles.text}>{Ubicación}</Text>
+        </View>
+      );
+    } 
   };
 
   return (
-    <View style={styles.contentWrapper}>
-      <Text style={styles.title}>Destacados</Text>
-      <FlatList data={eventos} renderItem={({item}) => renderItem(item)} />
+    <View>
+      <ScrollView>
+        <View style={styles.contentWrapper}>
+          <Text style={styles.title}>El Club del Plan</Text>
+
+          <Text style={styles.subtitle}>Eventos destacados</Text>
+          <FlatList
+            contentContainerStyle={{paddingTop: 40}}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            data={eventos}
+            renderItem={({item}) => renderItem(item)}
+          />
+        </View>
+        <View style={styles.contentWrapper}>
+          <Text style={styles.subtitle}>Música</Text>
+          <FlatList
+            contentContainerStyle={{paddingTop: 40}}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            data={eventos}
+            renderItem={({item}) => renderItem(item)}
+          />
+        </View>
+        <View style={styles.contentWrapper}>
+          <Text style={styles.subtitle}>Cine</Text>
+          <FlatList
+            contentContainerStyle={{paddingTop: 40}}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            data={eventos}
+            renderItem={({item}) => renderItem(item)}
+          />
+        </View>
+        <View style={styles.contentWrapper}>
+          <Text style={styles.subtitle}>Bares</Text>
+          <FlatList
+            contentContainerStyle={{paddingTop: 40}}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            data={eventos}
+            renderItem={({item}) => renderItem(item)}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 };
 
-
 const styles = StyleSheet.create({
   itemWrapper: {
-    borderColor: 'blue',
-    borderWidth: 2,
-    // flexDirection: 'row',
-    width: 300,
-    borderBottomColor: 'blue',
-    backgroundColor: 'lightblue',
-    marginTop: 10,
-    marginBottom: 10,
+    width: 203,
+    height: 320,
+    marginHorizontal: 15,
+    padding: 2,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
   },
   contentWrapper: {
+    margin: 10,
     width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: 'red',
   },
   title: {
-    fontSize: 18,
-    textAlign: 'center',
-    padding: 10,
     fontWeight: 'bold',
+    color: '#B90303',
+    marginTop: 20,
+    marginBottom: 0,
+    marginLeft: 18,
+    fontSize: 30,
+    padding: 1,
+  },
+  subtitle: {
+    color: '#000000',
+    marginTop: 20,
+    marginBottom: 0,
+    marginLeft: 18,
+    fontSize: 22,
+    padding: 1,
+    fontWeight: 'bold',
+  },
+  text: {
+    color: '#000000',
+    fontWeight: 'bold',
+    margin: 1,
+    marginLeft: 5,
+  },
+  nombreEvento: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#B90303',
+    marginTop: 5,
+    marginLeft: 5,
   },
   image: {
     width: 200,
-    height: 100,
-    borderRadius: 6,
+    height: 200,
+    borderRadius: 20,
   },
 });
 
