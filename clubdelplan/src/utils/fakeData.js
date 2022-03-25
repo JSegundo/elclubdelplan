@@ -337,6 +337,7 @@ const eventos = [
     Ubicación: 'Cinemark Palermo - Buenos Aires',
     Categoría: 'Cine',
     privado: false,
+    destacado: true,
   },
   {
     id: 30,

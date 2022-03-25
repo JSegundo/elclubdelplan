@@ -2,8 +2,6 @@ import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import eventos from '../utils/fakeData';
 
-import eventos from '../utils/fakeData';
-
 const HomeScreen = () => {
 
   const renderItem = item => {
