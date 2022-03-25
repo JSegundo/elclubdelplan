@@ -11,11 +11,15 @@ import Tabs from './src/navigation/Tabs.js';
 const App = () => {
   return (
     <NavigationContainer>
-      <Tabs />
+        <Tabs />
     </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
 
 export default App;
