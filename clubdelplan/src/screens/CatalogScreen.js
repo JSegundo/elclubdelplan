@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   itemWrapper: {
     borderWidth: 2,
     borderRadius: 12,
+    borderColor: 'transparent',
     flexDirection: 'row',
     width: 300,
     height: 120,
