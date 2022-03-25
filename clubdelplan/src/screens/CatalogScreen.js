@@ -2,6 +2,7 @@ import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
 import React from 'react';
 
 import eventos from '../utils/fakeData';
+import { color } from 'react-native-elements/dist/helpers';
 
 const CatalogScreen = () => {
   const renderItem = item => {
@@ -17,9 +18,9 @@ const CatalogScreen = () => {
           style={styles.image}
         />
         <View style={styles.infoWrapper}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>{nombre}</Text>
-          <Text style={{color: 'darkblue'}}>{Categoría}</Text>
-          <Text style={{fontSize: 12}}>{Ubicación}</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold' ,color :'#900'}}>{nombre}</Text>
+          <Text style={{color: '#900'}}>{Categoría}</Text>
+          <Text style={{fontSize: 10 , color: '#900'}}>{Ubicación}</Text>
         </View>
       </View>
     ) : null;
@@ -35,6 +36,7 @@ const CatalogScreen = () => {
 
 const styles = StyleSheet.create({
   itemWrapper: {
+    backgroundColor : 'white',
     borderWidth: 2,
     borderRadius: 12,
     borderColor: 'transparent',
@@ -43,13 +45,14 @@ const styles = StyleSheet.create({
     height: 120,
     marginTop: 10,
     marginBottom: 10,
+
   },
   contentWrapper: {
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 150,
   },
   infoWrapper: {
     padding: 5,
@@ -58,6 +61,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     textAlign: 'center',
+
     padding: 10,
     fontWeight: 'bold',
     borderBottomColor: 'lightblue',
