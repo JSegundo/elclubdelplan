@@ -13,23 +13,24 @@ const Search = () => {
     setResults(filterEvents);
   };
 
-  const renderItem = ({ item, index }) => (
-      <>
-      <View style={styles.cardImage}>
-      <Text >{item.nombre}</Text>
-      <Text >{item.fecha}</Text>
-      <Text >{item.Categoría}</Text>
-      <Image
-        source={{
-          uri: item.image
-            ? item.image
-            : "event image",
-        }}
-        style={{ height: 180, width: "100%", borderRadius: 5 }}
-      />
+  const renderItem = ({item}) => {
+    const {nombre, id, Categoría, fecha, hora, image, Ubicación, privado} =
+      item;
+
+    return privado === false ? (
+      <View style={styles.itemWrapper}>
+        <Image
+          source={{
+            uri: image,
+          }}
+          style={styles.image}
+        />
+        <Text>{nombre}</Text>
+        <Text>{Categoría}</Text>
+        <Text>{Ubicación}</Text>
       </View>
-      </>
-  );
+    ) : null;
+  };
 
   return (
     <>
@@ -90,11 +91,11 @@ const styles = StyleSheet.create({
   },
   buttonSearch: {backgroundColor: '#229783', marginBottom: 27},
   cardImage: {
-    display: "flex",
-    width: "49.5%",
+    display: 'flex',
+    width: '49.5%',
     margin: 4,
-    justifyContent: "space-between",
-    backgroundColor: "#2C292C",
+    justifyContent: 'space-between',
+    backgroundColor: '#2C292C',
     borderWidth: 0,
     borderRadius: 5,
   },
