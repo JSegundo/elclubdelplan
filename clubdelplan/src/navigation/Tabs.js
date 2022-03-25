@@ -28,7 +28,7 @@ const Tabs = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <View>
-              <Text>Home</Text>
+              <Text>HomeScreen</Text>
             </View>
           ),
         }}
