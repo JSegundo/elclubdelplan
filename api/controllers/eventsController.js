@@ -16,7 +16,7 @@ class EventsController{
     const event = await EventsService.serviceEventByCategory(req, next);
     return res.send(event);
   };
-  static async  updateProduct(req, res, next){
+  static async  updateEvent(req, res, next){
     const event = await EventsService.serviceUpdateEvent(req, next);
     return res.status(201).json(event);
   };
