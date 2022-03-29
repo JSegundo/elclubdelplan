@@ -9,14 +9,13 @@ import {
   Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-<<<<<<< HEAD
-=======
 import {NavigationContainer} from '@react-navigation/native';
 
 // import {Input, Button} from 'react-native-elements';
->>>>>>> 1a73ba5a6fb0d8790a807a79b4141fffbd20dbe5
 
 import eventos from '../utils/fakeData';
+import {color} from 'react-native-elements/dist/helpers';
+
 
 const CatalogScreen = ({navigation}) => {
   const renderItem = item => {

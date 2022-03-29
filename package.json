@@ -1,0 +1,23 @@
+{
+  "name": "elclubdelplan",
+  "version": "1.0.0",
+  "description": "El club del plan es una app para organizar y encontrar eventos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JSegundo/elclubdelplan.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JSegundo/elclubdelplan/issues"
+  },
+  "homepage": "https://github.com/JSegundo/elclubdelplan#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

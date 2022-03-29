@@ -1,6 +1,7 @@
 const { hash, genSalt } = require("bcrypt");
 
 const genHash = async (password) => {
+
   const salt = await genSalt(8);
   const userHash = await hash(password, salt);
 
@@ -11,9 +12,9 @@ const genHash = async (password) => {
 };
 
 const verifyHash = async (password, userHash, salt) => {
-  let resultadoHash = await hash(password, salt);
 
-  return userHash === resultadoHash;
+  return userHash === (await hash(password, salt));
+
 };
 
 module.exports = { genHash, verifyHash };

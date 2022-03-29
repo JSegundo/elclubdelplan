@@ -14,12 +14,13 @@ const UserSchema = new Schema({
 UserSchema.pre("save", async function () {
   const saltHash = await genHash(this.password);
   const { salt, hash } = saltHash;
-  console.log("SALTHASH:  ", saltHash);
+
   this.password = hash;
   this.salt = salt;
 });
 
 const UserModel = model("User", UserSchema);
+
 
 // const newUser = () => {
 //   const prueba = new UserModel({
@@ -31,5 +32,8 @@ const UserModel = model("User", UserSchema);
 //   prueba.save().then(() => console.log(prueba));
 // };
 // newUser();
+
+newUser();
+
 
 module.exports = UserModel;
