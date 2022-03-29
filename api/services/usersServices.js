@@ -40,7 +40,7 @@ class UsersService {
       // VER NOMBRE DE LOS CAMPOS EN LOS MODELOS
       return {
         name: user.name,
-        lastName: user.lastName,
+        email: user.email,
         id: user._id,
       }
     } catch (err) {
