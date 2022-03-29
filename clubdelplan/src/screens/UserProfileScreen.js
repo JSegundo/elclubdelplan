@@ -1,6 +1,6 @@
 import {View, Text, Image, StyleSheet} from 'react-native';
 import React from 'react';
-import Tabs from '../navigation/Tabs';
+
 
 
 const UserProfileScreen = () => {

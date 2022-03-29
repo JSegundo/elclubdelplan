@@ -6,13 +6,12 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-// import {Input, Button} from 'react-native-elements';
-
+import {NavigationContainer} from '@react-navigation/native';
 import eventos from '../utils/fakeData';
 import {color} from 'react-native-elements/dist/helpers';
-
 
 const CatalogScreen = ({navigation}) => {
   const renderItem = item => {
@@ -60,8 +59,13 @@ const CatalogScreen = ({navigation}) => {
   };
 
   return (
-
     <View style={styles.pageWrapper}>
+      <View>
+        <Button
+          title="Go to Home"
+          onPress={() => navigation.navigate('Home')}
+        />
+      </View>
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}
@@ -73,12 +77,18 @@ const CatalogScreen = ({navigation}) => {
           style={styles.buttonSearch}
           title="Search"
           onPress={handleSearch}>
-          <Text style = {{color : '#111'}}>Search</Text>
+          <Text style={{color: '#111'}}>Search</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.contentWrapper}>
         <Text style={styles.title}>Catalogo de eventos públicos</Text>
+        {results[0] ? (
+          <Text style={{padding: 5}}>
+            {results.length} resultados encontrados
+          </Text>
+        ) : null}
+
         <FlatList
           data={results[0] ? results : eventos}
           renderItem={({item}) => renderItem(item)}
@@ -137,8 +147,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    color : '#111',
-    
+    color: '#111',
   },
   buttonSearch: {
     borderWidth: 2,
@@ -148,7 +157,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 8,
     paddingVertical: 5,
-    color : '#111',
+    color: '#111',
   },
   searchInput: {
     borderBottomWidth: 3,

@@ -1,12 +1,21 @@
-const express = require("express")
-const app = express()
+const express = require("express");
+const app = express();
+const volleyball = require("volleyball");
+const morgan = require("morgan");
+require("./config"); // --> require the db()
+const router = require("./routes");
 
-const PORT = 3000
+app.use(express.json());
+app.use(morgan("tiny"));
 
-app.get("/", (req,res) => {
-    res.send("<h1>SERVER LEVANTADO!!</h1>")
+router.use(volleyball);
+app.use("/api", router);
+
+app.get("/", (req, res) => {
+  res.send("hello world!!");
+});
+
+app.listen(3001 ,() => {
+    console.log(`server listening on http//:localhost:3001`)
 })
 
-app.listen(PORT ,() => {
-    console.log(`server listening on http//:localhost:${PORT}`)
-})

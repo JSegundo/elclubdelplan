@@ -1,14 +1,27 @@
-import { NavigationContainer } from '@react-navigation/native';
+
 import React from 'react';
 import { Text, View, TextInput , Button } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const Register = () => {
   const [email, onChangeText] = React.useState(null);
   const [psw, onChangePsw] = React.useState(null);
   const [number, onChangePhone] = React.useState(null);
-  const [address, onChangeAddress] = React.useState(null)
+  const [city, onChangeCity] = React.useState(null)
 
+  const onRegister = async() => {
+    const newUser = {
+      email,
+      city,
+      password : psw,
+    }
+    try {
+      const response = await axios.post("http://localhost:3001/api/users/register" , newUser )
+      console.log(response)
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   return (
     <View style={styles.view}>
@@ -30,10 +43,10 @@ const Register = () => {
       />
       <TextInput
         style={styles.input}
-        onChangeText={onChangeAddress}
-        placeholder="address"
+        onChangeText={onChangeCity}
+        placeholder="city"
         placeholderTextColor="#808080" 
-        value={address}
+        value={city}
       />
       <TextInput
         style={styles.input}
@@ -44,7 +57,7 @@ const Register = () => {
         placeholderTextColor="#808080" 
         
       />
-      <Button title="Register" onPress={()=>{navigation.navigate('Register')}}></Button>
+      <Button title="Register" onPress={onRegister}></Button>
       
     </View>
   );

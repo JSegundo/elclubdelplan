@@ -10,8 +10,7 @@ import UserProfileScreen from './src/screens/UserProfileScreen.js';
 const Stack = createNativeStackNavigator();
 
 
-
-function App () {
+function App() {
   return (
     <NavigationContainer>
     <Stack.Navigator>
@@ -21,12 +20,9 @@ function App () {
         options={{ headerShown: false }}
       />
        <Stack.Screen name="RegisterScreen" component={Register} />
-       <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
     </Stack.Navigator>
     </NavigationContainer>
   );
-};
-
-const styles = StyleSheet.create({});
+}
 
 export default App;

@@ -1,40 +1,35 @@
-import { NavigationContainer } from '@react-navigation/native';
+
 import React from 'react';
 import { Text, View, TextInput, Button , Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import UserProfileScreen from './UserProfileScreen';
 
 const Log = ({ navigation }) => {
   const [email, onChangeText] = React.useState(null);
   const [psw, onChangeNumber] = React.useState(null);
-  const [isSignedIn, changeSignIn] = React.useState(false)
+  const [user , setUser] = React.useState({})
+
+
   const onSubmit = async () => {
+    console.log(email)
     const valid = {
       email,
       password : psw,
     }
     try {
       const response = await axios.post("http://localhost:3001/api/users/login" , valid )
+      setUser(response.user)
       const token = JSON.stringify(response.token)
       await AsyncStorage.setItem('@Token', token)
     } catch (e) {
       console.error(e)
     }
   }
-
   return (
 
-    isSignedIn ?  (
-      <View style={styles.profileWrapper}>
-        <Image
-          source={{
-            uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
-          }}
-          style={styles.imagen}
-        />
-        <Text style={{ color: '#111' }}>User Name</Text>
-        <Button title="LogOut" onPress={() => changeSignIn(false)}></Button>
-      </View>
+    user?._id ?  (
+      <UserProfileScreen/>
     ) : (
       <View style={styles.view}>
         <Text style={styles.tittle}>Please log in to see your Profile!</Text>
