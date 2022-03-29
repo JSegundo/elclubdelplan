@@ -1,53 +1,78 @@
-const { Users } = require("../models"); // preguntar como se exportan los modelos en mongo
+const User = require("../models/User"); // preguntar como se exportan los modelos en mongo
+const jwt = require("jsonwebtoken");
 
-class UsersService{
+require("dotenv").config();
 
-  static async serviceResgisterUser(req){
+const { verifyHash } = require("../config/passwordHash");
+
+class UsersService {
+  static async serviceResgisterUser(req) {
+    console.log(req.body);
     try {
-        //METODO REGISTER
+      const newUser = await User.create(req.body);
+      console.log(newUser);
     } catch (err) {
-      console.log("err->", err);
+      console.error("err->", err);
     }
-  };
+  }
 
-  static async serviceLogin(req){
+  static async serviceLogin(req) {
+    const { email, password } = req.body;
     try {
-        //METODO LOGIN
+      if (email && password) {
+        let user = await User.findOne({ email });
+        if (!user) {
+          return { msg: "No such user found", user };
+        }
+
+        let verifyUser = await verifyHash(password, user.password, user.salt);
+
+        if (!verifyUser) {
+          console.log("LAS CONTRASEÑAS NO COINCIDEN");
+          return { msg: "Password is incorrect" };
+        } else {
+          let payload = { id: user._id };
+          let token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+          return { msg: "ok", token: token, user: user };
+        }
+      }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
-  };
+  }
 
-  static async serviceLogout(req){
+  static async serviceLogout(req) {
     try {
-        //METODO LOGOUT
+      //METODO LOGOUT
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
-  };
-  
-  static async serviceGetMe(req){
-    try {
-        //METODO USUARIO LOGUEADO
-    } catch (err) {
-      console.log(err);
-    }      
-  };
+  }
 
-  static async serviceEditUser(req, next){
+  static async serviceGetMe(req) {
     try {
-        //METODO EDITAR USUARIO
+      //METODO USUARIO LOGUEADO
+      const user = await User.find({ _id: req.params.id });
+      return user;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  static async serviceEditUser(req, next) {
+    try {
+      //METODO EDITAR USUARIO
     } catch (err) {
       next(err);
     }
-  };
-  
- static async serviceGetOneUser(req, next){
+  }
+
+  static async serviceGetOneUser(req, next) {
     try {
-        //METODO FINDONE
+      //METODO FINDONE
     } catch (err) {
       next(err);
     }
-  };
+  }
 }
-module.exports= UsersService;
+module.exports = UsersService;
