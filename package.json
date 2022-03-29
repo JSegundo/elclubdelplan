@@ -1,11 +1,10 @@
 {
-  "name": "proyecto-profesional",
+  "name": "elclubdelplan",
   "version": "1.0.0",
-  "description": "",
+  "description": "El club del plan es una app para organizar y encontrar eventos.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,12 +17,7 @@
     "url": "https://github.com/JSegundo/elclubdelplan/issues"
   },
   "homepage": "https://github.com/JSegundo/elclubdelplan#readme",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "express": "^4.17.3",
-    "mongoose": "^6.2.8",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.15",
-    "react-native": "^0.67.4"
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
