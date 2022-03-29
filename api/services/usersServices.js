@@ -15,8 +15,11 @@ class UsersService {
 
   static async serviceLogin(req) {
     try {
-      const user = await Users.find({ email: req.body.email });
-      //FALTA AVERIGUAR COMO FILTRAR DATOS PARA NO DEVOLVER PASS Y SALT
+      // FALTAN LAS VALIDACIONES
+      const user = await Users.findOne({ email: req.body.email });
+      //AVERIGUAR COMO FILTRAR DATOS PARA NO DEVOLVER PASS Y SALT
+
+      // LOGICA DE JWT
       return user;
     } catch (err) {
       console.log(err);
@@ -33,7 +36,13 @@ class UsersService {
 
   static async serviceGetMe(req) {
     try {
-      return req.user ? req.user : null;
+      const user = await Users.findById(req.user.id);
+      // VER NOMBRE DE LOS CAMPOS EN LOS MODELOS
+      return {
+        name: user.name,
+        lastName: user.lastName,
+        id: user._id,
+      }
     } catch (err) {
       console.log(err);
     }
