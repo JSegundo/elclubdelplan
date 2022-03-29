@@ -1,38 +1,55 @@
-const { Users } = require("../models"); // preguntar como se exportan los modelos en mongo
+const User = require("../models/User"); // preguntar como se exportan los modelos en mongo
+const jwt = require("jsonwebtoken");
+
+require("dotenv").config();
+
+const { verifyHash } = require("../config/passwordHash");
 
 class UsersService {
-
   static async serviceResgisterUser(req) {
+    console.log(req.body);
     try {
-      //FALTAN LAS VALIDACIONES
-      const newUser = new User(req.body);
-      const user = await newUser.save();
-      return user
+      const newUser = await User.create(req.body);
+      console.log(newUser);
     } catch (err) {
-      console.log(err);
+      console.error("err->", err)
     }
-  };
+  }
 
   static async serviceLogin(req) {
-    try {
-      // FALTAN LAS VALIDACIONES
-      const user = await Users.findOne({ email: req.body.email });
-      //AVERIGUAR COMO FILTRAR DATOS PARA NO DEVOLVER PASS Y SALT
 
-      // LOGICA DE JWT
-      return user;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  /*static async serviceLogout(req){
+    const { email, password } = req.body;
     try {
-        //METODO LOGOUT
+      if (email && password) {
+        let user = await User.findOne({ email });
+        if (!user) {
+          return { msg: "No such user found", user };
+        }
+
+        let verifyUser = await verifyHash(password, user.password, user.salt);
+
+        if (!verifyUser) {
+          console.log("LAS CONTRASEÑAS NO COINCIDEN");
+          return { msg: "Password is incorrect" };
+        } else {
+          let payload = { id: user._id };
+          let token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+          return { msg: "ok", token: token, user: user };
+        }
+      }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
-  };*/
+  }
+
+  static async serviceLogout(req){
+    try {
+      //METODO LOGOUT
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
 
   static async serviceGetMe(req) {
     try {
@@ -64,9 +81,11 @@ class UsersService {
       const { id } = req.params;
       const user = await Users.findById(id);
       return user;
+
     } catch (err) {
       next(err);
     }
-  };
+  }
 }
+
 module.exports = UsersService;

@@ -16,6 +16,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import eventos from '../utils/fakeData';
 import {color} from 'react-native-elements/dist/helpers';
 
+
 const CatalogScreen = ({navigation}) => {
   const renderItem = item => {
     const {
@@ -86,6 +87,12 @@ const CatalogScreen = ({navigation}) => {
 
       <View style={styles.contentWrapper}>
         <Text style={styles.title}>Catalogo de eventos públicos</Text>
+        {results[0] ? (
+          <Text style={{padding: 5}}>
+            {results.length} resultados encontrados
+          </Text>
+        ) : null}
+
         <FlatList
           data={results[0] ? results : eventos}
           renderItem={({item}) => renderItem(item)}
