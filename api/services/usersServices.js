@@ -1,72 +1,87 @@
-const { Users } = require("../models"); // preguntar como se exportan los modelos en mongo
+const User = require("../models/User"); // preguntar como se exportan los modelos en mongo
+const jwt = require("jsonwebtoken");
+
+require("dotenv").config();
+
+const { verifyHash } = require("../config/passwordHash");
 
 class UsersService {
-
   static async serviceResgisterUser(req) {
     try {
-      //FALTAN LAS VALIDACIONES
-      const newUser = new User(req.body);
-      const user = await newUser.save();
-      return user
+      const newUser = await User.create(req.body);
+      return newUser;
     } catch (err) {
-      console.log(err);
+      console.error("err->", err);
     }
-  };
+  }
 
   static async serviceLogin(req) {
+    const { email, password } = req.body;
     try {
-      // FALTAN LAS VALIDACIONES
-      const user = await Users.findOne({ email: req.body.email });
-      //AVERIGUAR COMO FILTRAR DATOS PARA NO DEVOLVER PASS Y SALT
+      if (email && password) {
+        let user = await User.findOne({ email });
+        if (!user) {
+          return { msg: "No such user found", user };
+        }
 
-      // LOGICA DE JWT
-      return user;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+        let verifyUser = await verifyHash(password, user.password, user.salt);
 
-  /*static async serviceLogout(req){
-    try {
-        //METODO LOGOUT
+        if (!verifyUser) {
+          console.log("LAS CONTRASEÑAS NO COINCIDEN");
+          return { msg: "Password is incorrect" };
+        } else {
+          let payload = { id: user._id };
+          let token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+          return { msg: "ok", token: token, user: user };
+        }
+      }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
-  };*/
+  }
+
+  // static async serviceLogout(req) {
+  //   try {
+  //     //METODO LOGOUT
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   static async serviceGetMe(req) {
     try {
-      const user = await Users.findById(req.user.id);
+      const user = await User.findById(req.user.id);
       // VER NOMBRE DE LOS CAMPOS EN LOS MODELOS
       return {
         name: user.name,
         email: user.email,
         id: user._id,
-      }
+      };
     } catch (err) {
       console.log(err);
     }
-  };
+  }
 
   static async serviceEditUser(req, next) {
     try {
       const { id } = req.params;
-      const oldUser = await Users.findByIdAndUpdate(id, req.body);
+      const oldUser = await User.findByIdAndUpdate(id, req.body);
       // REVISAR QUE DEBERIA DEVOLVER ESTE METODO
       return 1;
     } catch (err) {
       next(err);
     }
-  };
+  }
 
   static async serviceGetOneUser(req, next) {
     try {
       const { id } = req.params;
-      const user = await Users.findById(id);
+      const user = await User.findById(id);
       return user;
     } catch (err) {
       next(err);
     }
-  };
+  }
 }
+
 module.exports = UsersService;

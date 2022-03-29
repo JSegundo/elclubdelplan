@@ -9,14 +9,9 @@ import {
   Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-<<<<<<< HEAD
-=======
 import {NavigationContainer} from '@react-navigation/native';
-
-// import {Input, Button} from 'react-native-elements';
->>>>>>> 9a3a54fede08d075d014b68e32c609d89fbdf760
-
 import eventos from '../utils/fakeData';
+import {color} from 'react-native-elements/dist/helpers';
 
 const CatalogScreen = ({navigation}) => {
   const renderItem = item => {
@@ -51,8 +46,8 @@ const CatalogScreen = ({navigation}) => {
           <Text>${price}</Text>
         </View>
       </View>
-      // </TouchableOpacity>
-    ) : null;
+    ) : // </TouchableOpacity>
+    null;
   };
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -82,7 +77,7 @@ const CatalogScreen = ({navigation}) => {
           style={styles.buttonSearch}
           title="Search"
           onPress={handleSearch}>
-          <Text style = {{color : '#111'}}>Search</Text>
+          <Text style={{color: '#111'}}>Search</Text>
         </TouchableOpacity>
       </View>
 
@@ -152,8 +147,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    color : '#111',
-    
+    color: '#111',
   },
   buttonSearch: {
     borderWidth: 2,
@@ -163,7 +157,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 8,
     paddingVertical: 5,
-    color : '#111',
+    color: '#111',
   },
   searchInput: {
     borderBottomWidth: 3,
@@ -175,5 +169,3 @@ const styles = StyleSheet.create({
 });
 
 export default CatalogScreen;
-
-
