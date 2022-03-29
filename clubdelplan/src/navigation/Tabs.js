@@ -5,8 +5,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
-import NewPLanScreen from '../screens/NewPlanScreen';
-import UserProfileScreen from '../screens/UserProfileScreen';
+import NewPlanScreen from '../screens/NewPlanScreen';
+import UserProfileScreen from '../screens/LogInScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -47,9 +47,9 @@ const Tabs = () => {
       />
       <Tab.Screen
         name="New Plan"
-        component={NewPLanScreen}
+        component={NewPlanScreen}
         options={{
-          headerShown:false,
+          
           tabBarIcon: () => <Ionicons name="add" size={30} color="#900" />,
         }}
       />
@@ -57,7 +57,7 @@ const Tabs = () => {
         name="Profile"
         component={UserProfileScreen}
         options={{
-          headerShown:false,
+         
           tabBarIcon: ({color}) => (
             <Ionicons name="person-outline" size={22} color="#900" />
           ),
@@ -66,7 +66,7 @@ const Tabs = () => {
     </Tab.Navigator>
   );
 };
-
+  
 const styles = StyleSheet.create({
   shadow: {
     shadowColor: '#7F5DF0',

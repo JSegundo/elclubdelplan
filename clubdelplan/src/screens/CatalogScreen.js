@@ -29,7 +29,7 @@ const CatalogScreen = ({navigation}) => {
     } = item;
 
     return privado === false ? (
-      // <TouchableOpacity onPress={() => navigation.navigate("DetailsScreen")}>
+      <TouchableOpacity >
       <View style={styles.itemWrapper}>
         <Image
           source={{
@@ -47,7 +47,7 @@ const CatalogScreen = ({navigation}) => {
           <Text>${price}</Text>
         </View>
       </View>
-      // </TouchableOpacity>
+      </TouchableOpacity>
     ) : null;
   };
 

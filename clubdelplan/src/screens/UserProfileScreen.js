@@ -1,5 +1,7 @@
 import {View, Text, Image, StyleSheet} from 'react-native';
 import React from 'react';
+import Tabs from '../navigation/Tabs';
+
 
 const UserProfileScreen = () => {
   return (
@@ -10,7 +12,7 @@ const UserProfileScreen = () => {
         }}
         style={styles.imagen}
       />
-      <Text>User Name</Text>
+      <Text style={{color:'#111'}}>User Name</Text>
     </View>
   );
 };
