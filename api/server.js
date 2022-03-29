@@ -1,17 +1,13 @@
-const express = require("express")
-const app = express()
-const routes = require("./routes");
-const PORT = 3000
-
+const express = require("express");
+const app = express();
+const morgan = require("morgan");
+const UserModel = require("./models/User");
+ 
 app.use(express.json());
+app.use(morgan("tiny"));
 
+require("./config"); // --> require the db()
 
-app.use("/api", routes);
-
-app.get("/", (req,res) => {
-    res.send("<h1>SERVER LEVANTADO!!</h1>")
-})
-
-app.listen(PORT ,() => {
-    console.log(`server listening on http//:localhost:${PORT}`)
+app.listen(3001 ,() => {
+    console.log(`server listening on http//:localhost:3001`)
 })

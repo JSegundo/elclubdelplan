@@ -6,11 +6,17 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
+<<<<<<< HEAD
+=======
+import {NavigationContainer} from '@react-navigation/native';
+
+// import {Input, Button} from 'react-native-elements';
+>>>>>>> 9a3a54fede08d075d014b68e32c609d89fbdf760
 
 import eventos from '../utils/fakeData';
-
 
 const CatalogScreen = ({navigation}) => {
   const renderItem = item => {
@@ -59,6 +65,12 @@ const CatalogScreen = ({navigation}) => {
 
   return (
     <View style={styles.pageWrapper}>
+      <View>
+        <Button
+          title="Go to Home"
+          onPress={() => navigation.navigate('Home')}
+        />
+      </View>
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}
@@ -163,3 +175,5 @@ const styles = StyleSheet.create({
 });
 
 export default CatalogScreen;
+
+
