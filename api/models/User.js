@@ -21,7 +21,6 @@ UserSchema.pre("save", async function () {
 
 const UserModel = model("User", UserSchema);
 
-
 // const newUser = () => {
 //   const prueba = new UserModel({
 //     name: "prueba",
@@ -33,7 +32,6 @@ const UserModel = model("User", UserSchema);
 // };
 // newUser();
 
-newUser();
-
+// newUser();
 
 module.exports = UserModel;
