@@ -12,7 +12,7 @@ class EventsServices {
 
   static async serviceGetAllMyEvents(req, next) {
     try {
-      const events = await Events.find({ eventOwner: req.user.id, private: true }); // PREGUNTAR
+      const events = await Events.find({ eventOwner: req.user._id, private: true }); // PREGUNTAR
       return events;
     } catch (err) {
       next(err);
@@ -54,7 +54,7 @@ class EventsServices {
       await newEvent.save();
       return newEvent;
     } catch (err) {
-      console.log(err);
+      console.error(err);
       next(err);
     }
   }
