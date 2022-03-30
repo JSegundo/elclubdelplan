@@ -1,9 +1,18 @@
-const { Events } = require("../models/Events"); // preguntar como se exportan los modelos en mongo
+const { Events } = require("../models/Events");
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
     try {
-      const events = await Events.find({ eventOwner: req.user.id });
+      const events = await Events.find({ private: false });
+      return events;
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async serviceGetAllMyEvents(req, next) {
+    try {
+      const events = await Events.find({ eventOwner: req.user.id, private: true }); // PREGUNTAR
       return events;
     } catch (err) {
       next(err);
@@ -22,7 +31,7 @@ class EventsServices {
 
   static async serviceEventByCategory(req, next) {
     try {
-      const events = await Events.find({ category : req.params.name });
+      const events = await Events.find({ category : req.params.name, private: false });
       return events;
     } catch (err) {
       next(err);
