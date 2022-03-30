@@ -1,9 +1,19 @@
-const { Events } = require("../models/Events"); // preguntar como se exportan los modelos en mongo
+const { Events } = require("../models/Events");
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
     try {
-      //METODO GETALL
+      const events = await Events.find({ private: false });
+      return events;
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async serviceGetAllMyEvents(req, next) {
+    try {
+      const events = await Events.find({ eventOwner: req.user.id, private: true }); // PREGUNTAR
+      return events;
     } catch (err) {
       next(err);
     }
@@ -11,7 +21,8 @@ class EventsServices {
 
   static async serviceGetEvents(req, next) {
     try {
-      //METODO FINDONE
+      const event = await Events.findById(req.params.id);
+      return event;
     } catch (err) {
       console.log(err);
       next(err);
@@ -20,7 +31,8 @@ class EventsServices {
 
   static async serviceEventByCategory(req, next) {
     try {
-      //METODO GET POR CATEGORIA
+      const events = await Events.find({ category : req.params.name, private: false });
+      return events;
     } catch (err) {
       next(err);
     }
@@ -28,7 +40,8 @@ class EventsServices {
 
   static async serviceUpdateEvent(req, next) {
     try {
-      //METODO UPDATE
+      const oldEvent = await Events.findByIdAndUpdate(req.params.id, req.body);
+      return oldEvent;
     } catch (err) {
       next(err);
     }
@@ -36,7 +49,10 @@ class EventsServices {
 
   static async serviceAddEvent(req, next) {
     try {
-      //METODO POST
+      const newEvent = new Events(req.body);
+      newEvent.eventOwner = req.user.id;
+      await newEvent.save();
+      return newEvent;
     } catch (err) {
       console.log(err);
       next(err);
@@ -45,7 +61,8 @@ class EventsServices {
 
   static async serviceDeleteEvent(req, next) {
     try {
-      //METODO DELETE
+      const res = await Events.findByIdAndDelete(req.params.id);
+      return res;
     } catch (err) {
       next(err);
     }
