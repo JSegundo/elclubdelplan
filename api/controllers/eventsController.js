@@ -19,7 +19,7 @@ class EventsController{
 
  static async eventByCategory(req, res, next){
     const event = await EventsService.serviceEventByCategory(req, next);
-    return res.send(event);
+    return event ? res.status(200).json(event) : res.sendStatus(404);
   };
   static async  updateEvent(req, res, next){
     const event = await EventsService.serviceUpdateEvent(req, next);
@@ -34,7 +34,7 @@ class EventsController{
   static async deleteEvent(req, res, next){
     const result = await EventsService.serviceDeleteEvent(req, next);
     result
-      ? res.status(204).send([])
+      ? res.sendStatus(204)
       : res.status(404).send("The event you want to delete doesn't exist.");
   };
 }

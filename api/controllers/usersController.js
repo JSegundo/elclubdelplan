@@ -3,8 +3,8 @@ const UsersService = require("../services/usersServices");
 class UsersController{
 
   static async registerUsers(req, res){
-    await UsersService.serviceResgisterUser(req);
-    return res.sendStatus(201);
+    const user = await UsersService.serviceResgisterUser(req);
+    return user ? res.sendStatus(201) : res.sendStatus(500);
   };
 
   static async loginUsers(req, res){

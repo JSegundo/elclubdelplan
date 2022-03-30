@@ -9,7 +9,7 @@ class UsersService {
   static async serviceResgisterUser(req) {
     try {
       const newUser = await User.create(req.body);
-      console.log("USER->", newUser);
+      return newUser;
     } catch (err) {
       console.error(err);
     }
