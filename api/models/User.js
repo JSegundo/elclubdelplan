@@ -32,6 +32,4 @@ const UserModel = model("User", UserSchema);
 // };
 // newUser();
 
-// newUser();
-
 module.exports = UserModel;
