@@ -1,18 +1,20 @@
-const { Events } = require("../models/Events");
+const Events = require("../models/Events");
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
+ 
     try {
       const events = await Events.find({ private: false });
+      console.log("EVENTS", events)
       return events;
-    } catch (err) {
+    } catch (err) { 
       next(err);
     }
   }
 
   static async serviceGetAllMyEvents(req, next) {
     try {
-      const events = await Events.find({ eventOwner: req.user.id, private: true }); // PREGUNTAR
+      const events = await Events.find({ eventOwner: req.user._id, private: true }); // PREGUNTAR
       return events;
     } catch (err) {
       next(err);

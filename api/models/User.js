@@ -7,8 +7,9 @@ const UserSchema = new Schema({
   city: { type: String, required: true },
   password: String,
   salt: String,
-  ownPlans: [{ type: Schema.ObjectId, ref: "Event" }],
-  userWillAttend: [{ type: Schema.ObjectId, ref: "Event" }],
+  ownPlans: [{ type: Schema.ObjectId, ref: "Event" }], //--> puede ser para los que quiere administrar pero no los ownea
+  userWillAttend: [{ type: Schema.ObjectId, ref: "Event" }], // ok
+  // preferredPlans: [{ type: Schema.ObjectId, ref: "Event" }] --> sprint3
 });
 
 UserSchema.pre("save", async function () {
@@ -21,15 +22,6 @@ UserSchema.pre("save", async function () {
 
 const UserModel = model("User", UserSchema);
 
-// const newUser = () => {
-//   const prueba = new UserModel({
-//     name: "prueba",
-//     password: "hola123",
-//     email: "DELFI@GMAIL.COM",
-//     city: "Buenos Aires",
-//   });
-//   prueba.save().then(() => console.log(prueba));
-// };
-// newUser();
+
 
 module.exports = UserModel;
