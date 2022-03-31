@@ -24,9 +24,9 @@ function App() {
         component={Tabs}
         options={{ headerShown: false }}
       />
-       <Stack.Screen name="RegisterScreen" component={Register} />
-       <Stack.Screen name="LogInScreen" component={LogInScreen} />
-       <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
+      <Stack.Screen name="RegisterScreen" component={Register} />
+      <Stack.Screen name="LogInScreen" component={LogInScreen} />
+      <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
     </Stack.Navigator>
     </NavigationContainer>
   );

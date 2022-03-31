@@ -4,6 +4,7 @@ import { Text, View, TextInput , Button } from 'react-native';
 import axios from 'axios';
 
 const Register = ({navigation}) => {
+  const [name, onChangeName] = React.useState(null);
   const [email, onChangeText] = React.useState(null);
   const [psw, onChangePsw] = React.useState(null);
   const [number, onChangePhone] = React.useState(null);
@@ -27,6 +28,7 @@ const Register = ({navigation}) => {
     // }
 
     const newUser = {
+      name,
       email,
       city,
       password : psw,
@@ -47,6 +49,14 @@ const Register = ({navigation}) => {
     <View style={styles.view}>
       <Text style= {styles.tittle}>Please register to see your Profile!</Text>
       
+
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeName}
+        placeholder="name"
+        placeholderTextColor="#808080" 
+        value={name}
+      />
       <TextInput
         style={styles.input}
         onChangeText={onChangeText}
@@ -65,7 +75,7 @@ const Register = ({navigation}) => {
         style={styles.input}
         onChangeText={onChangeCity}
         placeholder="city"
-        placeholderTextColor="#808080" 
+        placeholderTextColor="#808080"
         value={city}
       />
       <TextInput

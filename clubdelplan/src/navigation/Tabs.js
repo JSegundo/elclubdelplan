@@ -56,6 +56,7 @@ const Tabs = () => {
         name="Profile"
         component={LogInScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({color}) => (
             <Ionicons name="person-outline" size={22} color="#900" />
           ),

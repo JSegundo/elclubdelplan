@@ -58,6 +58,7 @@ const Log = () => {
 
     token ?  (
       <UserProfileScreen/>
+      
     ) : (
       <View style={styles.view}>
         <Text style={styles.tittle}>Please log in to see your Profile!</Text>
