@@ -9,24 +9,42 @@ import {
   Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import eventos from '../utils/fakeData';
+// import eventos from '../utils/fakeData';
 import axios from 'axios';
 
 const CatalogScreen = ({navigation}) => {
+  const [eventos, setEventos] = useState({});
+
+  useEffect(() => {
+    async function getAllEvents() {
+      try {
+        const response = await axios.get('http://localhost:3001/api/events');
+        setEventos(response.data);
+        console.log(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getAllEvents();
+    console.log(eventos);
+  }, []);
+
   const renderItem = item => {
     const {
-      nombre,
-      id,
-      Categoría,
-      fecha,
-      hora,
+      name,
+      _id,
+      category,
+      date,
+      time,
       image,
-      Ubicación,
-      privado,
-      price,
+      location,
+      isPrivate,
+      totalPrice,
     } = item;
 
-    return privado === false ? (
+    console.log(isPrivate);
+
+    return item.isPrivate === true ? (
       <TouchableOpacity>
         <View style={styles.itemWrapper}>
           <Image
@@ -37,12 +55,12 @@ const CatalogScreen = ({navigation}) => {
           />
           <View style={styles.infoWrapper}>
             <Text style={{fontSize: 20, fontWeight: 'bold', color: '#900'}}>
-              {nombre}
+              {name}
             </Text>
-            <Text style={{color: 'black'}}>{Categoría}</Text>
-            <Text style={{fontSize: 10, color: 'black'}}>{Ubicación}</Text>
+            <Text style={{color: 'black'}}>{category}</Text>
+            <Text style={{fontSize: 10, color: 'black'}}>{location}</Text>
             {/* <Text>{fecha}</Text> */}
-            <Text>${price}</Text>
+            <Text>${totalPrice}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -53,18 +71,18 @@ const CatalogScreen = ({navigation}) => {
   const [results, setResults] = useState([]);
 
   const handleSearch = () => {
-    const filterEvents = eventos.filter(e => e.Categoría === searchTerm);
+    const filterEvents = eventos.filter(e => e.category === searchTerm);
     setResults(filterEvents);
   };
 
   return (
     <View style={styles.pageWrapper}>
-      <View>
+      {/* <View>
         <Button
           title="Go to Home"
           onPress={() => navigation.navigate('Home')}
         />
-      </View>
+      </View> */}
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}

@@ -1,9 +1,23 @@
-const { Events } = require("../models/Events"); // preguntar como se exportan los modelos en mongo
+const Events = require("../models/Events");
+// const Categories = require("../models/Categories");
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
     try {
-      //METODO GETALL
+      const events = await Events.find({ private: false }).populate("category");
+      return events;
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async serviceGetAllMyEvents(req, next) {
+    try {
+      const events = await Events.find({
+        eventOwner: req.user._id,
+        private: true,
+      }).populate("category"); // PREGUNTAR
+      return events;
     } catch (err) {
       next(err);
     }
@@ -11,7 +25,8 @@ class EventsServices {
 
   static async serviceGetEvents(req, next) {
     try {
-      //METODO FINDONE
+      const event = await Events.findById(req.params.id).populate("category");
+      return event;
     } catch (err) {
       console.log(err);
       next(err);
@@ -20,7 +35,11 @@ class EventsServices {
 
   static async serviceEventByCategory(req, next) {
     try {
-      //METODO GET POR CATEGORIA
+      const events = await Events.find({
+        category: req.params.id,
+        private: false,
+      }).populate("category"); //CHEQUEAR
+      return events;
     } catch (err) {
       next(err);
     }
@@ -28,24 +47,35 @@ class EventsServices {
 
   static async serviceUpdateEvent(req, next) {
     try {
-      //METODO UPDATE
+      const oldEvent = await Events.findByIdAndUpdate(req.params.id, req.body);
+      return oldEvent;
     } catch (err) {
       next(err);
     }
   }
 
   static async serviceAddEvent(req, next) {
+    //CHEQUEAR
     try {
-      //METODO POST
+      console.log("BODY->", req.body);
+      const { category, ...rest } = req.body;
+      console.log("REST->", rest);
+      const newEvent = new Events(rest);
+      newEvent.eventOwner = req.user.id;
+      //esta linea no deberia hacer falta
+      newEvent.category = category;
+      await newEvent.save();
+      return newEvent;
     } catch (err) {
-      console.log(err);
+      console.error(err);
       next(err);
     }
   }
 
   static async serviceDeleteEvent(req, next) {
     try {
-      //METODO DELETE
+      const res = await Events.findByIdAndDelete(req.params.id);
+      return res;
     } catch (err) {
       next(err);
     }
