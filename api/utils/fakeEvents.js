@@ -5,14 +5,13 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://pbs.twimg.com/profile_images/1500933654830276608/PBf2KquH_400x400.jpg",
-    date: {
-      startDate: "20-03-2022",
-      endDate: "23-03-2022",
-    },
+    startDate: new Date(2022, 04, 21),
+    endDate: new Date(2022, 04, 23),
+    paymentDay: null,
     time: "17:00",
     location: "Hipódromo de Palermo, Buenos Aires",
-    category: "Concierto",
     isPrivate: false,
+    category: "Concert",
     destacado: true,
     totalPrice: 11000,
   },
@@ -22,14 +21,14 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpE500YCm2dI6vMH2K6qMuPgMkDvJALf9RRg&usqp=CAU",
-    date: {
-      startDate: "12-02-2022",
-      endDate: "15-02-2022",
-    },
+
+    startDate: new Date(2022, 04, 28),
+    endDate: new Date(2022, 04, 30),
+    paymentDay: null,
     time: "15:00",
     location: "Aeroclub Santa María de Punilla, Córdoba",
-    category: "Concierto",
     isPrivate: false,
+    category: "Concert",
     destacado: true,
     totalPrice: 9000,
   },
@@ -39,14 +38,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVjZhYW7SVyf8Akzzd-NNqmzXVEpJ6svC62Q&usqp=CAU",
-    date: {
-      startDate: "03-04-2022",
-      endDate: "06-04-2022",
-    },
+
+    startDate: new Date(2022, 05, 21),
+    endDate: new Date(2022, 05, 23),
+    paymentDay: null,
+
     time: "16:00",
     location: "Tecnópolis, Buenos Aires",
-    category: "Concierto",
+
     isPrivate: false,
+
+    category: "Concert",
     destacado: true,
     totalPrice: 10500,
   },
@@ -56,14 +58,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0Kt5VeujJ0DyJ2SXR956PDmi0sgAtcGKZhg&usqp=CAU",
-    date: {
-      startDate: "20-03-2022",
-      endDate: "20-03-2022",
-    },
+
+    startDate: new Date(2022, 05, 10),
+    endDate: new Date(2022, 05, 10),
+    paymentDay: null,
+
     time: "18:00",
     location: "Estadio River Plate, Buenos Aires",
-    category: "Concierto",
+
     isPrivate: false,
+
+    category: "Concert",
     destacado: true,
     totalPrice: 15000,
   },
@@ -73,14 +78,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEesccfOXtsDa18cKUjoB0aL8xtPr9-1gyWQ&usqp=CAU",
-    date: {
-      startDate: "25-04-2022",
-      endDate: "25-04-2022",
-    },
+
+    startDate: new Date(2022, 04, 21),
+    endDate: new Date(2022, 04, 21),
+    paymentDay: null,
+
     time: "21:00",
     location: "Antares Nueva Córdoba -  San Lorenzo 79, Córdoba",
-    category: "Fiesta Privada",
+
     isPrivate: true,
+
+    category: "Social event",
     destacado: false,
   },
   {
@@ -89,14 +97,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0TgWEh39xjel0fQfshgcY3TrSyn21hsj_Xg&usqp=CAU",
-    date: {
-      startDate: "10-04-2022",
-      endDate: "10-04-2022",
-    },
+
+    startDate: new Date(2022, 05, 01),
+    endDate: new Date(2022, 05, 01),
+    paymentDay: null,
+
     time: "22:00",
     location: "Vidón-Bar - Achával Rodríguez 152, Córdoba",
-    category: "Fiesta Privada",
+
     isPrivate: true,
+
+    category: "Social event",
     destacado: false,
   },
   {
@@ -105,15 +116,18 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREmFuC9yq-ZFwYGiyDNPXbjdyzB5gyNQHiGw&usqp=CAU",
-    date: {
-      startDate: "26-04-2022",
-      endDate: "26-04-2022",
-    },
+
+    startDate: new Date(2022, 04, 21),
+    endDate: new Date(2022, 04, 21),
+    paymentDay: null,
+
     time: "22:30",
     location:
       "Cruz Espacio -  Av. Ramón Cárcano 120, Chateau Carreras, Córdoba",
-    category: "Fiesta Privada",
+
     isPrivate: true,
+
+    category: "Social event",
     destacado: false,
   },
   {
@@ -122,14 +136,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCy-dcspdIfjaL6dDUiRTP_LnFWGcA0kszMw&usqp=CAU",
-    date: {
-      startDate: "15-04-2022",
-      endDate: "15-04-2022",
-    },
+
+    startDate: new Date(2022, 03, 21),
+    endDate: new Date(2022, 03, 21),
+    paymentDay: null,
+
     time: "20:30",
     location: "Cervecería Capitán - Achával Rodríguez 244, Córdoba",
-    category: "Fiesta Privada",
+
     isPrivate: true,
+
+    category: "Social event",
     destacado: false,
   },
   {
@@ -138,14 +155,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxc21-gVXu_MP75NtGhUb1ZgOUBul90D2XRg&usqp=CAU",
-    date: {
-      startDate: "18-04-2022",
-      endDate: "18-04-2022",
-    },
+
+    startDate: new Date(2022, 04, 15),
+    endDate: new Date(2022, 04, 15),
+    paymentDay: null,
+
     time: "20:30",
     location: "Cervecería BarBeer - Hipólito Yrigoyen 81, Córdoba",
-    category: "Evento Social",
+
     isPrivate: true,
+
+    category: "Social event",
     destacado: false,
   },
   {
@@ -154,14 +174,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCy-dcspdIfjaL6dDUiRTP_LnFWGcA0kszMw&usqp=CAU",
-    date: {
-      startDate: "12-04-2022",
-      endDate: "12-04-2022",
-    },
+
+    startDate: new Date(2022, 04, 18),
+    endDate: new Date(2022, 04, 18),
+    paymentDay: null,
+
     time: "17:30",
     location: "Cervecería Capitán - Achával Rodríguez 244, Córdoba",
-    category: "Evento Social",
+
     isPrivate: true,
+
+    category: "Social event",
     destacado: false,
   },
   {
@@ -170,14 +193,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpeUvbserY2xOoPDrsGXRBZJ_sbQB4c6pWQQ&usqp=CAU",
-    date: {
-      startDate: "28-04-2022",
-      endDate: "28-04-2022",
-    },
+
+    startDate: new Date(2022, 04, 10),
+    endDate: new Date(2022, 04, 10),
+    paymentDay: null,
+
     time: "20:30",
     location: "Los Infernales - General Manuel Belgrano 631, Córdoba",
-    category: "Evento Social",
+
     isPrivate: true,
+
+    category: "Social event",
     destacado: false,
   },
   {
@@ -186,14 +212,16 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
-    date: {
-      startDate: "12-04-2022",
-      endDate: "12-04-2022",
-    },
+
+    startDate: new Date(2022, 03, 21),
+    endDate: new Date(2022, 03, 21),
+    paymentDay: null,
+
     time: "21:00",
     location: "La Gran 7 -  Concepción Arenal, Córdoba",
-    category: "Deportes",
     isPrivate: true,
+
+    category: "Sports",
     destacado: false,
   },
   {
@@ -202,14 +230,16 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
-    date: {
-      startDate: "17-04-2022",
-      endDate: "17-04-2022",
-    },
+
+    startDate: new Date(2022, 04, 01),
+    endDate: new Date(2022, 04, 01),
+    paymentDay: null,
+
     time: "20:00",
     location: "La Gran 7 -  Concepción Arenal, Córdoba",
-    category: "Deportes",
     isPrivate: true,
+
+    category: "Sports",
     destacado: false,
   },
   {
@@ -218,14 +248,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
-    date: {
-      startDate: "30-04-2022",
-      endDate: "30-04-2022",
-    },
+
+    startDate: new Date(2022, 03, 21),
+    endDate: new Date(2022, 03, 21),
+    paymentDay: null,
+
     time: "21:00",
     location: "La Gran 7 -  Concepción Arenal, Córdoba",
-    category: "Deportes",
+
     isPrivate: true,
+
+    category: "Sports",
     destacado: false,
   },
   {
@@ -234,14 +267,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
-    date: {
-      startDate: "02-05-2022",
-      endDate: "02-05-2022",
-    },
+
+    startDate: new Date(2022, 02, 21),
+    endDate: new Date(2022, 02, 21),
+    paymentDay: null,
+
     time: "20:00",
     location: "La Gran 7 -  Concepción Arenal, Córdoba",
-    category: "Deportes",
+
     isPrivate: true,
+
+    category: "Sports",
     destacado: false,
   },
   {
@@ -250,14 +286,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyP3Hr_QSJrNZhIxvJnxi98mD4SFnUyoUD8sPiGEAWYTdHV4JIRIG9q5Y8Z8zWaxugiSE&usqp=CAU",
-    date: {
-      startDate: "26-04-2022",
-      endDate: "27-04-2022",
-    },
+
+    startDate: new Date(2022, 05, 17),
+    endDate: new Date(2022, 04, 18),
+    paymentDay: null,
+
     time: "22:00",
     location: "Le Parc -  Av Vélez Sarsfield 753, Córdoba",
-    category: "Bar Experience",
+
     isPrivate: true,
+
+    category: "Social event",
     destacado: false,
   },
   {
@@ -266,14 +305,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyP3Hr_QSJrNZhIxvJnxi98mD4SFnUyoUD8sPiGEAWYTdHV4JIRIG9q5Y8Z8zWaxugiSE&usqp=CAU",
-    date: {
-      startDate: "29-04-2022",
-      endDate: "29-04-2022",
-    },
+
+    startDate: new Date(2022, 04, 11),
+    endDate: new Date(2022, 04, 12),
+    paymentDay: null,
+
     time: "22:00",
     location: "Bartó -   Av. Marcelo T. de Alvear 635, Córdoba",
-    category: "Bar Experience",
+
     isPrivate: true,
+
+    category: "Social event",
     destacado: false,
   },
   {
@@ -282,11 +324,16 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyP3Hr_QSJrNZhIxvJnxi98mD4SFnUyoUD8sPiGEAWYTdHV4JIRIG9q5Y8Z8zWaxugiSE&usqp=CAU",
-    date: "26-03-2022",
+    startDate: new Date(2022, 04, 21),
+    endDate: new Date(2022, 04, 21),
     time: "20:00",
+    paymentDay: null,
+
     location: "María María -  Av. Marcelo T. de Alvear 386, Córdoba",
-    category: "Bar Experience",
+
     isPrivate: true,
+
+    category: "Social event",
     destacado: false,
   },
   {
@@ -295,14 +342,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIWCNfj4tROoI0ZQRLa_dpI-_76pvNY-o5cQ&usqp=CAU",
-    date: {
-      startDate: "19-04-2022",
-      endDate: "19-04-2022",
-    },
+
+    startDate: new Date(2022, 05, 12),
+    endDate: new Date(2022, 05, 12),
+    paymentDay: null,
+
     time: "22:15",
     location: "Hoyts Patio Olmos, Córdoba",
-    category: "Cine",
+
     isPrivate: false,
+
+    category: "Cinema",
     destacado: true,
     totalPrice: 900,
   },
@@ -312,14 +362,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.rNWoTqiGrlXCznxK5vnRpwHaEK%26pid%3DApi&f=1",
-    date: {
-      startDate: "28-04-2022",
-      endDate: "29-04-2022",
-    },
+
+    startDate: new Date(2022, 04, 02),
+    endDate: new Date(2022, 04, 03),
+    paymentDay: null,
+
     time: "23:25",
     location: "Hoyts Nuevo Centro, Córdoba",
-    category: "Cine",
+
     isPrivate: false,
+
+    category: "Cinema",
     destacado: true,
     totalPrice: 900,
   },
@@ -329,11 +382,16 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIWCNfj4tROoI0ZQRLa_dpI-_76pvNY-o5cQ&usqp=CAU",
-    date: "01-04-2022",
+    startDate: new Date(2022, 04, 14),
+    endDate: new Date(2022, 04, 15),
     time: "23:00",
+    paymentDay: null,
+
     location: "Hoyts Nuevo Centro, Córdoba",
-    category: "Cine",
+
     isPrivate: false,
+
+    category: "Cinema",
     totalPrice: 800,
   },
   {
@@ -341,11 +399,16 @@ const events = [
     name: "Kolombo",
     description: "lorem ipsum...",
     image: "https://virtualtkt.com/repo/images/VAG4X9.jpg",
-    date: "01-05-2022",
+    startDate: new Date(2022, 06, 17),
+    endDate: new Date(2022, 06, 18),
     time: "23:25",
+    paymentDay: null,
+
     location: "Visión Festival - Neuquén",
-    category: "Fiesta",
+
     isPrivate: false,
+
+    category: "Party",
     totalPrice: 6000,
     destacado: true,
   },
@@ -355,14 +418,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/536/860/products/libro-hernan-cattaneo1-4d6d150966d1dce0fa16230298728167-480-0.jpg",
-    date: {
-      startDate: "05-05-2022",
-      endDate: "06-05-2022",
-    },
+
+    startDate: new Date(2022, 06, 14),
+    endDate: new Date(2022, 06, 15),
+    paymentDay: null,
+
     time: "00:00",
     location: "Río Electronic Music - Buenos Aires",
-    category: "Fiesta",
+
     isPrivate: false,
+
+    category: "Party",
     totalPrice: 4500,
     destacado: true,
   },
@@ -371,15 +437,19 @@ const events = [
     name: "Feria degustar",
     description: "lorem ipsum...",
     image:
-      "https://www.infobae.com/new-resizer/wd2nNWDrR-JsJvAgXNGQtbZeOvs=/1200x900/filters:format(webp):quality(85)//s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20114815/vinos-41.jpg",
-    date: {
-      startDate: "05-05-2022",
-      endDate: "06-05-2022",
-    },
+      "https://www.infobae.com/new-resizer/wd2nNWDrR-JsJvAgXNGQtbZeOvs=/1200x900/filters:format(webp:quality(85//s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20114815/vinos-41.jpg",
+
+    startDate: new Date(2022, 06, 12),
+    endDate: new Date(2022, 06, 12),
+    paymentDay: null,
+
     time: "23:25",
     location: "Palermo - Buenos Aires",
-    category: "Gastronomía",
+
     isPrivate: false,
+
+    category: "Gastronomy",
+
     totalPrice: 2100,
   },
   {
@@ -388,14 +458,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://www.saavedraonline.com.ar/wp-content/uploads/2020/03/maldini.jpg",
-    date: {
-      startDate: "10-05-2022",
-      endDate: "11-05-2022",
-    },
+
+    startDate: new Date(2022, 05, 14),
+    endDate: new Date(2022, 05, 15),
+    paymentDay: null,
+
     time: "23:25",
     location: "Saavedra - Buenos Aires",
-    category: "Fiesta",
+
     isPrivate: false,
+
+    category: "Bar",
     totalPrice: 6000,
   },
   {
@@ -404,8 +477,12 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://i0.wp.com/revistag7.com/wp-content/uploads/2021/02/MG_6734_edicion_alta.jpg?fit=1080%2C720&ssl=1",
-    date: "01-04-2022",
+    startDate: new Date(2022, 06, 14),
+    endDate: new Date(2022, 06, 15),
     time: "23:25",
+
+    paymentDay: null,
+
     location: "Palermo - Buenos Aires",
     category: "Bar",
     isPrivate: false,
@@ -417,14 +494,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://encolombia.com/wp-content/uploads/2021/07/Elementos-del-Teatro.jpg",
-    date: {
-      startDate: "20-04-2022",
-      endDate: "20-04-2022",
-    },
+
+    startDate: new Date(2022, 04, 29),
+    endDate: new Date(2022, 04, 29),
+    paymentDay: null,
+
     time: "20:20",
     location: "Recoleta - Buenos Aires",
-    category: "Teatro",
+
     isPrivate: false,
+
+    category: "Social event",
     totalPrice: 1400,
   },
   {
@@ -433,14 +513,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://offloadmedia.feverup.com/madridsecreto.co/wp-content/uploads/2021/03/03044328/dining-in-the-dark-madrid-3.jpg",
-    date: {
-      startDate: "21-05-2022",
-      endDate: "21-05-2022",
-    },
+
+    startDate: new Date(2022, 06, 14),
+    endDate: new Date(2022, 06, 14),
+    paymentDay: null,
+
     time: "20:25",
     location: "Recoleta - Buenos Aires",
-    category: "Restaurant",
+
     isPrivate: false,
+
+    category: "Gastronomy",
     totalPrice: 600,
     destacado: true,
   },
@@ -449,14 +532,17 @@ const events = [
     name: "The Hobbit",
     description: "lorem ipsum...",
     image: "https://wallpaperaccess.com/full/830842.jpg",
-    date: {
-      startDate: "012-05-2022",
-      endDate: "13-05-2022",
-    },
+
+    startDate: new Date(2022, 06, 14),
+    endDate: new Date(2022, 06, 15),
+    paymentDay: null,
+
     time: "22:00",
     location: "Cinemark Palermo - Buenos Aires",
-    category: "Cine",
+
     isPrivate: false,
+
+    category: "Cinema",
     totalPrice: 1000,
     destacado: true,
   },
@@ -466,14 +552,17 @@ const events = [
     description: "lorem ipsum...",
     image:
       "https://lh3.googleusercontent.com/-km726JvA5ds/YTlfBh2p8dI/AAAAAAAAOCo/3iyoTQtCoBArMzkOP2Q9tDgmfAneRwZJgCLcBGAsYHQ/w437-h640/E-xdddtWQAQ3YLh.jpg",
-    date: {
-      startDate: "03-05-2022",
-      endDate: "03-05-2022",
-    },
+
+    startDate: new Date(2022, 06, 14),
+    endDate: new Date(2022, 06, 14),
+    paymentDay: null,
+
     time: "21:00",
     location: "IMAX - Buenos Aires",
-    category: "Cine",
+
     isPrivate: false,
+
+    category: "Cinema",
     totalPrice: 900,
   },
 ];

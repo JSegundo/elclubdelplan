@@ -11,11 +11,10 @@ const EventSchema = new Schema({
     type: String,
     default: "//add random img",
   },
-  date: {
-    startDate: { type: String }, //--> desp habría q cambiarlo a Date en vez de String
-    endDate: { type: String },
-    paymentDay: { type: String }, //--> no es required porque si es público esta opción no existe.
-  },
+
+  startDate: { type: Date },
+  endDate: { type: Date },
+  paymentDay: { type: Date },
   time: { type: String },
   location: {
     type: String,
@@ -25,10 +24,9 @@ const EventSchema = new Schema({
     default: true,
   },
   totalPrice: Number,
-  category: {
-    type: String,
-  },
-  eventOwner: [{ type: Schema.ObjectId, ref: "User" }], //--> referencia al user, usar .populate() en el pedido al back desde en front
+
+  category: { type: Schema.ObjectId, ref: "Category" }, // --> ref to Category schema
+  eventOwner: { type: Schema.ObjectId, ref: "User" }, //--> ref to User schema
 });
 
 const EventModel = model("Event", EventSchema);
