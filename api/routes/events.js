@@ -9,7 +9,7 @@ router.get("/me", EventsControllers.getMyEvents);
 //RUTA PARA BUSCAR UN EVENTO
 router.get("/:id", EventsControllers.getEvent);
 //RUTA PARA BUSCAR EVENTOS POR CATEGORIAS
-router.get("/categories/:name", EventsControllers.eventByCategory);
+router.get("/categories/:id", EventsControllers.eventByCategory);
 //RUTA PARA EDITAR UN EVENTO
 router.put("/:id", EventsControllers.updateEvent);
 //RUTA PARA AGREGAR UN EVENTO

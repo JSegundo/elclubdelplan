@@ -1,9 +1,9 @@
-const { Events } = require("../models/Events");
+const Events = require("../models/Events");
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
     try {
-      const events = await Events.find({ private: false });
+      const events = await Events.find({ private: false }).populate('category');
       return events;
     } catch (err) {
       next(err);
@@ -12,7 +12,7 @@ class EventsServices {
 
   static async serviceGetAllMyEvents(req, next) {
     try {
-      const events = await Events.find({ eventOwner: req.user._id, private: true }); // PREGUNTAR
+      const events = await Events.find({ eventOwner: req.user._id, private: true }).populate('category'); // PREGUNTAR
       return events;
     } catch (err) {
       next(err);
@@ -21,7 +21,7 @@ class EventsServices {
 
   static async serviceGetEvents(req, next) {
     try {
-      const event = await Events.findById(req.params.id);
+      const event = await Events.findById(req.params.id).populate('category');
       return event;
     } catch (err) {
       console.log(err);
@@ -31,7 +31,7 @@ class EventsServices {
 
   static async serviceEventByCategory(req, next) {
     try {
-      const events = await Events.find({ category : req.params.name, private: false });
+      const events = await Events.find({ category : req.params.id, private: false }).populate('category'); //CHEQUEAR
       return events;
     } catch (err) {
       next(err);
@@ -49,8 +49,10 @@ class EventsServices {
 
   static async serviceAddEvent(req, next) {
     try {
+      const { category } = req.body
       const newEvent = new Events(req.body);
       newEvent.eventOwner = req.user.id;
+      newEvent.category = category; //CHEQUEAR
       await newEvent.save();
       return newEvent;
     } catch (err) {
