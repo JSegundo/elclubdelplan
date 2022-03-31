@@ -1,4 +1,5 @@
 const Events = require("../models/Events");
+const Categories = require("../models/Categories");
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
@@ -47,12 +48,13 @@ class EventsServices {
     }
   }
 
-  static async serviceAddEvent(req, next) {
+  static async serviceAddEvent(req, next) { //CHEQUEAR
     try {
-      const { category } = req.body
-      const newEvent = new Events(req.body);
+      const { category, ...rest } = req.body;
+      const cat = await Categories.findById(category);
+      const newEvent = new Events(rest);
       newEvent.eventOwner = req.user.id;
-      newEvent.category = category; //CHEQUEAR
+      newEvent.category = cat;
       await newEvent.save();
       return newEvent;
     } catch (err) {
