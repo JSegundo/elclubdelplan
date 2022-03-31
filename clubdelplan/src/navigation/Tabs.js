@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
 import NewPlanScreen from '../screens/NewPlanScreen';
-import UserProfileScreen from '../screens/LogInScreen';
+import LogInScreen from '../screens/LogInScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,30 +32,40 @@ const Tabs = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          // headerTransparent: true,
+          headerShadowVisible: false,
+          // headerTitleStyle: {color: '#900'},
           tabBarIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color="#900" />
           ),
         }}
       />
       <Tab.Screen
-        name="Catalog"
+        name="Buscar"
         component={CatalogScreen}
         options={{
+          headerShown: true,
+          headerShadowVisible: false,
           tabBarIcon: () => <Ionicons name="search" size={24} color="#900" />,
         }}
       />
       <Tab.Screen
-        name="New Plan"
+        name="Crear plan"
         component={NewPlanScreen}
         options={{
+          headerShown: true,
+          headerShadowVisible: false,
           tabBarIcon: () => <Ionicons name="add" size={30} color="#900" />,
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={UserProfileScreen}
+        name="Perfil"
+        component={LogInScreen}
         options={{
+          headerShown: true,
+          headerShadowVisible: false,
+
           tabBarIcon: ({color}) => (
             <Ionicons name="person-outline" size={22} color="#900" />
           ),

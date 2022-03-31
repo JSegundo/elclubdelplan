@@ -12,6 +12,11 @@ class EventsController{
     return events ? res.status(200).json(events) : res.sendStatus(404);
   };
 
+  static async getMyPastEvents(req, res, next){
+    const events = await EventsService.serviceGetAllMyPastEvents(req, next);
+    return events ? res.status(200).json(events) : res.sendStatus(404);
+  };
+
  static async getEvent(req, res, next){
     const event = await EventsService.serviceGetEvent(req, next);
     return event ? res.status(200).json(event) : res.sendStatus(404);
