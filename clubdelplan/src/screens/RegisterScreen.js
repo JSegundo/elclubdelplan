@@ -3,25 +3,45 @@ import React from 'react';
 import { Text, View, TextInput , Button } from 'react-native';
 import axios from 'axios';
 
-const Register = () => {
+const Register = ({navigation}) => {
   const [email, onChangeText] = React.useState(null);
   const [psw, onChangePsw] = React.useState(null);
   const [number, onChangePhone] = React.useState(null);
   const [city, onChangeCity] = React.useState(null)
 
+
+
   const onRegister = async() => {
+
+    
+    // let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(email);
+
+    // if(!validEMail) {
+    //   return alert('Inalid email')
+    // }
+
+    // let password = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$/.test(psw);
+
+    // if(!password){
+    //   return alert("Ivalid password")
+    // }
+
     const newUser = {
       email,
       city,
       password : psw,
     }
+    console.log(newUser)
     try {
       const response = await axios.post("http://localhost:3001/api/users/register" , newUser )
+      if(response) navigation.navigate('LogInScreen')
       console.log(response)
-    } catch (e) {
-      console.error(e)
+    } catch (err) {
+      console.log(err)
     }
   }
+
+
 
   return (
     <View style={styles.view}>

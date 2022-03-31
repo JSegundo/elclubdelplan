@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
 import NewPlanScreen from '../screens/NewPlanScreen';
-import UserProfileScreen from '../screens/LogInScreen';
+import LogInScreen from '../screens/LogInScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -55,7 +55,7 @@ const Tabs = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={UserProfileScreen}
+        component={LogInScreen}
         options={{
          
           tabBarIcon: ({color}) => (
