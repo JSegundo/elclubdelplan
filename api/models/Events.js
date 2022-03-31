@@ -12,21 +12,21 @@ const EventSchema = new Schema({
     default: "//add random img",
   },
   date: {
-    startDate: {type: String}, //--> desp habría q cambiarlo a Date en vez de String
-    endDate: {type: String},
-    paymentDay: {type: String} //--> no es required porque si es público esta opción no existe.     
+    startDate: { type: String }, //--> desp habría q cambiarlo a Date en vez de String
+    endDate: { type: String },
+    paymentDay: { type: String }, //--> no es required porque si es público esta opción no existe.
   },
-  time: {type: String},
+  time: { type: String },
   location: {
     type: String,
   },
-  private: {
+  isPrivate: {
     type: Boolean,
     default: true,
   },
   totalPrice: Number,
   category: {
-    type: String, 
+    type: String,
   },
   eventOwner: [{ type: Schema.ObjectId, ref: "User" }], //--> referencia al user, usar .populate() en el pedido al back desde en front
 });

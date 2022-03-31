@@ -4,34 +4,74 @@ import {
   FlatList,
   StyleSheet,
   Image,
-  Dimensions,
   ScrollView,
 } from 'react-native';
-import React from 'react';
-import eventos from '../utils/fakeData';
-
-// const width = Dimensions.get("window").width;
-// const height = Dimensions.get("window").height;
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 
 const HomeScreen = () => {
-  const renderItem = item => {
-    const {nombre, Categoría, image, Ubicación, destacado} = item;
+  const [eventos, setEventos] = useState({});
 
-    if (destacado === true) {
-      return (
-        <View style={styles.itemWrapper}>
-          <Image
-            source={{
-              uri: image,
-            }}
-            style={styles.image}
-          />
-          <Text style={styles.nombreEvento}>{nombre}</Text>
-          <Text style={styles.text}>{Categoría}</Text>
-          <Text style={styles.text}>{Ubicación}</Text>
-        </View>
-      );
+  useEffect(() => {
+    async function getAllEvents() {
+      try {
+        const response = await axios.get('http://localhost:3001/api/events');
+        setEventos(response.data);
+        console.log(response.data);
+      } catch (err) {
+        console.error(err);
+      }
     }
+    getAllEvents();
+    console.log(eventos);
+  }, []);
+
+  // filtro por categoría para mostrar en sus respectivos carruseles.
+  // arrays que se les pasa a los Flatlist's en "data"
+  const eventosCine = eventos[0]
+    ? eventos.filter(ev => ev.category === 'Cine')
+    : '';
+  const eventosFiesta = eventos[0]
+    ? eventos.filter(ev => ev.category === 'Fiesta')
+    : '';
+  const eventosBares = eventos[0]
+    ? eventos.filter(ev => ev.category === 'Bar')
+    : '';
+  const seleccionEspecial = eventos[0]
+    ? eventos.filter(ev => ev.category === 'Concierto')
+    : '';
+
+  const renderItem = item => {
+    const {
+      name,
+      _id,
+      category,
+      date,
+      time,
+      image,
+      location,
+      isPrivate,
+      totalPrice,
+    } = item;
+
+    return item.isPrivate === false ? (
+      <View style={styles.itemWrapper}>
+        <Image
+          source={{
+            uri: image,
+          }}
+          style={styles.image}
+        />
+        <View style={{padding: 4}}>
+          <Text style={styles.nombreEvento}>{name}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.text}>{category}</Text>
+            <Text style={styles.startDate}>{date?.startDate}</Text>
+          </View>
+          <Text style={styles.text}>{location}</Text>
+        </View>
+      </View>
+    ) : null;
   };
 
   return (
@@ -40,22 +80,22 @@ const HomeScreen = () => {
         <View style={styles.contentWrapper}>
           <Text style={styles.title}>El Club del Plan</Text>
 
-          <Text style={styles.subtitle}>Eventos destacados</Text>
+          <Text style={styles.subtitle}>Nuestra selección para vos</Text>
           <FlatList
             contentContainerStyle={{paddingTop: 40}}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={eventos}
+            data={seleccionEspecial}
             renderItem={({item}) => renderItem(item)}
           />
         </View>
         <View style={styles.contentWrapper}>
-          <Text style={styles.subtitle}>Música</Text>
+          <Text style={styles.subtitle}>Fiesta</Text>
           <FlatList
             contentContainerStyle={{paddingTop: 40}}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={eventos}
+            data={eventosFiesta}
             renderItem={({item}) => renderItem(item)}
           />
         </View>
@@ -65,7 +105,7 @@ const HomeScreen = () => {
             contentContainerStyle={{paddingTop: 40}}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={eventos}
+            data={eventosCine}
             renderItem={({item}) => renderItem(item)}
           />
         </View>
@@ -75,7 +115,7 @@ const HomeScreen = () => {
             contentContainerStyle={{paddingTop: 40}}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={eventos}
+            data={eventosBares}
             renderItem={({item}) => renderItem(item)}
           />
         </View>
@@ -86,33 +126,35 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   pageWrapper: {
-    marginBottom: 60,
+    marginBottom: 80,
   },
   itemWrapper: {
     width: 203,
-    height: 320,
-    marginHorizontal: 15,
+    height: 250,
+    // height: 320,
+    marginHorizontal: 10,
     // padding: 2,
     borderRadius: 20,
     backgroundColor: '#FFFFFF',
   },
   contentWrapper: {
-    margin: 10,
+    margin: 0,
     width: '100%',
   },
   title: {
+    textAlign: 'center',
     fontWeight: 'bold',
     color: '#B90303',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 0,
-    marginLeft: 18,
+    // marginLeft: 18,
     fontSize: 30,
     padding: 1,
   },
   subtitle: {
     color: '#000000',
-    marginTop: 0,
-    marginBottom: 0,
+    marginTop: 40,
+    marginBottom: -20,
     marginLeft: 18,
     fontSize: 22,
     padding: 1,
@@ -133,10 +175,15 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 200,
-    height: 200,
+    height: '58%',
+    // height: 180,
     borderRadius: 20,
     // borderTopLeftRadius: 20,
     // borderTopRightRadius: 20,
+  },
+  startDate: {
+    marginEnd: 20,
+    // marginTop: 8,
   },
 });
 
