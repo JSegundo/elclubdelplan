@@ -1,4 +1,4 @@
-const { Events } = require("../models/Events");
+const Events = require("../models/Events");
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
@@ -12,7 +12,10 @@ class EventsServices {
 
   static async serviceGetAllMyEvents(req, next) {
     try {
-      const events = await Events.find({ eventOwner: req.user._id, private: true }); // PREGUNTAR
+      const events = await Events.find({
+        eventOwner: req.user._id,
+        private: true,
+      }); // PREGUNTAR
       return events;
     } catch (err) {
       next(err);
@@ -31,7 +34,10 @@ class EventsServices {
 
   static async serviceEventByCategory(req, next) {
     try {
-      const events = await Events.find({ category : req.params.name, private: false });
+      const events = await Events.find({
+        category: req.params.name,
+        private: false,
+      });
       return events;
     } catch (err) {
       next(err);

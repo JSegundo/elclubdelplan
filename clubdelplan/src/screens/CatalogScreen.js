@@ -9,9 +9,8 @@ import {
   Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import eventos from '../utils/fakeData';
-import {color} from 'react-native-elements/dist/helpers';
+import axios from 'axios';
 
 const CatalogScreen = ({navigation}) => {
   const renderItem = item => {
@@ -28,24 +27,24 @@ const CatalogScreen = ({navigation}) => {
     } = item;
 
     return privado === false ? (
-      <TouchableOpacity >
-      <View style={styles.itemWrapper}>
-        <Image
-          source={{
-            uri: image,
-          }}
-          style={styles.image}
-        />
-        <View style={styles.infoWrapper}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: '#900'}}>
-            {nombre}
-          </Text>
-          <Text style={{color: 'black'}}>{Categoría}</Text>
-          <Text style={{fontSize: 10, color: 'black'}}>{Ubicación}</Text>
-          {/* <Text>{fecha}</Text> */}
-          <Text>${price}</Text>
+      <TouchableOpacity>
+        <View style={styles.itemWrapper}>
+          <Image
+            source={{
+              uri: image,
+            }}
+            style={styles.image}
+          />
+          <View style={styles.infoWrapper}>
+            <Text style={{fontSize: 20, fontWeight: 'bold', color: '#900'}}>
+              {nombre}
+            </Text>
+            <Text style={{color: 'black'}}>{Categoría}</Text>
+            <Text style={{fontSize: 10, color: 'black'}}>{Ubicación}</Text>
+            {/* <Text>{fecha}</Text> */}
+            <Text>${price}</Text>
+          </View>
         </View>
-      </View>
       </TouchableOpacity>
     ) : null;
   };
