@@ -9,43 +9,59 @@ import {
   Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import eventos from '../utils/fakeData';
-import {color} from 'react-native-elements/dist/helpers';
+import axios from 'axios';
 
 const CatalogScreen = ({navigation}) => {
+  const [eventos, setEventos] = useState({});
+
+  useEffect(() => {
+    async function getAllEvents() {
+      try {
+        const response = await axios.get('http://localhost:3001/api/events');
+        setEventos(response.data);
+        console.log(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getAllEvents();
+    console.log(eventos);
+  }, []);
+
   const renderItem = item => {
     const {
-      nombre,
-      id,
-      Categoría,
-      fecha,
-      hora,
+      name,
+      _id,
+      category,
+      date,
+      time,
       image,
-      Ubicación,
-      privado,
-      price,
+      location,
+      isPrivate,
+      totalPrice,
     } = item;
 
-    return privado === false ? (
-      <TouchableOpacity >
-      <View style={styles.itemWrapper}>
-        <Image
-          source={{
-            uri: image,
-          }}
-          style={styles.image}
-        />
-        <View style={styles.infoWrapper}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: '#900'}}>
-            {nombre}
-          </Text>
-          <Text style={{color: 'black'}}>{Categoría}</Text>
-          <Text style={{fontSize: 10, color: 'black'}}>{Ubicación}</Text>
-          {/* <Text>{fecha}</Text> */}
-          <Text>${price}</Text>
+    console.log(isPrivate);
+
+    return item.isPrivate === false ? (
+      <TouchableOpacity>
+        <View style={styles.itemWrapper}>
+          <Image
+            source={{
+              uri: image,
+            }}
+            style={styles.image}
+          />
+          <View style={styles.infoWrapper}>
+            <Text style={{fontSize: 20, fontWeight: 'bold', color: '#900'}}>
+              {name}
+            </Text>
+            <Text style={{color: 'black'}}>{category}</Text>
+            <Text style={{fontSize: 10, color: 'black'}}>{location}</Text>
+            {/* <Text>{fecha}</Text> */}
+            <Text>${totalPrice}</Text>
+          </View>
         </View>
-      </View>
       </TouchableOpacity>
     ) : null;
   };
@@ -54,18 +70,18 @@ const CatalogScreen = ({navigation}) => {
   const [results, setResults] = useState([]);
 
   const handleSearch = () => {
-    const filterEvents = eventos.filter(e => e.Categoría === searchTerm);
+    const filterEvents = eventos.filter(e => e.category === searchTerm);
     setResults(filterEvents);
   };
 
   return (
     <View style={styles.pageWrapper}>
-      <View>
+      {/* <View>
         <Button
           title="Go to Home"
           onPress={() => navigation.navigate('Home')}
         />
-      </View>
+      </View> */}
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}

@@ -6,6 +6,8 @@ const EventsControllers = require("../controllers/eventsController");
 router.get("/", EventsControllers.getAllEvents);
 //RUTA PARA BUSCAR EVENTOS PRIVADOS DE UN USUARIO
 router.get("/me", EventsControllers.getMyEvents);
+//RUTA PARA BUSCAR EVENTOS PASADOS DE UN USUARIO
+router.get("/done", EventsControllers.getMyPastEvents);
 //RUTA PARA BUSCAR UN EVENTO
 router.get("/:id", EventsControllers.getEvent);
 //RUTA PARA BUSCAR EVENTOS POR CATEGORIAS
