@@ -50,11 +50,13 @@ class EventsServices {
 
   static async serviceAddEvent(req, next) { //CHEQUEAR
     try {
+      console.log("BODY->", req.body);
       const { category, ...rest } = req.body;
-      const cat = await Categories.findById(category);
+      console.log("REST->", rest);
       const newEvent = new Events(rest);
       newEvent.eventOwner = req.user.id;
-      newEvent.category = cat;
+      //esta linea no deberia hacer falta
+      newEvent.category = category;
       await newEvent.save();
       return newEvent;
     } catch (err) {
