@@ -9,7 +9,6 @@ import {
   Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-// import eventos from '../utils/fakeData';
 import axios from 'axios';
 
 const CatalogScreen = ({navigation}) => {
@@ -44,7 +43,7 @@ const CatalogScreen = ({navigation}) => {
 
     console.log(isPrivate);
 
-    return item.isPrivate === true ? (
+    return item.isPrivate === false ? (
       <TouchableOpacity>
         <View style={styles.itemWrapper}>
           <Image
