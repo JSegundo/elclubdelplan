@@ -1,4 +1,4 @@
-const User = require("../models/User"); // preguntar como se exportan los modelos en mongo
+const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
@@ -11,7 +11,7 @@ class UsersService {
       const newUser = await User.create(req.body);
       return newUser;
     } catch (err) {
-      console.error("err->", err);
+      console.error(err);
     }
   }
 
@@ -40,34 +40,24 @@ class UsersService {
     }
   }
 
-  // static async serviceLogout(req) {
-  //   try {
-  //     //METODO LOGOUT
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
-
   static async serviceGetMe(req) {
     try {
-      const user = await User.findById(req.user.id);
-      // VER NOMBRE DE LOS CAMPOS EN LOS MODELOS
+      const user = await User.findById(req.user._id);
       return {
         name: user.name,
         email: user.email,
         id: user._id,
       };
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
   static async serviceEditUser(req, next) {
     try {
       const { id } = req.params;
-      const oldUser = await User.findByIdAndUpdate(id, req.body);
-      // REVISAR QUE DEBERIA DEVOLVER ESTE METODO
-      return 1;
+      const user = await User.findByIdAndUpdate(id, req.body, { new: true });
+      return user;
     } catch (err) {
       next(err);
     }
@@ -75,8 +65,7 @@ class UsersService {
 
   static async serviceGetOneUser(req, next) {
     try {
-      const { id } = req.params;
-      const user = await User.findById(id);
+      const user = await User.findById(req.params.id);
       return user;
     } catch (err) {
       next(err);

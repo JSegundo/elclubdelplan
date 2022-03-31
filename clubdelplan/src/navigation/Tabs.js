@@ -32,7 +32,7 @@ const Tabs = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          headerShown:false,
+          headerShown: false,
           tabBarIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color="#900" />
           ),
@@ -42,14 +42,13 @@ const Tabs = () => {
         name="Catalog"
         component={CatalogScreen}
         options={{
-          tabBarIcon: () => <Ionicons name="search" size={30} color="#900" />,
+          tabBarIcon: () => <Ionicons name="search" size={24} color="#900" />,
         }}
       />
       <Tab.Screen
         name="New Plan"
         component={NewPlanScreen}
         options={{
-          
           tabBarIcon: () => <Ionicons name="add" size={30} color="#900" />,
         }}
       />
@@ -57,7 +56,6 @@ const Tabs = () => {
         name="Profile"
         component={LogInScreen}
         options={{
-         
           tabBarIcon: ({color}) => (
             <Ionicons name="person-outline" size={22} color="#900" />
           ),
@@ -66,7 +64,7 @@ const Tabs = () => {
     </Tab.Navigator>
   );
 };
-  
+
 const styles = StyleSheet.create({
   shadow: {
     shadowColor: '#7F5DF0',
