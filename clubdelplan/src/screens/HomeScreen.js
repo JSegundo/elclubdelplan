@@ -29,16 +29,16 @@ const HomeScreen = () => {
   // filtro por categoría para mostrar en sus respectivos carruseles.
   // arrays que se les pasa a los Flatlist's en "data"
   const eventosCine = eventos[0]
-    ? eventos.filter(ev => ev.category === 'Cine')
+    ? eventos.filter(ev => ev.category === 'Cinema')
     : '';
   const eventosFiesta = eventos[0]
-    ? eventos.filter(ev => ev.category === 'Fiesta')
+    ? eventos.filter(ev => ev.category === 'Party')
     : '';
   const eventosBares = eventos[0]
     ? eventos.filter(ev => ev.category === 'Bar')
     : '';
   const seleccionEspecial = eventos[0]
-    ? eventos.filter(ev => ev.category === 'Concierto')
+    ? eventos.filter(ev => ev.category === 'Concert')
     : '';
 
   const renderItem = item => {

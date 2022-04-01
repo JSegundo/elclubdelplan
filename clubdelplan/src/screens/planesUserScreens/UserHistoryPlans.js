@@ -13,19 +13,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const token_storage = '@Token';
 const user_storage = '@userData';
 
-const OwnPlans = () => {
+const UserHistoryPlans = () => {
   const [ownPlans, setOwnPlans] = useState(null);
   const [user, setUser] = useState(null);
-  console.log('USER!!!', user);
-  console.log('LOS PLANES!! -->', ownPlans);
+
   useEffect(() => {
     async function getUserAsyncStorage() {
       try {
         let responseUser = await AsyncStorage.getItem(user_storage);
         const usuario = JSON.parse(responseUser);
         setUser(usuario);
-
-        console.log(usuario);
       } catch (err) {
         console.error(err);
       }
@@ -39,7 +36,7 @@ const OwnPlans = () => {
       try {
         if (user !== null) {
           let response = await axios.get(
-            `http://localhost:3001/api/events/me/${userid}`,
+            `http://localhost:3001/api/events/done/${userid}`,
           );
           setOwnPlans(response.data);
         }
@@ -63,8 +60,6 @@ const OwnPlans = () => {
       totalPrice,
     } = item;
 
-    console.log(isPrivate);
-
     return item.isPrivate === true ? (
       <TouchableOpacity>
         <View style={styles.itemWrapper}>
@@ -78,8 +73,7 @@ const OwnPlans = () => {
             <Text style={{fontSize: 20, fontWeight: 'bold', color: '#900'}}>
               {name}
             </Text>
-            {/* <Text style={{color: 'black'}}>{category}</Text>
-            <Text style={{fontSize: 10, color: 'black'}}>{location}</Text> */}
+
             <Text>{date?.startDate}</Text>
           </View>
         </View>
@@ -89,7 +83,7 @@ const OwnPlans = () => {
 
   return (
     <View>
-      <Text>OwnPlans</Text>
+      <Text>Historial de planes</Text>
       <FlatList data={ownPlans} renderItem={({item}) => renderItem(item)} />
     </View>
   );
@@ -165,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OwnPlans;
+export default UserHistoryPlans;

@@ -25,7 +25,7 @@ const EventSchema = new Schema({
   },
   totalPrice: Number,
 
-  category: { type: Schema.ObjectId, ref: "Category" }, // --> ref to Category schema
+  category: { type: String }, // --> ref to Category schema
   eventOwner: { type: Schema.ObjectId, ref: "User" }, //--> ref to User schema
 });
 

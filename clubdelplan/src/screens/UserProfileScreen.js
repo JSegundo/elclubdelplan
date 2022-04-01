@@ -60,7 +60,7 @@ const UserProfileScreen = () => {
       <Text style={{color: '#111'}}>{userInfo.email}</Text>
 
       {/* BOTONES PARA VER MIS PLANES  */}
-      <View style={styles.buttonsWrapper}>
+      <ScrollView style={styles.buttonsWrapper}>
         <TouchableOpacity
           style={styles.BtnNavigateToPlans}
           onPress={() => navigation.navigate('Tus planes')}>
@@ -80,7 +80,16 @@ const UserProfileScreen = () => {
             <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
           </View>
         </TouchableOpacity>
-      </View>
+
+        <TouchableOpacity
+          style={styles.BtnNavigateToPlans}
+          onPress={() => navigation.navigate('Historial')}>
+          <View style={styles.textAndIconWrapper}>
+            <Text style={{color: 'white', fontSize: 16}}>Historial</Text>
+            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+          </View>
+        </TouchableOpacity>
+      </ScrollView>
       {/* BOTONES PARA VER MIS PLANES  */}
 
       <TouchableOpacity onPress={logout} style={styles.logout}>
@@ -97,15 +106,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 30,
+    marginBottom: 120,
   },
   imagen: {
     width: 100,
     height: 100,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   buttonsWrapper: {
-    marginVertical: 30,
+    marginVertical: 10,
   },
   BtnNavigateToPlans: {
     backgroundColor: '#208383',

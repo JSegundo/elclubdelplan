@@ -2,13 +2,10 @@ const Events = require("../models/Events");
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
- 
     try {
-      const events = await Events.find({ isPrivate: false }).populate(
-        "category"
-      );
+      const events = await Events.find({ isPrivate: false });
       return events;
-    } catch (err) { 
+    } catch (err) {
       next(err);
     }
   }
@@ -20,7 +17,6 @@ class EventsServices {
         eventOwner: req.params.userid,
         isPrivate: true,
       });
-      // .populate("category"); // PREGUNTAR
       return events;
     } catch (err) {
       next(err);
@@ -29,12 +25,13 @@ class EventsServices {
 
   static async serviceGetAllMyPastEvents(req, next) {
     try {
-      const date = Date();
+      const date = new Date();
+
       const events = await Events.find({
-        eventOwner: req.user._id,
+        eventOwner: req.params.userid,
         isPrivate: true,
-        date: { $lt: date }, //CHEQUEAR CON MODELO
-      }).populate("category"); // PREGUNTAR
+        endDate: { $lt: date },
+      });
       return events;
     } catch (err) {
       next(err);

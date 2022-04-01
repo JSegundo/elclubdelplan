@@ -10,6 +10,7 @@ import UserProfileScreen from './src/screens/UserProfileScreen.js';
 
 import OwnPlans from './src/screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from './src/screens/planesUserScreens/UserWillAttendPlans';
+import UserHistoryPlans from './src/screens/planesUserScreens/UserHistoryPlans';
 
 // Configuracion de Store redux
 import {store} from './src/store/index.js';
@@ -38,6 +39,11 @@ function App() {
         <Stack.Screen
           name="Fuiste invitado"
           component={UserWillAttendPlans}
+          options={{headerShadowVisible: false}}
+        />
+        <Stack.Screen
+          name="Historial"
+          component={UserHistoryPlans}
           options={{headerShadowVisible: false}}
         />
       </Stack.Navigator>
