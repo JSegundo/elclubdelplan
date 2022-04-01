@@ -14,11 +14,13 @@ class EventsServices {
   }
 
   static async serviceGetAllMyEvents(req, next) {
+    console.log(req.params);
     try {
       const events = await Events.find({
-        eventOwner: req.user._id,
+        eventOwner: req.params.userid,
         isPrivate: true,
-      }).populate("category"); // PREGUNTAR
+      });
+      // .populate("category"); // PREGUNTAR
       return events;
     } catch (err) {
       next(err);

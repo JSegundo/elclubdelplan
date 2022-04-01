@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import {useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import LogInScreen from './LogInScreen';
 import axios from 'axios';
 import {Button} from 'react-native-elements';
@@ -18,7 +18,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const user_storage = '@userData';
 
 const UserProfileScreen = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const [userInfo, setUserInfo] = useState(null);
   const [tokenUser, setToken] = useState('token');
@@ -63,14 +63,16 @@ const UserProfileScreen = () => {
       <View style={styles.buttonsWrapper}>
         <TouchableOpacity
           style={styles.BtnNavigateToPlans}
-          onPress={() => navigator.navigate()}>
+          onPress={() => navigation.navigate('Tus planes')}>
           <View style={styles.textAndIconWrapper}>
             <Text style={{color: 'white', fontSize: 16}}>Mis planes</Text>
             <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.BtnNavigateToPlans}>
+        <TouchableOpacity
+          style={styles.BtnNavigateToPlans}
+          onPress={() => navigation.navigate('Fuiste invitado')}>
           <View style={styles.textAndIconWrapper}>
             <Text style={{color: 'white', fontSize: 16}}>
               Planes que me invitaron

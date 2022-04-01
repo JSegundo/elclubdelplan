@@ -19,13 +19,11 @@ const CatalogScreen = ({navigation}) => {
       try {
         const response = await axios.get('http://localhost:3001/api/events');
         setEventos(response.data);
-        console.log(response.data);
       } catch (err) {
         console.error(err);
       }
     }
     getAllEvents();
-    console.log(eventos);
   }, []);
 
   const renderItem = item => {

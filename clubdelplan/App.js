@@ -9,6 +9,7 @@ import LogInScreen from './src/screens/LogInScreen';
 import UserProfileScreen from './src/screens/UserProfileScreen.js';
 
 import OwnPlans from './src/screens/planesUserScreens/OwnPlans';
+import UserWillAttendPlans from './src/screens/planesUserScreens/UserWillAttendPlans';
 
 // Configuracion de Store redux
 import {store} from './src/store/index.js';
@@ -29,7 +30,16 @@ function App() {
         <Stack.Screen name="RegisterScreen" component={Register} />
         <Stack.Screen name="LogInScreen" component={LogInScreen} />
         <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
-        <Stack.Screen name="OwnPlans" component={OwnPlans} />
+        <Stack.Screen
+          name="Tus planes"
+          component={OwnPlans}
+          options={{headerShadowVisible: false}}
+        />
+        <Stack.Screen
+          name="Fuiste invitado"
+          component={UserWillAttendPlans}
+          options={{headerShadowVisible: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
