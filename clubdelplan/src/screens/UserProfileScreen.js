@@ -16,7 +16,7 @@ import axios from 'axios';
 import {Button} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {launchImageLibrary} from 'react-native-image-picker';
-import FileBase64 from 'react-file-base64';
+// import FileBase64 from 'react-file-base64';
 
 const user_storage = '@userData';
 
@@ -25,7 +25,8 @@ const UserProfileScreen = () => {
 
   const [userInfo, setUserInfo] = useState(null);
   const [tokenUser, setToken] = useState('token');
-  const imgDefault = 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1'
+  const imgDefault =
+    'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1';
   const [image, setImage] = useState(imgDefault);
 
   useEffect(() => {
@@ -66,7 +67,7 @@ const UserProfileScreen = () => {
       } else {
         const selectedImage = response.assets[0].uri;
         setImage(selectedImage);
-        
+
         // axios.put(`http://localhost:3001/api/users/img_data/${userInfo._id}` , image)
       }
     });
@@ -76,31 +77,29 @@ const UserProfileScreen = () => {
 
   return userInfo?.email && tokenUser !== null ? (
     <View style={styles.profileWrapper}>
-      {image === imgDefault ? (  <Image
-        source={{
-          uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
-        }}
-        style={styles.imagen}
-      />) :
-        (
+      {image === imgDefault ? (
         <Image
-        source={{
-          uri: image,
-        }}
-        style={styles.imagen}
-      />
-      )
-        }
-        <View>
-          <Button title={'Seleccionar foto de perfil'} onPress={selectImage} />
-        </View>
+          source={{
+            uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
+          }}
+          style={styles.imagen}
+        />
+      ) : (
+        <Image
+          source={{
+            uri: image,
+          }}
+          style={styles.imagen}
+        />
+      )}
+      <View>
+        <Button title={'Seleccionar foto de perfil'} onPress={selectImage} />
+      </View>
       <Text style={{color: '#111', fontSize: 20, fontWeight: 'bold'}}>
         {userInfo.name}
       </Text>
       <Text style={{color: '#111'}}>{userInfo.email}</Text>
-      <TouchableOpacity>
-
-      </TouchableOpacity>
+      <TouchableOpacity></TouchableOpacity>
 
       {/* BOTONES PARA VER MIS PLANES  */}
       <ScrollView style={styles.buttonsWrapper}>
@@ -157,7 +156,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 50,
   },
-  button : {
+  button: {
     marginRight: 8,
   },
   buttonsWrapper: {
