@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const EventsControllers = require("../controllers/eventsController");
+const checkJWT = require("../middlewares/jwt");
 
 //RUTA PARA BUSCAR EVENTOS
 router.get("/", EventsControllers.getAllEvents);
@@ -13,10 +14,10 @@ router.get("/:id", EventsControllers.getEvent);
 //RUTA PARA BUSCAR EVENTOS POR CATEGORIAS
 router.get("/categories/:id", EventsControllers.eventByCategory);
 //RUTA PARA EDITAR UN EVENTO
-router.put("/:id", EventsControllers.updateEvent);
+router.put("/:id", checkJWT, EventsControllers.updateEvent);
 //RUTA PARA AGREGAR UN EVENTO
-router.post("/add", EventsControllers.addEvent);
+router.post("/add", checkJWT, EventsControllers.addEvent);
 //RUTA PARA ELIMINAR UN EVENTO
-router.delete("/remove", EventsControllers.deleteEvent);
+router.delete("/remove", checkJWT, EventsControllers.deleteEvent);
 
 module.exports = router;

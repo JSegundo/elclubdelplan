@@ -76,7 +76,7 @@ class EventsServices {
       const { category, ...rest } = req.body;
       console.log("REST->", rest);
       const newEvent = new Events(rest);
-      newEvent.eventOwner = req.user.id;
+      newEvent.eventOwner = req.user._id;
       //esta linea no deberia hacer falta
       newEvent.category = category;
       await newEvent.save();
