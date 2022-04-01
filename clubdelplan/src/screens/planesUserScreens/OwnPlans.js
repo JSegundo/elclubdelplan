@@ -2,29 +2,53 @@ import {
   View,
   Text,
   FlatList,
+  TouchableOpacity,
   StyleSheet,
   Image,
-  TextInput,
-  TouchableOpacity,
-  Button,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {Children, useEffect, useState} from 'react';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const CatalogScreen = ({navigation}) => {
-  const [eventos, setEventos] = useState({});
+const token_storage = '@Token';
+const user_storage = '@userData';
 
+const OwnPlans = () => {
+  const [ownPlans, setOwnPlans] = useState(null);
+  const [user, setUser] = useState(null);
+  console.log('USER!!!', user);
+  console.log('LOS PLANES!! -->', ownPlans);
   useEffect(() => {
-    async function getAllEvents() {
+    async function getUserAsyncStorage() {
       try {
-        const response = await axios.get('http://localhost:3001/api/events');
-        setEventos(response.data);
+        let responseUser = await AsyncStorage.getItem(user_storage);
+        const usuario = JSON.parse(responseUser);
+        setUser(usuario);
+
+        console.log(usuario);
       } catch (err) {
         console.error(err);
       }
     }
-    getAllEvents();
+    getUserAsyncStorage();
   }, []);
+
+  useEffect(() => {
+    let userid = user?._id;
+    async function getOwnPlans() {
+      try {
+        if (user !== null) {
+          let response = await axios.get(
+            `http://localhost:3001/api/events/me/${userid}`,
+          );
+          setOwnPlans(response.data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getOwnPlans();
+  }, [user]);
 
   const renderItem = item => {
     const {
@@ -41,7 +65,7 @@ const CatalogScreen = ({navigation}) => {
 
     console.log(isPrivate);
 
-    return item.isPrivate === false ? (
+    return item.isPrivate === true ? (
       <TouchableOpacity>
         <View style={styles.itemWrapper}>
           <Image
@@ -54,60 +78,19 @@ const CatalogScreen = ({navigation}) => {
             <Text style={{fontSize: 20, fontWeight: 'bold', color: '#900'}}>
               {name}
             </Text>
-            <Text style={{color: 'black'}}>{category}</Text>
-            <Text style={{fontSize: 10, color: 'black'}}>{location}</Text>
-            {/* <Text>{fecha}</Text> */}
-            <Text>${totalPrice}</Text>
+            {/* <Text style={{color: 'black'}}>{category}</Text>
+            <Text style={{fontSize: 10, color: 'black'}}>{location}</Text> */}
+            <Text>{date?.startDate}</Text>
           </View>
         </View>
       </TouchableOpacity>
     ) : null;
   };
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState([]);
-
-  const handleSearch = () => {
-    const filterEvents = eventos.filter(e => e.category === searchTerm);
-    setResults(filterEvents);
-  };
-
   return (
-    <View style={styles.pageWrapper}>
-      {/* <View>
-        <Button
-          title="Go to Home"
-          onPress={() => navigation.navigate('Home')}
-        />
-      </View> */}
-      <View style={styles.searchSection}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search by Category"
-          placeholderTextColor={'black'}
-          onChangeText={value => setSearchTerm(value)}
-        />
-        <TouchableOpacity
-          style={styles.buttonSearch}
-          title="Search"
-          onPress={handleSearch}>
-          <Text style={{color: '#111'}}>Search</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.contentWrapper}>
-        <Text style={styles.title}>Catalogo de eventos públicos</Text>
-        {results[0] ? (
-          <Text style={{padding: 5}}>
-            {results.length} resultados encontrados
-          </Text>
-        ) : null}
-
-        <FlatList
-          data={results[0] ? results : eventos}
-          renderItem={({item}) => renderItem(item)}
-        />
-      </View>
+    <View>
+      <Text>OwnPlans</Text>
+      <FlatList data={ownPlans} renderItem={({item}) => renderItem(item)} />
     </View>
   );
 };
@@ -182,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CatalogScreen;
+export default OwnPlans;

@@ -9,6 +9,7 @@ class UsersService {
   static async serviceResgisterUser(req) {
     try {
       const newUser = await User.create(req.body);
+      console.log(newUser);
       return newUser;
     } catch (err) {
       console.error(err);
@@ -20,6 +21,7 @@ class UsersService {
     try {
       if (email && password) {
         let user = await User.findOne({ email });
+        console.log(user);
         if (!user) {
           return { msg: "No such user found", user };
         }

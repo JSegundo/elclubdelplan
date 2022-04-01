@@ -25,6 +25,7 @@ const NewPlanScreen = () => {
   const [privadoCheck, setPrivadoCheck] = useState(false);
   const [image, setImage] = useState('https://via.placeholder.com/300x150');
 
+  //formatear date para enviarla
   const formatDate = value => {
     const cutDate = value.toString().split(' ');
 
@@ -90,6 +91,7 @@ const NewPlanScreen = () => {
       category,
       image,
     };
+
     console.log(newPlan);
   };
 

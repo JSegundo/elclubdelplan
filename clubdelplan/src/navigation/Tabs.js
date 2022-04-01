@@ -32,31 +32,40 @@ const Tabs = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          // headerTransparent: true,
+          headerShadowVisible: false,
+          // headerTitleStyle: {color: '#900'},
           tabBarIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color="#900" />
           ),
         }}
       />
       <Tab.Screen
-        name="Catalog"
+        name="Buscar"
         component={CatalogScreen}
         options={{
+          headerShown: true,
+          headerShadowVisible: false,
           tabBarIcon: () => <Ionicons name="search" size={24} color="#900" />,
         }}
       />
       <Tab.Screen
-        name="New Plan"
+        name="Crear plan"
         component={NewPlanScreen}
         options={{
+          headerShown: true,
+          headerShadowVisible: false,
           tabBarIcon: () => <Ionicons name="add" size={30} color="#900" />,
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="Perfil"
         component={LogInScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerShadowVisible: false,
+
           tabBarIcon: ({color}) => (
             <Ionicons name="person-outline" size={22} color="#900" />
           ),
