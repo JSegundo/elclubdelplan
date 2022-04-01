@@ -18,17 +18,16 @@ const seedDb = async () => {
       city: "Plataforma 5",
     });
 
-    console.log("FAKE USER",fakeUser)
+    console.log("FAKE USER", fakeUser);
 
     const createdCategories = await CategoryModel.insertMany(categories);
-
 
     for (const event of events) {
       const category = createdCategories.find(
         (category) => category.categoryName === event.category
       );
-      event.category = category;
-      event.eventOwner = fakeUser;
+      event.category = category.categoryName;
+      event.eventOwner = fakeUser._id;
     }
 
     await EventModel.insertMany(events);
