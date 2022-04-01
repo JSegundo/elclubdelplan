@@ -13,7 +13,7 @@ class UsersController{
   };
   
   static async logOutUsers(req, res){
-    req.logOut();
+    // LOGICA DE LOGOUT
     return res.status(200).send({});
   };
   
