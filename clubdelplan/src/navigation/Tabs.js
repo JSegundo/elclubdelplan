@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Pressable} from 'react-native';
 import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
 import NewPlanScreen from '../screens/NewPlanScreen';
 import LogInScreen from '../screens/LogInScreen';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -63,6 +64,7 @@ const Tabs = () => {
         name="Perfil"
         component={LogInScreen}
         options={{
+
           headerShown: true,
           headerShadowVisible: false,
 

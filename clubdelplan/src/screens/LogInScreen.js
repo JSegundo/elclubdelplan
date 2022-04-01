@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { Text, View, TextInput, Button , Image} from 'react-native';
+import { Text, View, TextInput, Button , Image, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import UserProfileScreen from './UserProfileScreen';
@@ -61,7 +61,8 @@ const Log = () => {
       
     ) : (
       <View style={styles.view}>
-        <Text style={styles.tittle}>Please log in to see your Profile!</Text>
+      <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
+        <Text style={styles.tittle}>Por favor ingresa tu cuenta para seguir!</Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeText}
@@ -77,8 +78,20 @@ const Log = () => {
           placeholder="password"
           placeholderTextColor="#808080"
         />
-        <Button title="Register" onPress={() => { navigation.navigate('RegisterScreen') }}></Button>
-        <Button title="Login" onPress={onSubmit}></Button>
+          <TouchableOpacity
+          style={styles.buttonLogin}
+          onPress={() => { navigation.navigate('RegisterScreen') }}>
+          <View >
+            <Text style={{color: 'white', fontSize: 16}}>Registrarse</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonLogin}
+          onPress={onSubmit}>
+          <View >
+            <Text style={{color: 'white', fontSize: 16}}>Iniciar sesion</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     )
   );
@@ -87,18 +100,40 @@ const Log = () => {
 
 
 const styles = {
-  tittle: { color: 'black', textAlign: 'center', fontSize: 20, marginBottom: 50, fontWeight: 'bold' },
+  tittle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#208383',
+    marginTop: 10,
+    marginBottom: 0,
+    // marginLeft: 18,
+    fontSize: 20,
+    padding: 1,
+  },
+  tittlePrincipal : {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#111',
+    marginTop: 10,
+    marginBottom: 0,
+
+    fontSize: 30,
+    padding: 1,
+  },
   view: {
     flex: 1,
     justifyContent: 'center',
   },
   input: {
-    height: 40,
+    height: 50,
     margin: 10,
-    borderWidth: 1,
+    borderWidth: 4,
     padding: 10,
     borderRadius: 10,
-    color: '#111'
+    borderColor: '#208383',
+    marginVertical: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 26,
   },
   profileWrapper: {
     justifyContent: 'center',
@@ -109,6 +144,13 @@ const styles = {
     width: 60,
     height: 60,
     marginBottom: 20,
+  },
+  buttonLogin : {
+    backgroundColor: '#208383',
+    marginVertical: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 26,
+    borderRadius: 8,
   }
 }
 export default Log;
