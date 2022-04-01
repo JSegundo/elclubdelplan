@@ -46,7 +46,7 @@ const HomeScreen = () => {
       name,
       _id,
       category,
-      date,
+      startDate,
       time,
       image,
       location,
@@ -66,7 +66,7 @@ const HomeScreen = () => {
           <Text style={styles.nombreEvento}>{name}</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.text}>{category}</Text>
-            <Text style={styles.startDate}>{date?.startDate}</Text>
+            <Text style={styles.startDate}>{startDate.split('T')[0]}</Text>
           </View>
           <Text style={styles.text}>{location}</Text>
         </View>
