@@ -1,14 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, StyleSheet, Button} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableHighlight,
+  ScrollView,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 import LogInScreen from './LogInScreen';
 import axios from 'axios';
+import {Button} from 'react-native-elements';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const user_storage = '@userData';
 
 const UserProfileScreen = () => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   const [userInfo, setUserInfo] = useState(null);
   const [tokenUser, setToken] = useState('token');
@@ -44,9 +54,36 @@ const UserProfileScreen = () => {
         }}
         style={styles.imagen}
       />
-      <Text style={{color: '#111'}}>{userInfo.nombre}</Text>
+      <Text style={{color: '#111', fontSize: 20, fontWeight: 'bold'}}>
+        {userInfo.name}
+      </Text>
       <Text style={{color: '#111'}}>{userInfo.email}</Text>
-      <Button title="logout" onPress={logout}></Button>
+
+      {/* BOTONES PARA VER MIS PLANES  */}
+      <View style={styles.buttonsWrapper}>
+        <TouchableOpacity
+          style={styles.BtnNavigateToPlans}
+          onPress={() => navigator.navigate()}>
+          <View style={styles.textAndIconWrapper}>
+            <Text style={{color: 'white', fontSize: 16}}>Mis planes</Text>
+            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.BtnNavigateToPlans}>
+          <View style={styles.textAndIconWrapper}>
+            <Text style={{color: 'white', fontSize: 16}}>
+              Planes que me invitaron
+            </Text>
+            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+          </View>
+        </TouchableOpacity>
+      </View>
+      {/* BOTONES PARA VER MIS PLANES  */}
+
+      <TouchableOpacity onPress={logout} style={styles.logout}>
+        <Text style={{color: 'white', fontSize: 16}}>Cerrar sesión</Text>
+      </TouchableOpacity>
     </View>
   ) : (
     <LogInScreen />
@@ -58,11 +95,39 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
+    marginBottom: 30,
   },
   imagen: {
     width: 100,
     height: 100,
     marginBottom: 20,
+  },
+  buttonsWrapper: {
+    marginVertical: 30,
+  },
+  BtnNavigateToPlans: {
+    backgroundColor: '#208383',
+    marginVertical: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 26,
+    borderRadius: 8,
+  },
+  IconBtnNav: {
+    color: 'white',
+    textAlign: 'center',
+    padding: 10,
+    fontSize: 20,
+  },
+  textAndIconWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  logout: {
+    backgroundColor: '#B81414',
+    paddingVertical: 10,
+    paddingHorizontal: 26,
+    borderRadius: 8,
   },
 });
 
