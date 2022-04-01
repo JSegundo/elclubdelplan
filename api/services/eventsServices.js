@@ -72,13 +72,8 @@ class EventsServices {
   static async serviceAddEvent(req, next) {
     //CHEQUEAR
     try {
-      //console.log("BODY->", req.body);
-      //const { category, ...rest } = req.body;
-      //console.log("REST->", rest);
       const newEvent = new Events(req.body);
       newEvent.eventOwner = req.user._id;
-      //esta linea no deberia hacer falta
-      //newEvent.category = category;
       await newEvent.save();
       return newEvent;
     } catch (err) {
