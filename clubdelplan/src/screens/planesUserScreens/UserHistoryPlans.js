@@ -52,7 +52,7 @@ const UserHistoryPlans = () => {
       name,
       _id,
       category,
-      date,
+      startDate,
       time,
       image,
       location,
@@ -70,11 +70,11 @@ const UserHistoryPlans = () => {
             style={styles.image}
           />
           <View style={styles.infoWrapper}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', color: '#900'}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', color: '#900'}}>
               {name}
             </Text>
 
-            <Text>{date?.startDate}</Text>
+            <Text style={{fontSize: 12}}>{startDate.split('T')[0]}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -83,8 +83,12 @@ const UserHistoryPlans = () => {
 
   return (
     <View>
-      <Text>Historial de planes</Text>
-      <FlatList data={ownPlans} renderItem={({item}) => renderItem(item)} />
+      {/* <Text>Historial de planes</Text> */}
+      <FlatList
+        data={ownPlans}
+        renderItem={({item}) => renderItem(item)}
+        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+      />
     </View>
   );
 };
@@ -100,7 +104,7 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     flexDirection: 'row',
     width: 300,
-    height: 120,
+    height: 80,
     marginTop: 5,
     marginBottom: 5,
   },
@@ -112,8 +116,9 @@ const styles = StyleSheet.create({
     marginBottom: 100,
   },
   infoWrapper: {
-    padding: 5,
     width: 160,
+    justifyContent: 'space-between',
+    padding: 8,
   },
   title: {
     fontSize: 18,
