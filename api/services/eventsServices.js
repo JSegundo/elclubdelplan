@@ -1,14 +1,14 @@
 const Events = require("../models/Events");
-// const Categories = require("../models/Categories");
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
+ 
     try {
       const events = await Events.find({ isPrivate: false }).populate(
         "category"
       );
       return events;
-    } catch (err) {
+    } catch (err) { 
       next(err);
     }
   }
