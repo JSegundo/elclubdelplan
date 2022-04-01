@@ -16,7 +16,7 @@ import axios from 'axios';
 import {Button} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {launchImageLibrary} from 'react-native-image-picker';
-import FileBase64 from 'react-file-base64';
+
 
 const user_storage = '@userData';
 
@@ -31,9 +31,12 @@ const UserProfileScreen = () => {
   useEffect(() => {
     async function getUser() {
       let responseUser = await AsyncStorage.getItem(user_storage);
+      // let ImageUser = await AsyncStorage.getItem('@ImageUser')
+
       let infoUser = JSON.parse(responseUser);
 
       setUserInfo(infoUser);
+      setImage(ImageUser)
     }
     getUser();
   }, []);
@@ -42,6 +45,7 @@ const UserProfileScreen = () => {
     try {
       await AsyncStorage.removeItem('@Token');
       await AsyncStorage.removeItem('@userData');
+      // await AsyncStorage.removeItem('@ImageUser');
       setToken(null);
     } catch (err) {
       console.log(err);
@@ -58,7 +62,7 @@ const UserProfileScreen = () => {
       },
     };
 
-    launchImageLibrary(options, response => {
+    launchImageLibrary (options, response => {
       if (response.errorCode) {
         console.error(response.errorMessage);
       } else if (response.didCancel) {
@@ -66,7 +70,9 @@ const UserProfileScreen = () => {
       } else {
         const selectedImage = response.assets[0].uri;
         setImage(selectedImage);
-        
+        // async function setearImagen (){
+
+        // }
         // axios.put(`http://localhost:3001/api/users/img_data/${userInfo._id}` , image)
       }
     });

@@ -82,14 +82,14 @@ const Log = () => {
           style={styles.buttonLogin}
           onPress={() => { navigation.navigate('RegisterScreen') }}>
           <View >
-            <Text style={{color: 'white', fontSize: 16}}>Registrarse</Text>
+            <Text style={{color: '#111', fontSize: 16}}>Registrarse</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonLogin}
           onPress={onSubmit}>
           <View >
-            <Text style={{color: 'white', fontSize: 16}}>Iniciar sesion</Text>
+            <Text style={{color: '#111', fontSize: 16}}>Iniciar sesion</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -130,6 +130,7 @@ const styles = {
     borderWidth: 4,
     padding: 10,
     borderRadius: 10,
+    color : '#111',
     borderColor: '#208383',
     marginVertical: 10,
     paddingVertical: 10,
