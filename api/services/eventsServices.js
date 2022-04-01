@@ -38,9 +38,9 @@ class EventsServices {
     }
   }
 
-  static async serviceGetEvents(req, next) {
+  static async serviceGetEvent(req, next) {
     try {
-      const event = await Events.findById(req.params.id).populate("category");
+      const event = await Events.findById(req.params.id);
       return event;
     } catch (err) {
       console.log(err);
@@ -51,9 +51,9 @@ class EventsServices {
   static async serviceEventByCategory(req, next) {
     try {
       const events = await Events.find({
-        category: req.params.id,
+        category: req.params.name,
         isPrivate: false,
-      }).populate("category"); //CHEQUEAR
+      })
       return events;
     } catch (err) {
       next(err);
@@ -62,23 +62,17 @@ class EventsServices {
 
   static async serviceUpdateEvent(req, next) {
     try {
-      const oldEvent = await Events.findByIdAndUpdate(req.params.id, req.body);
-      return oldEvent;
+      const event = await Events.findByIdAndUpdate(req.params.id, req.body, {new: true});
+      return event;
     } catch (err) {
       next(err);
     }
   }
 
   static async serviceAddEvent(req, next) {
-    //CHEQUEAR
     try {
-      console.log("BODY->", req.body);
-      const { category, ...rest } = req.body;
-      console.log("REST->", rest);
-      const newEvent = new Events(rest);
-      newEvent.eventOwner = req.user.id;
-      //esta linea no deberia hacer falta
-      newEvent.category = category;
+      const newEvent = new Events(req.body);
+      newEvent.eventOwner = req.user._id;
       await newEvent.save();
       return newEvent;
     } catch (err) {
