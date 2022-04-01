@@ -31,7 +31,7 @@ const CatalogScreen = ({navigation}) => {
       name,
       _id,
       category,
-      date,
+      startDate,
       time,
       image,
       location,
@@ -56,7 +56,7 @@ const CatalogScreen = ({navigation}) => {
             </Text>
             <Text style={{color: 'black'}}>{category}</Text>
             <Text style={{fontSize: 10, color: 'black'}}>{location}</Text>
-            {/* <Text>{fecha}</Text> */}
+            {/* <Text>{startDate.split('T')[0]}</Text> */}
             <Text>${totalPrice}</Text>
           </View>
         </View>
