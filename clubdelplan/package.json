@@ -31,6 +31,7 @@
     "react-native-datefield": "^0.3.5",
     "react-native-element-dropdown": "^1.8.4",
     "react-native-elements": "^3.4.2",
+    "react-native-fbsdk-next": "^7.3.3",
     "react-native-gesture-handler": "^2.3.2",
     "react-native-hide-show-password-input": "^1.2.0",
     "react-native-image-picker": "^4.7.3",

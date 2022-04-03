@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
@@ -10,7 +10,9 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import UserProfileScreen from './UserProfileScreen';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { LoginButton, AccessToken } from 'react-native-fbsdk-next';
+
 
 const token_storage = '@Token';
 const user_storage = '@userData';
@@ -63,7 +65,7 @@ const Log = () => {
   return token ? (
     <UserProfileScreen />
   ) : (
-    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
       <View style={styles.view}>
         <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
         <Text style={styles.tittle}>
@@ -84,22 +86,37 @@ const Log = () => {
           placeholder="password"
           placeholderTextColor="#808080"
         />
+        <TouchableOpacity style={styles.buttonLogin} onPress={onSubmit}>
+        <LoginButton
+          onLoginFinished = {(error, result) => {
+            if (error) {
+              console.log("login has error: " + result.error);
+            } else if (result.isCancelled) {
+              console.log("Login is cancelled.");
+            } else {
+              AccessToken.getCurrentAccessToken().then((data) => {
+                console.log(data.accessToken.tostring())
+                onLogoutFinished(() => console.Log("logout"))
+              })
+            }
+          }} />
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonLogin}
           onPress={() => {
             navigation.navigate('RegisterScreen');
           }}>
-          <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
             Registrarse
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonLogin} onPress={onSubmit}>
-          <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
             Iniciar sesion
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </View >
   );
 };
 
@@ -162,3 +179,4 @@ const styles = {
   },
 };
 export default Log;
+
