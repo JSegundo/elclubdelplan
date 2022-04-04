@@ -23,7 +23,7 @@ const HomeScreen = () => {
       }
     }
     getAllEvents();
-    console.log(eventos);
+    //console.log(eventos);
   }, []);
 
   // filtro por categoría para mostrar en sus respectivos carruseles.

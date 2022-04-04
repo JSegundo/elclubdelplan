@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">clubdelplan</string>
     <string name="facebook_app_id">493177902531433</string>
-    <string name="facebook_client_token">56789</string>
+        <string name="fb_login_protocol_scheme">fb493177902531433</string>
+    <string name="facebook_client_token">91edea75db4df7cd58af96f53fa749da</string>  
+
 </resources>

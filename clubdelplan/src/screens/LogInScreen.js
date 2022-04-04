@@ -11,7 +11,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import UserProfileScreen from './UserProfileScreen';
 import { useNavigation } from '@react-navigation/native';
-import { LoginButton, AccessToken } from 'react-native-fbsdk-next';
+import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk-next';
+
 
 
 const token_storage = '@Token';
@@ -24,7 +25,7 @@ const Log = () => {
   const [token, setToken] = React.useState(null);
   const navigation = useNavigation();
 
-  useEffect(() => {
+  /*useEffect(() => {
     async function getTokenAndUser() {
       let responseToken = await AsyncStorage.getItem(token_storage);
       let responseUser = await AsyncStorage.getItem(user_storage);
@@ -34,7 +35,7 @@ const Log = () => {
       // console.log('aqui seteo al renderizar el user' , token)
     }
     getTokenAndUser();
-  }, []);
+  }, []);*/
 
   const onSubmit = async () => {
     console.log(email);
@@ -60,8 +61,31 @@ const Log = () => {
       console.error(e);
     }
   };
-  // console.log(user)
-  // console.log(token)
+  console.log("USUARIO->", user)
+  console.log("TOKEN->", token)
+
+  const getInfoFromToken = token => {
+    const PROFILE_REQUEST_PARAMS = {
+      fields: {
+        string: 'id,name,first_name,last_name',
+      },
+    };
+    const profileRequest = new GraphRequest(
+      '/me',
+      {token, parameters: PROFILE_REQUEST_PARAMS},
+      (error, user) => {
+        if (error) {
+          console.log('login info has error: ' + error);
+        } else {
+          //setState({userInfo: user});
+          console.log('result:', user);
+          setUser(user)
+          setToken(token)
+        }
+      },
+    );
+    new GraphRequestManager().addRequest(profileRequest).start();
+  };
   return token ? (
     <UserProfileScreen />
   ) : (
@@ -86,16 +110,19 @@ const Log = () => {
           placeholder="password"
           placeholderTextColor="#808080"
         />
-        <TouchableOpacity style={styles.buttonLogin} onPress={onSubmit}>
+        <TouchableOpacity style={styles.buttonLogin}>
         <LoginButton
           onLoginFinished = {(error, result) => {
+            console.log("RESULT->", result.grantedPermissions);
             if (error) {
               console.log("login has error: " + result.error);
             } else if (result.isCancelled) {
               console.log("Login is cancelled.");
             } else {
               AccessToken.getCurrentAccessToken().then((data) => {
-                console.log(data.accessToken.tostring())
+                const accessToken = data.accessToken.toString();
+                getInfoFromToken(accessToken);
+                console.log("ACCESTOKEN->", accessToken)
                 onLogoutFinished(() => console.Log("logout"))
               })
             }
