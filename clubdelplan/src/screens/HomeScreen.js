@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
@@ -87,6 +88,7 @@ const HomeScreen = () => {
             horizontal={true}
             data={seleccionEspecial}
             renderItem={({item}) => renderItem(item)}
+            
           />
         </View>
         <View style={styles.contentWrapper}>
