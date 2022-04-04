@@ -11,7 +11,7 @@ class EventsServices {
   }
 
   static async serviceGetAllMyEvents(req, next) {
-    console.log(req.params);
+    console.log(req.params.userid);
     try {
       const events = await Events.find({
         eventOwner: req.params.userid,

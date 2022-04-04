@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import React, {Children, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -16,16 +16,21 @@ const user_storage = '@userData';
 const OwnPlans = () => {
   const [ownPlans, setOwnPlans] = useState(null);
   const [user, setUser] = useState(null);
-  console.log('USER!!!', user);
-  console.log('LOS PLANES!! -->', ownPlans);
+  const [token,setToken] = useState(null)
+
+  // console.log('USER!!!', user);
+  // console.log('LOS PLANES!! -->', ownPlans);
+
+  //GET user and token
   useEffect(() => {
     async function getUserAsyncStorage() {
       try {
         let responseUser = await AsyncStorage.getItem(user_storage);
+        let responseToken = await AsyncStorage.getItem(token_storage);
         const usuario = JSON.parse(responseUser);
+        const tokenUser = JSON.parse(responseToken);
         setUser(usuario);
-
-        console.log(usuario);
+        setToken(tokenUser)
       } catch (err) {
         console.error(err);
       }
@@ -33,13 +38,22 @@ const OwnPlans = () => {
     getUserAsyncStorage();
   }, []);
 
+  //SET headers for JWT check
+   const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  //GET events for showing
   useEffect(() => {
     let userid = user?._id;
     async function getOwnPlans() {
       try {
         if (user !== null) {
-          let response = await axios.get(
-            `http://localhost:3001/api/events/me/${userid}`,
+          let response = await authAxios.get(
+            `/api/events/me/${userid}`,
           );
           setOwnPlans(response.data);
         }
@@ -48,8 +62,9 @@ const OwnPlans = () => {
       }
     }
     getOwnPlans();
-  }, [user]);
+  }, [user,token]);
 
+  //render items
   const renderItem = item => {
     const {
       name,
@@ -63,7 +78,6 @@ const OwnPlans = () => {
       totalPrice,
     } = item;
 
-    console.log(isPrivate);
 
     return item.isPrivate === true ? (
       <TouchableOpacity>
