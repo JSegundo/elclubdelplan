@@ -16,13 +16,18 @@ const user_storage = '@userData';
 const UserHistoryPlans = () => {
   const [ownPlans, setOwnPlans] = useState(null);
   const [user, setUser] = useState(null);
+  const [token,setToken] = useState(null)
 
+  // GET user and token
   useEffect(() => {
     async function getUserAsyncStorage() {
       try {
         let responseUser = await AsyncStorage.getItem(user_storage);
+        let responseToken = await AsyncStorage.getItem(token_storage);
         const usuario = JSON.parse(responseUser);
+        const tokenUser = JSON.parse(responseToken);
         setUser(usuario);
+        setToken(tokenUser);
       } catch (err) {
         console.error(err);
       }
@@ -30,13 +35,22 @@ const UserHistoryPlans = () => {
     getUserAsyncStorage();
   }, []);
 
+  // SET headers for JWT check
+ const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  // GET events for showing
   useEffect(() => {
     let userid = user?._id;
     async function getOwnPlans() {
       try {
         if (user !== null) {
-          let response = await axios.get(
-            `http://localhost:3001/api/events/done/${userid}`,
+          let response = await authAxios.get(
+            `/api/events/done/${userid}`,
           );
           setOwnPlans(response.data);
         }
@@ -45,8 +59,9 @@ const UserHistoryPlans = () => {
       }
     }
     getOwnPlans();
-  }, [user]);
+  }, [user,token]);
 
+  // render items
   const renderItem = item => {
     const {
       name,

@@ -21,23 +21,25 @@ const NewPlanScreen = () => {
   const [description, onChangeDescription] = React.useState('');
   const [category, setCategory] = React.useState('');
   const [location, onChangeLocation] = React.useState('');
-  const [date, setDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [paymentLimitDate, setPaymentLimitDate] = useState('');
   const [privadoCheck, setPrivadoCheck] = useState(false);
   const [image, setImage] = useState('https://via.placeholder.com/300x150');
 
   //formatear date para enviarla
-  const formatDate = value => {
-    const cutDate = value.toString().split(' ');
+  // const formatDate = value => {
+  //   const cutDate = value.toString().split(' ');
 
-    const date = {
-      day: cutDate[0],
-      month: cutDate[1],
-      dayNum: cutDate[2],
-      year: cutDate[3],
-    };
+  //   const date = {
+  //     day: cutDate[0],
+  //     month: cutDate[1],
+  //     dayNum: cutDate[2],
+  //     year: cutDate[3],
+  //   };
 
-    setDate(date);
-  };
+  //   setDate(date);
+  // };
 
   // SUBIR IMAGEN
   const selectImage = () => {
@@ -86,7 +88,9 @@ const NewPlanScreen = () => {
       name: text,
       description,
       location,
-      date,
+      startDate,
+      endDate,
+      paymentLimitDate,
       privado: privadoCheck,
       category,
       image,
@@ -135,27 +139,53 @@ const NewPlanScreen = () => {
         />
         {/* CATEGORY DROPDOWN */}
 
+        {/* LOCATION INPUT */}
         <Input
           onChangeText={onChangeLocation}
           placeholder={'Donde se van a encontrar?'}
           label={'Ubicación'}
           value={location}
         />
-        {/* fecha input */}
+        {/* LOCATION INPUT */}
+        
+        {/* DATE input */}
         <View style={{justifyContent: 'center'}}>
-          <DateField labelDate="Dia" labelMonth="Mes" labelYear="Año" />
+          <Text>Cuando inicia el evento?</Text>
+          {/* <DateField labelDate="Dia" labelMonth="Mes" labelYear="Año" /> */}
           <DateField
             defaultValue={new Date()}
             styleInput={{fontSize: 15}}
-            onSubmit={value => formatDate(value)}
+            onSubmit={value => setStartDate(value)}
             // containerStyle={{marginVertical: 10}}
           />
         </View>
-        {/* fecha input */}
+        <View style={{justifyContent: 'center'}}>
+          <Text>Cuando termina?</Text>
+          {/* <DateField labelDate="Dia" labelMonth="Mes" labelYear="Año" /> */}
+          <DateField
+            defaultValue={new Date()}
+            styleInput={{fontSize: 15}}
+            onSubmit={value => setEndDate(value)}
+            // containerStyle={{marginVertical: 10}}
+          />
+        </View>
+        <View style={{justifyContent: 'center'}}>
+          <Text>Fecha limite de confirmación:</Text>
+          {/* <DateField labelDate="Dia" labelMonth="Mes" labelYear="Año" /> */}
+          <DateField
+            defaultValue={new Date()}
+            styleInput={{fontSize: 15}}
+            onSubmit={value => setPaymentLimitDate(value)}
+            // containerStyle={{marginVertical: 10}}
+          />
+        </View>
+        {/* DATE input */}
         <View>
           <Button title={'Seleccionar imagen'} onPress={selectImage} />
           <Image style={{width: 300, height: 150}} source={{uri: image}} />
         </View>
+
+        {/* SET PRIVATE OR PUBLIC */}
         <CheckBox
           containerStyle={{
             backgroundColor: 'transparent',
@@ -172,10 +202,14 @@ const NewPlanScreen = () => {
             (Todo el mundo podrá ver tu evento)
           </Text>
         )}
+        {/* SET PRIVATE OR PUBLIC */}
+
+        {/* SEND DATA*/}
         <TouchableOpacity style={styles.btnCrearPlan} onPress={onSubmit}>
           <Text style={{color: 'white', textAlign: 'center'}}>Crear Plan</Text>
           <Ionicons style={styles.btnIcon} name="checkmark-outline"></Ionicons>
         </TouchableOpacity>
+        {/* SEND DATA*/}
       </View>
     </ScrollView>
   );
