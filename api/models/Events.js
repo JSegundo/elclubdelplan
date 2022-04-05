@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require("mongoose")
 
 const EventSchema = new Schema({
   name: {
@@ -24,12 +24,14 @@ const EventSchema = new Schema({
     type: Boolean,
     default: true,
   },
-  totalPrice: Number,
+  pricePerPerson: {
+    type: Number,
+  },
 
   category: { type: String }, // --> ref to Category schema
   eventOwner: { type: Schema.ObjectId, ref: "User" }, //--> ref to User schema
-});
+})
 
-const EventModel = model("Event", EventSchema);
+const EventModel = model("Event", EventSchema)
 
-module.exports = EventModel;
+module.exports = EventModel

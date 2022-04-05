@@ -15,6 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 const token_storage = '@Token';
 const user_storage = '@userData';
 
+import {userData} from '../store/user';
+import {useDispatch} from 'react-redux';
+
 const Log = () => {
   const [email, onChangeText] = React.useState(null);
   const [psw, onChangeNumber] = React.useState(null);
@@ -22,20 +25,7 @@ const Log = () => {
   const [token, setToken] = React.useState(null);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    async function getTokenAndUser() {
-      let responseToken = await AsyncStorage.getItem(token_storage);
-      let responseUser = await AsyncStorage.getItem(user_storage);
-      // console.log('aqui estoy esperando el store de user' , responseUser)
-      setToken(responseToken);
-      setUser(responseUser);
-      // console.log('aqui seteo al renderizar el user' , token)
-    }
-    getTokenAndUser();
-  }, []);
-
   const onSubmit = async () => {
-    console.log(email);
     const valid = {
       email,
       password: psw,
@@ -49,17 +39,27 @@ const Log = () => {
       const tokenPrev = JSON.stringify(response.data.token);
       setToken(tokenPrev);
       await AsyncStorage.setItem('@Token', tokenPrev);
-
-      console.log('este este es el user onSubit', response.data.user);
       const userJson = JSON.stringify(response.data.user);
-
       await AsyncStorage.setItem('@userData', userJson);
     } catch (e) {
       console.error(e);
     }
   };
-  // console.log(user)
-  // console.log(token)
+
+  useEffect(() => {
+    async function getTokenAndUser() {
+      try {
+        let responseToken = await AsyncStorage.getItem(token_storage);
+        let responseUser = await AsyncStorage.getItem(user_storage);
+        setToken(JSON.parse(responseToken));
+        setUser(JSON.parse(responseUser));
+      } catch ({err}) {
+        console.error({err});
+      }
+    }
+    getTokenAndUser();
+  }, []);
+
   return token ? (
     <UserProfileScreen />
   ) : (

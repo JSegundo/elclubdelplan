@@ -1,4 +1,4 @@
-const Categories = require("../models/Categories");
+const Categories = require("../models/Category");
 
 class CategoryService{
   static async serviceGetAllCategories(req, next){
@@ -20,4 +20,5 @@ class CategoryService{
     }
   };
 }
+
 module.exports= CategoryService;
