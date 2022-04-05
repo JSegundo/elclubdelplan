@@ -6,6 +6,8 @@ import {
   Image,
   ScrollView,
   Button,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
@@ -49,20 +51,24 @@ const HomeScreen = () => {
 
     return item.isPrivate === false ? (
       <View style={styles.itemWrapper}>
-        <Image
-          source={{
-            uri: image,
-          }}
-          style={styles.image}
-        />
-        <View style={{padding: 4}}>
-          <Text style={styles.nombreEvento}>{name}</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.text}>{category}</Text>
-            <Text style={styles.startDate}>{startDate.split('T')[0]}</Text>
+        <TouchableOpacity
+        onPress={()=> {navigation.navigate('Plan', {item: item})}}>
+          <Image
+            source={{
+              uri: image,
+            }}
+            style={styles.image}
+          />
+          <View style={{padding: 4}}>
+            <Text style={styles.nombreEvento}>{name}</Text>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.text}>{category}</Text>
+              <Text style={styles.startDate}>{startDate.split('T')[0]}</Text>
+            </View>
+            <Text style={styles.text}>{location}</Text>
           </View>
-          <Text style={styles.text}>{location}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     ) : null;
   };
