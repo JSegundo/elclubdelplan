@@ -7,7 +7,7 @@ import Tabs from './src/navigation/Tabs.js';
 import Register from './src/screens/RegisterScreen.js';
 import LogInScreen from './src/screens/LogInScreen';
 import UserProfileScreen from './src/screens/UserProfileScreen.js';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import OwnPlans from './src/screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from './src/screens/planesUserScreens/UserWillAttendPlans';
 import UserHistoryPlans from './src/screens/planesUserScreens/UserHistoryPlans';
@@ -17,9 +17,24 @@ import {store} from './src/store/index.js';
 import {Provider} from 'react-redux';
 //--------------------------------------
 
+const user_storage = '@userData';
+
 const Stack = createNativeStackNavigator();
 
 function App() {
+  // useEffect(() => {
+  //   async function getUser() {
+  //     let responseUser = await AsyncStorage.getItem(user_storage);
+  //     // let ImageUser = await AsyncStorage.getItem('@ImageUser')
+
+  //     let infoUser = JSON.parse(responseUser);
+
+  //     setUserInfo(infoUser);
+  //     setImage(ImageUser)
+  //   }
+  //   getUser();
+  // }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
