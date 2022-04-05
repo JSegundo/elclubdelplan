@@ -67,7 +67,7 @@ const Log = () => {
   const getInfoFromToken = token => {
     const PROFILE_REQUEST_PARAMS = {
       fields: {
-        string: 'id,name,first_name,last_name',
+        string: 'email,id,name,first_name,last_name',
       },
     };
     const profileRequest = new GraphRequest(
@@ -78,9 +78,9 @@ const Log = () => {
           console.log('login info has error: ' + error);
         } else {
           //setState({userInfo: user});
-          console.log('result:', user);
-          setUser(user)
-          setToken(token)
+          console.log('REQUEST->:', user);
+          setUser(user);
+          setToken(token);
         }
       },
     );
@@ -112,6 +112,7 @@ const Log = () => {
         />
         <TouchableOpacity style={styles.buttonLogin}>
         <LoginButton
+          readPermissions={['public_profile', 'email']}
           onLoginFinished = {(error, result) => {
             console.log("RESULT->", result.grantedPermissions);
             if (error) {
@@ -122,11 +123,10 @@ const Log = () => {
               AccessToken.getCurrentAccessToken().then((data) => {
                 const accessToken = data.accessToken.toString();
                 getInfoFromToken(accessToken);
-                console.log("ACCESTOKEN->", accessToken)
-                onLogoutFinished(() => console.Log("logout"))
+                console.log("ACCESTOKEN->", accessToken);
               })
-            }
-          }} />
+            }}}
+            onLogoutFinished= {(() => console.log("logout"))} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonLogin}
