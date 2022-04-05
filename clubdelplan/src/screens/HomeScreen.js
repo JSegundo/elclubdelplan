@@ -10,26 +10,15 @@ import {
   Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import CardEvent from './CardEventScreen';
-import {NavigationType} from 'react-router-dom';
-import {useNavigation} from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
+import {getAllEvents} from '../store/event';
 
 const HomeScreen = () => {
-  const [eventos, setEventos] = useState({});
-  const navigation = useNavigation();
+  const eventos = useSelector(state => state.event);
+  let dispatch = useDispatch();
 
   useEffect(() => {
-    async function getAllEvents() {
-      try {
-        const response = await axios.get('http://localhost:3001/api/events');
-        setEventos(response.data);
-        //console.log(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    getAllEvents();
+    dispatch(getAllEvents());
   }, []);
 
   // filtro por categoría para mostrar en sus respectivos carruseles.
