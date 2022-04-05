@@ -5,8 +5,6 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  Pressable,
-  TouchableHighlight,
   ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,16 +27,6 @@ const UserProfileScreen = () => {
     'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1';
   const [image, setImage] = useState(imgDefault);
 
-  useEffect(() => {
-    async function getUser() {
-      let responseUser = await AsyncStorage.getItem(user_storage);
-      let infoUser = JSON.parse(responseUser);
-
-      setUserInfo(infoUser);
-    }
-    getUser();
-  }, []);
-
   const logout = async () => {
     try {
       await AsyncStorage.removeItem('@Token');
@@ -49,6 +37,27 @@ const UserProfileScreen = () => {
       return false;
     }
   };
+
+  // useEffect(() => {
+  //   async function getTokenAndUser() {
+  //     try {
+  //       let responseToken = await AsyncStorage.getItem(token_storage);
+  //       let responseUser = await AsyncStorage.getItem(user_storage);
+  //       setToken(JSON.parse(responseToken));
+  //       setUserInfo(JSON.parse(responseUser));
+  //     } catch ({err}) {
+  //       console.error({err});
+  //     }
+  //   }
+  //   getTokenAndUser();
+  // }, []);
+
+  // useEffect(() => {
+  //   if (!tokenUser) return;
+  //   if (!userInfo?._id) return;
+  //   const userid = userInfo._id;
+  //   dispatch(userData({userid, tokenUser}));
+  // }, []);
 
   const selectImage = () => {
     const options = {
