@@ -12,10 +12,11 @@ import {
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
-
+import { useNavigation } from '@react-navigation/native';
 const HomeScreen = () => {
   const eventos = useSelector(state => state.event);
   let dispatch = useDispatch();
+  const navigation = useNavigation();
 
   useEffect(() => {
     dispatch(getAllEvents());
