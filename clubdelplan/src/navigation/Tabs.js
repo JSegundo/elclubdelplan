@@ -74,7 +74,7 @@ const Tabs = () => {
         }}
       />
     </Tab.Navigator>
-  );
+  ); 
 };
 
 const styles = StyleSheet.create({

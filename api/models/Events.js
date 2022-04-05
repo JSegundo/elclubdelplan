@@ -15,6 +15,7 @@ const EventSchema = new Schema({
   startDate: { type: Date },
   endDate: { type: Date },
   paymentDay: { type: Date },
+  
   time: { type: String },
   location: {
     type: String,
