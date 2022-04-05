@@ -21,33 +21,38 @@ const Stack = createNativeStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="tabs"
-          component={Tabs}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen name="RegisterScreen" component={Register} />
-        <Stack.Screen name="LogInScreen" component={LogInScreen} />
-        <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
-        <Stack.Screen
-          name="Tus planes"
-          component={OwnPlans}
-          options={{headerShadowVisible: false}}
-        />
-        <Stack.Screen
-          name="Fuiste invitado"
-          component={UserWillAttendPlans}
-          options={{headerShadowVisible: false}}
-        />
-        <Stack.Screen
-          name="Historial"
-          component={UserHistoryPlans}
-          options={{headerShadowVisible: false}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="tabs"
+            component={Tabs}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen name="RegisterScreen" component={Register} />
+          <Stack.Screen name="LogInScreen" component={LogInScreen} />
+          <Stack.Screen
+            name="UserProfileScreen"
+            component={UserProfileScreen}
+          />
+          <Stack.Screen
+            name="Tus planes"
+            component={OwnPlans}
+            options={{headerShadowVisible: false}}
+          />
+          <Stack.Screen
+            name="Fuiste invitado"
+            component={UserWillAttendPlans}
+            options={{headerShadowVisible: false}}
+          />
+          <Stack.Screen
+            name="Historial"
+            component={UserHistoryPlans}
+            options={{headerShadowVisible: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

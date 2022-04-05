@@ -9,21 +9,15 @@ import {
   Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import {useSelector, useDispatch} from 'react-redux';
+import {getAllEvents} from '../store/event';
 
-const CatalogScreen = ({navigation}) => {
-  const [eventos, setEventos] = useState({});
+const CatalogScreen = () => {
+  const eventos = useSelector(state => state.event);
+  let dispatch = useDispatch();
 
   useEffect(() => {
-    async function getAllEvents() {
-      try {
-        const response = await axios.get('http://localhost:3001/api/events');
-        setEventos(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    getAllEvents();
+    dispatch(getAllEvents());
   }, []);
 
   const renderItem = item => {

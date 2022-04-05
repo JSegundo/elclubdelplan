@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -16,7 +16,7 @@ const user_storage = '@userData';
 const OwnPlans = () => {
   const [ownPlans, setOwnPlans] = useState(null);
   const [user, setUser] = useState(null);
-  const [token,setToken] = useState(null)
+  const [token, setToken] = useState(null);
 
   // console.log('USER!!!', user);
   // console.log('LOS PLANES!! -->', ownPlans);
@@ -30,7 +30,7 @@ const OwnPlans = () => {
         const usuario = JSON.parse(responseUser);
         const tokenUser = JSON.parse(responseToken);
         setUser(usuario);
-        setToken(tokenUser)
+        setToken(tokenUser);
       } catch (err) {
         console.error(err);
       }
@@ -39,8 +39,8 @@ const OwnPlans = () => {
   }, []);
 
   //SET headers for JWT check
-   const authAxios = axios.create({
-    baseURL: "http://localhost:3001",
+  const authAxios = axios.create({
+    baseURL: 'http://localhost:3001',
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -51,10 +51,8 @@ const OwnPlans = () => {
     let userid = user?._id;
     async function getOwnPlans() {
       try {
-        if (user !== null) {
-          let response = await authAxios.get(
-            `/api/events/me/${userid}`,
-          );
+        if (userid !== null) {
+          let response = await authAxios.get(`/api/events/me/${userid}`);
           setOwnPlans(response.data);
         }
       } catch (err) {
@@ -62,7 +60,7 @@ const OwnPlans = () => {
       }
     }
     getOwnPlans();
-  }, [user,token]);
+  }, [user, token]);
 
   //render items
   const renderItem = item => {
@@ -78,7 +76,6 @@ const OwnPlans = () => {
       totalPrice,
     } = item;
 
-
     return item.isPrivate === true ? (
       <TouchableOpacity>
         <View style={styles.itemWrapper}>
@@ -92,7 +89,7 @@ const OwnPlans = () => {
             <Text style={{fontSize: 16, fontWeight: 'bold', color: '#900'}}>
               {name}
             </Text>
-            <Text style={{fontSize: 12}}>{startDate.split('T')[0]}</Text>
+            <Text style={{fontSize: 12}}>{startDate?.split('T')[0]}</Text>
           </View>
         </View>
       </TouchableOpacity>
