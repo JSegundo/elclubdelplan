@@ -27,6 +27,7 @@ export const createEvent = createAsyncThunk(
       );
       return res.data;
     } catch (err) {
+      console.error(err);
       throw err;
     }
   },

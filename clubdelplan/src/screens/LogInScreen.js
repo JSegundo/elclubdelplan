@@ -19,8 +19,6 @@ import {userData} from '../store/user';
 import {useDispatch} from 'react-redux';
 
 const Log = () => {
-  const dispatch = useDispatch();
-
   const [email, onChangeText] = React.useState(null);
   const [psw, onChangeNumber] = React.useState(null);
   const [user, setUser] = React.useState(null);
@@ -60,13 +58,6 @@ const Log = () => {
       }
     }
     getTokenAndUser();
-  }, []);
-
-  useEffect(() => {
-    if (!token) return;
-    if (!user?._id) return;
-    const userid = user._id;
-    dispatch(userData({userid, token}));
   }, []);
 
   return token ? (

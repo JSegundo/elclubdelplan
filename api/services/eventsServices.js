@@ -11,10 +11,10 @@ class EventsServices {
   }
 
   static async serviceGetAllMyEvents(req, next) {
-    console.log(req.params.userid)
+    console.log(req.user.id)
     try {
       const events = await Events.find({
-        eventOwner: req.params.userid,
+        eventOwner: req.user.id,
         isPrivate: true,
       })
       return events
@@ -28,7 +28,8 @@ class EventsServices {
       const date = new Date()
 
       const events = await Events.find({
-        eventOwner: req.params.userid,
+        eventOwner: req.user.id,
+        // eventOwner: req.params.userid,
         isPrivate: true,
         endDate: { $lt: date },
       })

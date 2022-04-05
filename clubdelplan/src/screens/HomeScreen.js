@@ -8,16 +8,12 @@ import {
   Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
 
 const HomeScreen = () => {
   const eventos = useSelector(state => state.event);
   let dispatch = useDispatch();
-
-  console.log(eventos);
 
   useEffect(() => {
     dispatch(getAllEvents());
@@ -84,7 +80,6 @@ const HomeScreen = () => {
             horizontal={true}
             data={seleccionEspecial}
             renderItem={({item}) => renderItem(item)}
-            
           />
         </View>
         <View style={styles.contentWrapper}>

@@ -6,9 +6,9 @@ const checkJWT = require("../middlewares/jwt")
 //RUTA PARA BUSCAR EVENTOS
 router.get("/", EventsControllers.getAllEvents)
 //RUTA PARA BUSCAR EVENTOS PRIVADOS DE UN USUARIO
-router.get("/me/:userid", checkJWT, EventsControllers.getMyEvents)
+router.get("/me", checkJWT, EventsControllers.getMyEvents)
 //RUTA PARA BUSCAR EVENTOS PASADOS DE UN USUARIO
-router.get("/done/:userid", checkJWT, EventsControllers.getMyPastEvents)
+router.get("/done", checkJWT, EventsControllers.getMyPastEvents)
 //RUTA PARA BUSCAR UN EVENTO
 router.get("/:id", EventsControllers.getEvent)
 //RUTA PARA BUSCAR EVENTOS POR CATEGORIAS

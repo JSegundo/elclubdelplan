@@ -43,8 +43,9 @@ class UsersService {
   }
 
   static async serviceGetMe(req) {
+    console.log("REQ.USER: ", req.user)
     try {
-      const user = await User.findById(req.params.userid)
+      const user = await User.findById(req.user.id)
       return user
     } catch (err) {
       console.error(err)

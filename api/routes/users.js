@@ -10,8 +10,8 @@ router.post("/login", UsersController.loginUsers)
 //RUTA PARA LOGOUT
 router.post("/logout", UsersController.logOutUsers)
 //RUTA PARA DEVOLVER USUARIO LOGUEADO
-router.get("/me/:userid", UsersController.getMe)
-// router.get("/me/:userid", checkJWT, UsersController.getMe)
+// router.get("/me/:userid", UsersController.getMe)
+router.get("/me", checkJWT, UsersController.getMe)
 //RUTA PARA EDITAR UN USUARIO
 router.put("/:id", checkJWT, UsersController.editUsers)
 //RUTA PARA VER UN USUARIO PARTICULAR

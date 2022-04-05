@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -13,47 +13,81 @@ import UserWillAttendPlans from './src/screens/planesUserScreens/UserWillAttendP
 import UserHistoryPlans from './src/screens/planesUserScreens/UserHistoryPlans';
 
 // Configuracion de Store redux
-import {store} from './src/store/index.js';
+import {store} from './src/store/index';
 import {Provider} from 'react-redux';
 //--------------------------------------
+import {useSelector, useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {userData} from './src/store/user';
+const token_storage = '@Token';
+const user_storage = '@userData';
 
 const Stack = createNativeStackNavigator();
 
-function App() {
+const appWrapper = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="tabs"
-            component={Tabs}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen name="RegisterScreen" component={Register} />
-          <Stack.Screen name="LogInScreen" component={LogInScreen} />
-          <Stack.Screen
-            name="UserProfileScreen"
-            component={UserProfileScreen}
-          />
-          <Stack.Screen
-            name="Tus planes"
-            component={OwnPlans}
-            options={{headerShadowVisible: false}}
-          />
-          <Stack.Screen
-            name="Fuiste invitado"
-            component={UserWillAttendPlans}
-            options={{headerShadowVisible: false}}
-          />
-          <Stack.Screen
-            name="Historial"
-            component={UserHistoryPlans}
-            options={{headerShadowVisible: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <App />
     </Provider>
+  );
+};
+
+function App() {
+  const dispatch = useDispatch();
+  const [user, setUser] = React.useState(null);
+  const [token, setToken] = React.useState(null);
+
+  React.useEffect(() => {
+    async function getTokenAndUser() {
+      try {
+        let responseToken = await AsyncStorage.getItem(token_storage);
+        let responseUser = await AsyncStorage.getItem(user_storage);
+        setToken(JSON.parse(responseToken));
+        setUser(JSON.parse(responseUser));
+      } catch ({err}) {
+        console.error({err});
+      }
+    }
+    getTokenAndUser();
+  }, []);
+
+  useEffect(() => {
+    if (!token) return;
+    if (!user?._id) return;
+    // const userid = user._id;
+    dispatch(userData(token));
+  }, [user]);
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="tabs"
+          component={Tabs}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen name="RegisterScreen" component={Register} />
+        <Stack.Screen name="LogInScreen" component={LogInScreen} />
+        <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
+        <Stack.Screen
+          name="Tus planes"
+          component={OwnPlans}
+          options={{headerShadowVisible: false}}
+        />
+        <Stack.Screen
+          name="Fuiste invitado"
+          component={UserWillAttendPlans}
+          options={{headerShadowVisible: false}}
+        />
+        <Stack.Screen
+          name="Historial"
+          component={UserHistoryPlans}
+          options={{headerShadowVisible: false}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-export default App;
+export default appWrapper;

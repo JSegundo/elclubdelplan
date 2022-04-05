@@ -22,8 +22,6 @@ import {useDispatch} from 'react-redux';
 import {createEvent} from '../store/event';
 
 import {launchImageLibrary} from 'react-native-image-picker';
-const token_storage = '@Token';
-const user_storage = '@userData';
 
 const NewPlanScreen = () => {
   const navigation = useNavigation();
