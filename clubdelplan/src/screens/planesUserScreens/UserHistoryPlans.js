@@ -7,73 +7,22 @@ import {
   Image,
 } from 'react-native';
 import React, {Children, useEffect, useState} from 'react';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const token_storage = '@Token';
-const user_storage = '@userData';
+import {useSelector, useDispatch} from 'react-redux';
+import {userDonePlans} from '../../store/userEvents';
 
 const UserHistoryPlans = () => {
-  const [ownPlans, setOwnPlans] = useState(null);
-  const [user, setUser] = useState(null);
-  const [token,setToken] = useState(null)
+  const dispatch = useDispatch();
+  const donePlans = useSelector(store => store.userEvents);
 
   // GET user and token
   useEffect(() => {
-    async function getUserAsyncStorage() {
-      try {
-        let responseUser = await AsyncStorage.getItem(user_storage);
-        let responseToken = await AsyncStorage.getItem(token_storage);
-        const usuario = JSON.parse(responseUser);
-        const tokenUser = JSON.parse(responseToken);
-        setUser(usuario);
-        setToken(tokenUser);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    getUserAsyncStorage();
+    dispatch(userDonePlans());
   }, []);
-
-  // SET headers for JWT check
- const authAxios = axios.create({
-    baseURL: "http://localhost:3001",
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
-
-  // GET events for showing
-  useEffect(() => {
-    let userid = user?._id;
-    async function getOwnPlans() {
-      try {
-        if (user !== null) {
-          let response = await authAxios.get(
-            `/api/events/done/${userid}`,
-          );
-          setOwnPlans(response.data);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    getOwnPlans();
-  }, [user,token]);
 
   // render items
   const renderItem = item => {
-    const {
-      name,
-      _id,
-      category,
-      startDate,
-      time,
-      image,
-      location,
-      isPrivate,
-      totalPrice,
-    } = item;
+    const {name, startDate, image} = item;
 
     return item.isPrivate === true ? (
       <TouchableOpacity>
@@ -100,7 +49,7 @@ const UserHistoryPlans = () => {
     <View>
       {/* <Text>Historial de planes</Text> */}
       <FlatList
-        data={ownPlans}
+        data={donePlans}
         renderItem={({item}) => renderItem(item)}
         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
       />
