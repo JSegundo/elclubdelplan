@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, TextInput, Button} from 'react-native';
+import {Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 
 const Register = ({navigation}) => {
@@ -42,46 +42,52 @@ const Register = ({navigation}) => {
   };
 
   return (
-    <View style={styles.view}>
-      <Text style={styles.tittle}>Please register to see your Profile!</Text>
+    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <View style={styles.view}>
+        <Text style={styles.tittle}>Please register to see your Profile!</Text>
 
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeName}
-        placeholder="name"
-        placeholderTextColor="#808080"
-        value={name}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeText}
-        placeholder="email"
-        placeholderTextColor="#808080"
-        value={email}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangePhone}
-        placeholder="phone"
-        placeholderTextColor="#808080"
-        value={number}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeCity}
-        placeholder="city"
-        placeholderTextColor="#808080"
-        value={city}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangePsw}
-        value={psw}
-        secureTextEntry={true}
-        placeholder="password"
-        placeholderTextColor="#808080"
-      />
-      <Button title="Register" onPress={onRegister}></Button>
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeName}
+          placeholder="name"
+          placeholderTextColor="#808080"
+          value={name}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeText}
+          placeholder="email"
+          placeholderTextColor="#808080"
+          value={email}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangePhone}
+          placeholder="phone"
+          placeholderTextColor="#808080"
+          value={number}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeCity}
+          placeholder="city"
+          placeholderTextColor="#808080"
+          value={city}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangePsw}
+          value={psw}
+          secureTextEntry={true}
+          placeholder="password"
+          placeholderTextColor="#808080"
+        />
+        <TouchableOpacity onPress={onRegister} style={styles.buttonRegister}>
+          <Text style={{color: 'white', textAlign: 'center', fontSize: 18}}>
+            Register
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -92,19 +98,35 @@ const styles = {
     textAlign: 'center',
     fontSize: 20,
     marginBottom: 50,
+    marginTop: 10,
     fontWeight: 'bold',
   },
   view: {
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    width: '90%',
   },
   input: {
-    height: 40,
+    width: 300,
+    height: 50,
     margin: 10,
-    borderWidth: 1,
+    borderWidth: 4,
     padding: 10,
     borderRadius: 10,
-    color: '#111',
+    borderColor: '#208383',
+    marginVertical: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 26,
+  },
+  buttonRegister: {
+    width: 300,
+    backgroundColor: '#208383',
+    marginVertical: 10,
+    paddingVertical: 10,
+    // paddingHorizontal: 20,
+    borderRadius: 6,
   },
 };
 export default Register;
