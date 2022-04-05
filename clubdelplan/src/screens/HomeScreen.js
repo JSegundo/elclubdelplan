@@ -6,25 +6,30 @@ import {
   Image,
   ScrollView,
   Button,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import CardEvent from './CardEventScreen';
+import {NavigationType} from 'react-router-dom';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen = () => {
   const [eventos, setEventos] = useState({});
+  const navigation = useNavigation();
 
   useEffect(() => {
     async function getAllEvents() {
       try {
         const response = await axios.get('http://localhost:3001/api/events');
         setEventos(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       } catch (err) {
         console.error(err);
       }
     }
     getAllEvents();
-    console.log(eventos);
   }, []);
 
   // filtro por categoría para mostrar en sus respectivos carruseles.
@@ -57,20 +62,24 @@ const HomeScreen = () => {
 
     return item.isPrivate === false ? (
       <View style={styles.itemWrapper}>
-        <Image
-          source={{
-            uri: image,
-          }}
-          style={styles.image}
-        />
-        <View style={{padding: 4}}>
-          <Text style={styles.nombreEvento}>{name}</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.text}>{category}</Text>
-            <Text style={styles.startDate}>{startDate.split('T')[0]}</Text>
+        <TouchableOpacity
+        onPress={()=> {navigation.navigate('Plan', {item: item})}}>
+          <Image
+            source={{
+              uri: image,
+            }}
+            style={styles.image}
+          />
+          <View style={{padding: 4}}>
+            <Text style={styles.nombreEvento}>{name}</Text>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.text}>{category}</Text>
+              <Text style={styles.startDate}>{startDate.split('T')[0]}</Text>
+            </View>
+            <Text style={styles.text}>{location}</Text>
           </View>
-          <Text style={styles.text}>{location}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     ) : null;
   };
@@ -88,7 +97,6 @@ const HomeScreen = () => {
             horizontal={true}
             data={seleccionEspecial}
             renderItem={({item}) => renderItem(item)}
-            
           />
         </View>
         <View style={styles.contentWrapper}>
