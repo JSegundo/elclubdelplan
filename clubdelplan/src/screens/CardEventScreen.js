@@ -6,25 +6,45 @@ import {
   Button,
   TouchableOpacity,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import React from 'react';
-import {useRoute, useNavigation} from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const CardEvent = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const {item} = route.params;
-  const {time, image, name, location, startDate, totalPrice, description} = item;
+  const { item } = route.params;
+  const { time, image, name, location, startDate, totalPrice, description, coments, endDate } = item;
   const fakeMapImage = 'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
+
+  const dateNow = new Date();
+  const eventDate = new Date(endDate);
+
+  const renderItem = item => {
+    const { userName, coment, vote } = item;
+    return (
+      <View style={styles.reviewWrapper}>
+        <View style={{ padding: 4 }}>
+          <Text style={styles.nombreUsuario}>{userName}</Text>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={styles.textComent}>{coment}</Text>
+            <Text style={styles.textComent}>{vote}</Text>
+          </View>
+        </View>
+      </View>
+    )
+  };
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.cardWrap}>
-          <Image style={styles.image} source={{uri: image}} />
+          <Image style={styles.image} source={{ uri: image }} />
           <Text style={styles.title}>{name}</Text>
           <Ionicons
             name="house-outline"
@@ -63,7 +83,7 @@ const CardEvent = () => {
             <Text style={styles.text}>--Incrustar mapa real--</Text>
             <Image
               style={styles.mapImage}
-              source={{uri: fakeMapImage}}/>
+              source={{ uri: fakeMapImage }} />
           </View>
 
           <View>
@@ -76,11 +96,23 @@ const CardEvent = () => {
           <TouchableOpacity
             style={styles.buttonWrap}
             onPress={() =>
-              navigation.navigate('Detalles de entrada', {item: item})
+              navigation.navigate('Detalles de entrada', { item: item })
             }>
             <Text style={styles.button}>Entradas</Text>
           </TouchableOpacity>
         </View>
+
+        {eventDate.getTime() < dateNow.getTime() ? (<View style={styles.comentWrapper}>
+          <Text style={styles.line}>─────────────────────────</Text>
+          <Text style={styles.subtitle}>Comentarios</Text>
+          <FlatList
+            contentContainerStyle={{ paddingTop: 40 }}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            data={coments}
+            renderItem={({ item }) => renderItem(item)}
+          />
+        </View>) : null}
       </ScrollView>
     </SafeAreaView>
   );
@@ -136,6 +168,32 @@ const styles = StyleSheet.create({
   button: {
     color: 'white',
     fontSize: 18,
+  },
+  comentWrapper: {
+    margin: 0,
+    width: '100%',
+  },
+  reviewWrapper: {
+    width: 203,
+    height: 100,
+    // height: 320,
+    marginHorizontal: 10,
+    // padding: 2,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  nombreUsuario: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#B90303',
+    marginTop: 5,
+    marginLeft: 5,
+  },
+  textComent: {
+    color: '#000000',
+    fontWeight: 'bold',
+    margin: 1,
+    marginLeft: 5,
   },
 });
 
