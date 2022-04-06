@@ -80,7 +80,7 @@ const CardEvent = () => {
             <Text> ARS {totalPrice}</Text>
           </Ionicons>   
           {/* Boton para compartir */}
-          <ButtonShare /> 
+          <ButtonShare />  
 
           <View>
             {/* <Text style={styles.line}>─────────────────────────</Text> */}
