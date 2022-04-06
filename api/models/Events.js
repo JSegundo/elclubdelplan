@@ -15,7 +15,7 @@ const EventSchema = new Schema({
   startDate: { type: Date },
   endDate: { type: Date },
   paymentDay: { type: Date },
-
+  
   time: { type: String },
   location: {
     type: String,
@@ -30,11 +30,7 @@ const EventSchema = new Schema({
 
   category: { type: String }, // --> ref to Category schema
   eventOwner: { type: Schema.ObjectId, ref: "User" }, //--> ref to User schema
-  coments: [{
-    userName: { type: String },
-    vote: { type: Number },
-    coment: { type: String }
-  }]
+  coments: [{ type: Schema.ObjectId, ref: "Coments" }]
 })
 
 const EventModel = model("Event", EventSchema)
