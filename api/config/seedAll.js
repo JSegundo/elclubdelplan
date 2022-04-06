@@ -3,7 +3,9 @@ const events = require("../utils/fakeEvents");
 const mongoose = require("mongoose");
 const CategoryModel = require("../models/Category");
 const UserModel = require("../models/User");
+const ComentModel = require("../models/Coments");
 const categories = require("../utils/categories");
+const coments = require("../utils/coments");
 
 const seedDb = async () => {
   try {
@@ -20,6 +22,11 @@ const seedDb = async () => {
 
     console.log("FAKE USER", fakeUser);
 
+    const createdComents = await ComentModel.insertMany(coments);
+    for (const coment of createdComents) {
+      coment.userName = fakeUser.name;
+    }
+
     const createdCategories = await CategoryModel.insertMany(categories);
 
     for (const event of events) {
@@ -28,6 +35,7 @@ const seedDb = async () => {
       );
       event.category = category.categoryName;
       event.eventOwner = fakeUser._id;
+      event.coments = createdComents;
     }
 
     await EventModel.insertMany(events);
