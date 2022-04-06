@@ -3,6 +3,7 @@ import logger from 'redux-logger';
 import userReducer from './user';
 import eventsReducer from './event';
 import userEventsReducer from './userEvents';
+import comentReducer from './coment';
 
 export const store = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
@@ -10,5 +11,6 @@ export const store = configureStore({
     user: userReducer,
     userEvents: userEventsReducer,
     event: eventsReducer,
+    coment: comentReducer
   },
 });
