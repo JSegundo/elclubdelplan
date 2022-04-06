@@ -10,6 +10,15 @@ export const getAllEvents = createAsyncThunk('events', async () => {
   }
 });
 
+export const getEvent = createAsyncThunk('EVENT', async (eventId) => {
+  try {
+    const res = await axios.get(`http://localhost:3001/api/events/${eventId}`);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 export const createEvent = createAsyncThunk(
   'CREATE_EVENT',
   async (newEvent, thunkAPI) => {
@@ -36,6 +45,7 @@ const eventsReducer = createReducer(
   {},
   {
     [getAllEvents.fulfilled]: (state, action) => action.payload,
+    [getEvent.fulfilled]: (state, action) => action.payload,
     [createEvent.fulfilled]: (state, action) => action.payload,
   },
 );
