@@ -10,8 +10,11 @@ import React, {Children, useEffect, useState} from 'react';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {userDonePlans} from '../../store/userEvents';
+import {useNavigation} from '@react-navigation/native';
 
 const UserHistoryPlans = () => {
+  const navigation = useNavigation();
+
   const dispatch = useDispatch();
   const donePlans = useSelector(store => store.userEvents);
 
@@ -22,10 +25,23 @@ const UserHistoryPlans = () => {
 
   // render items
   const renderItem = item => {
-    const {name, startDate, image} = item;
+    const {
+      name,
+      _id,
+      category,
+      startDate,
+      time,
+      image,
+      location,
+      isPrivate,
+      totalPrice,
+    } = item;
 
     return item.isPrivate === true ? (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Plan', {item: item});
+        }}>
         <View style={styles.itemWrapper}>
           <Image
             source={{

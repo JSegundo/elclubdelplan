@@ -11,10 +11,13 @@ import {
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
+import { useNavigate } from 'react-router-dom';
+import { useNavigation } from '@react-navigation/native';
 
 const CatalogScreen = () => {
   const eventos = useSelector(state => state.event);
   let dispatch = useDispatch();
+  const navigation = useNavigation();
 
   useEffect(() => {
     dispatch(getAllEvents());
@@ -36,7 +39,8 @@ const CatalogScreen = () => {
     console.log(isPrivate);
 
     return item.isPrivate === false ? (
-      <TouchableOpacity>
+      <TouchableOpacity 
+      onPress={()=> {navigation.navigate('Plan', {item: item})}}>
         <View style={styles.itemWrapper}>
           <Image
             source={{

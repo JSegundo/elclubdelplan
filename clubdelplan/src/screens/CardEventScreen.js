@@ -37,7 +37,11 @@ const CardEvent = () => {
             style={styles.text}>
             <Text style={styles.text}>{location}</Text>
           </Ionicons>
-          <Ionicons name="phone" size={18} color="#900" style={styles.text}>
+          <Ionicons
+            name="ticket-outline"
+            size={18}
+            color="#900"
+            style={styles.text}>
             <Text style={styles.text}>{startDate}</Text>
           </Ionicons>
           <Ionicons name="phone" size={18} color="#900" style={styles.text}>
@@ -75,12 +79,8 @@ const CardEvent = () => {
           </View>
 
           {/* poner el button -fixed- at the buttom of the screen */}
-          <TouchableOpacity
-            style={styles.buttonWrap}
-            onPress={() =>
-              navigation.navigate('Detalles de entrada', {item: item})
-            }>
-            <Text style={styles.button}>Entradas</Text>
+          <TouchableOpacity style={styles.buttonWrap}>
+            <Text style={styles.button}>Compartir evento</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
