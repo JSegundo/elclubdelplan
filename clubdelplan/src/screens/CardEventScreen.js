@@ -17,8 +17,11 @@ const CardEvent = () => {
   const route = useRoute();
 
   const {item} = route.params;
-  const {time, image, name, location, startDate, totalPrice, description} = item;
-  const fakeMapImage = 'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
+  console.log(item);
+  const {time, image, name, location, startDate, totalPrice, description} =
+    item;
+  const fakeMapImage =
+    'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
 
   return (
     <SafeAreaView>
@@ -26,6 +29,7 @@ const CardEvent = () => {
         <View style={styles.cardWrap}>
           <Image style={styles.image} source={{uri: image}} />
           <Text style={styles.title}>{name}</Text>
+
           <Ionicons
             name="house-outline"
             size={18}
@@ -61,9 +65,7 @@ const CardEvent = () => {
             <Text style={styles.line}>─────────────────────────</Text>
             <Text style={styles.subtitle}>Ubicación</Text>
             <Text style={styles.text}>--Incrustar mapa real--</Text>
-            <Image
-              style={styles.mapImage}
-              source={{uri: fakeMapImage}}/>
+            <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
           </View>
 
           <View>
