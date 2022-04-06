@@ -9,7 +9,6 @@ import LogInScreen from './src/screens/LogInScreen';
 import UserProfileScreen from './src/screens/UserProfileScreen.js';
 import CardEvent from './src/screens/CardEventScreen.js';
 import NewPlanScreen from './src/screens/NewPlanScreen.js';
-import PaymentDetails from './src/screens/PaypmentDetails.js';
 
 import OwnPlans from './src/screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from './src/screens/planesUserScreens/UserWillAttendPlans';
@@ -75,7 +74,6 @@ function App() {
         <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
         <Stack.Screen name="Plan" component={CardEvent} />
         <Stack.Screen name="NewPlanScreen" component={NewPlanScreen} />
-        <Stack.Screen name="Detalles de entrada" component={PaymentDetails} />
 
         <Stack.Screen
           name="Tus planes"

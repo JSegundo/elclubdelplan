@@ -17,8 +17,10 @@ const CardEvent = () => {
   const route = useRoute();
 
   const {item} = route.params;
-  const {time, image, name, location, startDate, totalPrice, description} = item;
-  const fakeMapImage = 'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
+  const {time, image, name, location, startDate, totalPrice, description} =
+    item;
+  const fakeMapImage =
+    'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
 
   return (
     <SafeAreaView>
@@ -33,7 +35,11 @@ const CardEvent = () => {
             style={styles.text}>
             <Text style={styles.text}>{location}</Text>
           </Ionicons>
-          <Ionicons name="phone" size={18} color="#900" style={styles.text}>
+          <Ionicons
+            name="ticket-outline"
+            size={18}
+            color="#900"
+            style={styles.text}>
             <Text style={styles.text}>{startDate}</Text>
           </Ionicons>
           <Ionicons name="phone" size={18} color="#900" style={styles.text}>
@@ -61,9 +67,7 @@ const CardEvent = () => {
             <Text style={styles.line}>─────────────────────────</Text>
             <Text style={styles.subtitle}>Ubicación</Text>
             <Text style={styles.text}>--Incrustar mapa real--</Text>
-            <Image
-              style={styles.mapImage}
-              source={{uri: fakeMapImage}}/>
+            <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
           </View>
 
           <View>
@@ -73,12 +77,8 @@ const CardEvent = () => {
           </View>
 
           {/* poner el button -fixed- at the buttom of the screen */}
-          <TouchableOpacity
-            style={styles.buttonWrap}
-            onPress={() =>
-              navigation.navigate('Detalles de entrada', {item: item})
-            }>
-            <Text style={styles.button}>Entradas</Text>
+          <TouchableOpacity style={styles.buttonWrap}>
+            <Text style={styles.button}>Compartir evento</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
