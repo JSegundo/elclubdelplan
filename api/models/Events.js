@@ -11,12 +11,21 @@ const EventSchema = new Schema({
     type: String,
     default: "//add random img",
   },
-
-  startDate: { type: Date },
-  endDate: { type: Date },
-  paymentDay: { type: Date },
-  
-  time: { type: String },
+  // date: {
+  //   type: Array,
+  // },
+  startDate: {
+    type: Date,
+  },
+  endDate: {
+    type: Date,
+  },
+  paymentDay: {
+    type: Date,
+  },
+  time: {
+    type: String,
+  },
   location: {
     type: String,
   },
@@ -27,7 +36,6 @@ const EventSchema = new Schema({
   pricePerPerson: {
     type: Number,
   },
-
   category: { type: String }, // --> ref to Category schema
   eventOwner: { type: Schema.ObjectId, ref: "User" }, //--> ref to User schema
 })

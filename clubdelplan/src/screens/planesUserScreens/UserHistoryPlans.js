@@ -54,7 +54,7 @@ const UserHistoryPlans = () => {
               {name}
             </Text>
 
-            <Text style={{fontSize: 12}}>{startDate.split('T')[0]}</Text>
+            <Text style={{fontSize: 12}}>{startDate?.split('T')[0]}</Text>
           </View>
         </View>
       </TouchableOpacity>

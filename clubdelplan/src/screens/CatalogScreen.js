@@ -11,8 +11,8 @@ import {
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
-import { useNavigate } from 'react-router-dom';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigate} from 'react-router-dom';
+import {useNavigation} from '@react-navigation/native';
 
 const CatalogScreen = () => {
   const eventos = useSelector(state => state.event);
@@ -36,11 +36,11 @@ const CatalogScreen = () => {
       totalPrice,
     } = item;
 
-    console.log(isPrivate);
-
     return item.isPrivate === false ? (
-      <TouchableOpacity 
-      onPress={()=> {navigation.navigate('Plan', {item: item})}}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Plan', {item: item});
+        }}>
         <View style={styles.itemWrapper}>
           <Image
             source={{

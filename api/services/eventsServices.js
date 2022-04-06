@@ -29,7 +29,6 @@ class EventsServices {
 
       const events = await Events.find({
         eventOwner: req.user.id,
-        // eventOwner: req.params.userid,
         isPrivate: true,
         endDate: { $lt: date },
       })
