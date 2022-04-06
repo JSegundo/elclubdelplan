@@ -30,6 +30,7 @@ const EventSchema = new Schema({
 
   category: { type: String }, // --> ref to Category schema
   eventOwner: { type: Schema.ObjectId, ref: "User" }, //--> ref to User schema
+  coments: [{ type: Schema.ObjectId, ref: "Coments" }]
 })
 
 const EventModel = model("Event", EventSchema)
