@@ -11,9 +11,13 @@ import {
 import React from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
+import ButtonShare from '../components/ButtonShare';
+
+
 
 const CardEvent = () => {
+
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -67,11 +71,12 @@ const CardEvent = () => {
           </Ionicons>
           <Ionicons name="phone" size={18} color="#900" style={styles.text}>
             <Text> ARS {totalPrice}</Text>
-          </Ionicons>
-          <Text style={styles.text}> Compartir (componente de Gus) </Text>
+          </Ionicons>   
+          {/* Boton para compartir */}
+          <ButtonShare /> 
 
           <View>
-            <Text style={styles.line}>─────────────────────────</Text>
+            {/* <Text style={styles.line}>─────────────────────────</Text> */}
             <Text style={styles.subtitle}>Descripción</Text>
             <Text style={styles.text}>
               {description} Un evento es todo acontecimiento previamente
