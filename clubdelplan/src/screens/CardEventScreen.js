@@ -6,13 +6,17 @@ import {
   Button,
   TouchableOpacity,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ScrollView} from 'react-native-gesture-handler';
+import ButtonShare from '../components/ButtonShare';
+
 
 const CardEvent = () => {
+
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -28,9 +32,28 @@ const CardEvent = () => {
     paymentLimitDate,
     totalPrice,
     description,
+    coments,
   } = item;
   const fakeMapImage =
     'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
+
+  const dateNow = new Date();
+  const eventDate = new Date(endDate);
+
+  const renderItem = item => {
+    const {userName, coment, vote} = item;
+    return (
+      <View style={styles.reviewWrapper}>
+        <View style={{padding: 4}}>
+          <Text style={styles.nombreUsuario}>{userName}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.textComent}>{coment}</Text>
+            <Text style={styles.textComent}>{vote}</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView>
@@ -39,6 +62,7 @@ const CardEvent = () => {
           <Image style={styles.image} source={{uri: image}} />
 
           <Text style={styles.title}>{name}</Text>
+
 
           <Text style={styles.text}>{location}</Text>
 
@@ -57,8 +81,9 @@ const CardEvent = () => {
           <Text> ARS ${totalPrice ? totalPrice : 0}</Text>
           <Text style={styles.text}> Compartir (componente de Gus) </Text>
 
+
           <View>
-            <Text style={styles.line}>─────────────────────────</Text>
+            {/* <Text style={styles.line}>─────────────────────────</Text> */}
             <Text style={styles.subtitle}>Descripción</Text>
             <Text style={styles.text}>
               {description ? description : 'no hay description'}
@@ -79,10 +104,34 @@ const CardEvent = () => {
           </View>
 
           {/* poner el button -fixed- at the buttom of the screen */}
+
           <TouchableOpacity style={styles.buttonWrap}>
             <Text style={styles.button}>Compartir evento</Text>
           </TouchableOpacity>
         </View>
+
+        {eventDate.getTime() < dateNow.getTime() ? (
+          <View style={styles.comentWrapper}>
+            <Text style={styles.line}>─────────────────────────</Text>
+            <Text style={styles.subtitle}>Comentarios</Text>
+            <FlatList
+              contentContainerStyle={{paddingTop: 40}}
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+              data={coments}
+              renderItem={({item}) => renderItem(item)}
+            />
+          </View>
+        ) : null}
+        {eventDate.getTime() < dateNow.getTime() ? (
+          <TouchableOpacity
+            style={styles.buttonWrap}
+            onPress={() =>
+              navigation.navigate('Detalles de entrada', {item: item})
+            }>
+            <Text style={styles.button}>Comentar</Text>
+          </TouchableOpacity>
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
@@ -139,6 +188,32 @@ const styles = StyleSheet.create({
   button: {
     color: 'white',
     fontSize: 18,
+  },
+  comentWrapper: {
+    margin: 0,
+    width: '100%',
+  },
+  reviewWrapper: {
+    width: 203,
+    height: 100,
+    // height: 320,
+    marginHorizontal: 10,
+    // padding: 2,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  nombreUsuario: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#B90303',
+    marginTop: 5,
+    marginLeft: 5,
+  },
+  textComent: {
+    color: '#000000',
+    fontWeight: 'bold',
+    margin: 1,
+    marginLeft: 5,
   },
 });
 

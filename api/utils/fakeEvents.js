@@ -2,7 +2,7 @@ const events = [
   {
     id: 1,
     name: "Lollapalooza",
-    description: "lorem ipsum...",
+    description: "z",
     image:
       "https://pbs.twimg.com/profile_images/1500933654830276608/PBf2KquH_400x400.jpg",
     startDate: new Date(2022, 04, 21),

@@ -3,7 +3,7 @@ const Events = require("../models/Events")
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
     try {
-      const events = await Events.find({ isPrivate: false })
+      const events = await Events.find({ isPrivate: false }).populate('coments')
       return events
     } catch (err) {
       next(err)
@@ -40,7 +40,7 @@ class EventsServices {
 
   static async serviceGetEvent(req, next) {
     try {
-      const event = await Events.findById(req.params.id)
+      const event = await Events.findById(req.params.id).populate('coments')
       return event
     } catch (err) {
       console.log(err)
