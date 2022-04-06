@@ -37,7 +37,7 @@ const NewPlanScreen = () => {
   const [image, setImage] = useState('https://via.placeholder.com/300x150');
   const [pricePerPerson, setPricePerPerson] = useState(null);
   const [privadoCheck, setPrivadoCheck] = useState(true);
-
+  const [submited, setSubmited] = useState(false);
   // state categories for dropdown input
   const [allCategories, setAllCategories] = useState(null);
   // GET list of categories available
@@ -91,21 +91,21 @@ const NewPlanScreen = () => {
     );
   };
 
+  const newPlan = {
+    name: text,
+    description,
+    location,
+    date: [startDate, endDate, paymentLimitDate],
+    privado: privadoCheck,
+    category,
+    image,
+    pricePerPerson,
+  };
+
   const onSubmit = e => {
     e.preventDefault();
-    const newPlan = {
-      name: text,
-      description,
-      location,
-      startDate,
-      endDate,
-      paymentLimitDate,
-      privado: privadoCheck,
-      category,
-      image,
-      pricePerPerson,
-    };
 
+    setSubmited(true);
     console.log(newPlan);
     dispatch(createEvent(newPlan));
   };
@@ -239,10 +239,25 @@ const NewPlanScreen = () => {
           </Text>
         )}
         {/* SEND DATA*/}
-        <TouchableOpacity style={styles.btnCrearPlan} onPress={onSubmit}>
-          <Text style={{color: 'white', textAlign: 'center'}}>Crear Plan</Text>
-          <Ionicons style={styles.btnIcon} name="checkmark-outline"></Ionicons>
-        </TouchableOpacity>
+        {submited ? (
+          <TouchableOpacity
+            style={styles.btnVerPlan}
+            onPress={() => navigation.navigate('Plan', {item: newPlan})}>
+            <Text style={{color: 'white', textAlign: 'center'}}>Ver plan</Text>
+            <Ionicons
+              style={styles.btnIcon}
+              name="checkmark-outline"></Ionicons>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.btnCrearPlan} onPress={onSubmit}>
+            <Text style={{color: 'white', textAlign: 'center'}}>
+              Crear Plan
+            </Text>
+            <Ionicons
+              style={styles.btnIcon}
+              name="checkmark-outline"></Ionicons>
+          </TouchableOpacity>
+        )}
       </View>
     </ScrollView>
   );
@@ -272,6 +287,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#900',
+    width: 300,
+    // width: '100%',
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+  },
+  btnVerPlan: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: 'green',
     width: 300,
     // width: '100%',
     paddingVertical: 15,

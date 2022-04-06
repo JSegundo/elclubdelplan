@@ -97,7 +97,6 @@ const UserProfileScreen = () => {
         {userInfo.name}
       </Text>
       <Text style={{color: '#111'}}>{userInfo.email}</Text>
-      <TouchableOpacity></TouchableOpacity>
 
       {/* BOTONES PARA VER MIS PLANES  */}
       <ScrollView style={styles.buttonsWrapper}>

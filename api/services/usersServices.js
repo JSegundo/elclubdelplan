@@ -33,7 +33,9 @@ class UsersService {
           return { msg: "Password is incorrect" }
         } else {
           let payload = { id: user._id }
-          let token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET)
+          let token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: "365d",
+          })
           return { msg: "ok", token: token, user: user }
         }
       }
@@ -43,9 +45,10 @@ class UsersService {
   }
 
   static async serviceGetMe(req) {
-    console.log("REQ.USER: ", req.user)
+    console.log("REQ.USER: ", req.user.id)
     try {
       const user = await User.findById(req.user.id)
+      console.log(user)
       return user
     } catch (err) {
       console.error(err)

@@ -41,26 +41,26 @@ function App() {
   const [user, setUser] = React.useState(null);
   const [token, setToken] = React.useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function getTokenAndUser() {
       try {
         let responseToken = await AsyncStorage.getItem(token_storage);
         let responseUser = await AsyncStorage.getItem(user_storage);
         setToken(JSON.parse(responseToken));
         setUser(JSON.parse(responseUser));
-      } catch ({err}) {
-        console.error({err});
+      } catch (err) {
+        console.error(err);
       }
     }
     getTokenAndUser();
   }, []);
-
+  console.log('hola!! esto es APP');
   useEffect(() => {
     if (!token) return;
     if (!user?._id) return;
     // const userid = user._id;
     dispatch(userData(token));
-  }, [user]);
+  }, [user, token]);
 
   return (
     <NavigationContainer>

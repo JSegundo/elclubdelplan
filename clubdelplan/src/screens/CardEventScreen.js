@@ -19,6 +19,7 @@ const CardEvent = () => {
 
 <<<<<<< HEAD
   const {item} = route.params;
+  console.log(item);
   const {time, image, name, location, startDate, totalPrice, description} =
     item;
   const fakeMapImage =
@@ -54,6 +55,7 @@ const CardEvent = () => {
         <View style={styles.cardWrap}>
           <Image style={styles.image} source={{ uri: image }} />
           <Text style={styles.title}>{name}</Text>
+
           <Ionicons
             name="house-outline"
             size={18}

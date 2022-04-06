@@ -18,7 +18,7 @@ class UsersController {
 
   static async getMe(req, res) {
     const user = await UsersService.serviceGetMe(req)
-    return user ? res.send(user) : res.sendStatus(401)
+    return user ? res.send(user) : res.status(401)
   }
 
   static async editUsers(req, res, next) {
