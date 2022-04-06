@@ -13,7 +13,7 @@ import NewPlanScreen from './src/screens/NewPlanScreen.js';
 import OwnPlans from './src/screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from './src/screens/planesUserScreens/UserWillAttendPlans';
 import UserHistoryPlans from './src/screens/planesUserScreens/UserHistoryPlans';
-import ComentScreen from "./src/screens/DetailsScreen";
+import ComentScreen from "./src/screens/ComentScreen";
 
 // Configuracion de Store redux
 import {store} from './src/store/index';
