@@ -23,6 +23,12 @@ import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {userData} from './src/store/user';
+import {LogBox} from 'react-native';
+
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+]);
+
 const token_storage = '@Token';
 const user_storage = '@userData';
 
@@ -54,7 +60,7 @@ function App() {
     }
     getTokenAndUser();
   }, []);
-  console.log('hola!! esto es APP');
+
   useEffect(() => {
     if (!token) return;
     if (!user?._id) return;

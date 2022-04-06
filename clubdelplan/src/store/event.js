@@ -4,7 +4,6 @@ import axios from 'axios';
 export const getAllEvents = createAsyncThunk('events', async () => {
   try {
     const res = await axios.get('http://localhost:3001/api/events');
-    console.log(res.data);
     return res.data;
   } catch (err) {
     console.error(err);

@@ -21,16 +21,18 @@ const CardEvent = () => {
   const route = useRoute();
 
   const {item} = route.params;
+  console.log('ITEM! EVENT DETAILS: --> ', item);
   const {
     time,
     image,
     name,
     location,
     startDate,
+    endDate,
+    paymentLimitDate,
     totalPrice,
     description,
     coments,
-    endDate,
   } = item;
   const fakeMapImage =
     'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
@@ -58,40 +60,33 @@ const CardEvent = () => {
       <ScrollView>
         <View style={styles.cardWrap}>
           <Image style={styles.image} source={{uri: image}} />
+
           <Text style={styles.title}>{name}</Text>
-          <Ionicons
-            name="house-outline"
-            size={18}
-            color="#900"
-            style={styles.text}>
-            <Text style={styles.text}>{location}</Text>
-          </Ionicons>
-          <Ionicons
-            name="ticket-outline"
-            size={18}
-            color="#900"
-            style={styles.text}>
-            <Text style={styles.text}>{startDate}</Text>
-          </Ionicons>
-          <Ionicons name="phone" size={18} color="#900" style={styles.text}>
-            <Text style={styles.text}>{time}</Text>
-          </Ionicons>
-          <Ionicons name="phone" size={18} color="#900" style={styles.text}>
-            <Text> ARS {totalPrice}</Text>
-          </Ionicons>   
-          {/* Boton para compartir */}
-          <ButtonShare />  
+
+
+          <Text style={styles.text}>{location}</Text>
+
+          <Text style={styles.text}> Empieza: {startDate?.split('T')[0]}</Text>
+          <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
+          <Text style={styles.text}>
+            {' '}
+            Limite de confirmación: {paymentLimitDate?.split('T')[0]}
+          </Text>
+          {/* DATES */}
+
+          {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
+          <Text style={styles.text}>{time} hs</Text>
+          {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
+
+          <Text> ARS ${totalPrice ? totalPrice : 0}</Text>
+          <Text style={styles.text}> Compartir (componente de Gus) </Text>
+
 
           <View>
             {/* <Text style={styles.line}>─────────────────────────</Text> */}
             <Text style={styles.subtitle}>Descripción</Text>
             <Text style={styles.text}>
-              {description} Un evento es todo acontecimiento previamente
-              organizado que reúne a un determinado número de personas en tiempo
-              y lugar preestablecidos, que desarrollarán y compartirán una serie
-              de actividades afines a un mismo objetivo para estímulo del
-              comercio, la industria, el intercambio social y la cultura
-              general.
+              {description ? description : 'no hay description'}
             </Text>
           </View>
 
@@ -164,6 +159,7 @@ const styles = StyleSheet.create({
     color: 'black',
     margin: 4,
   },
+
   image: {
     marginTop: 30,
     width: 250,

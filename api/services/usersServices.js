@@ -48,7 +48,7 @@ class UsersService {
     console.log("REQ.USER: ", req.user.id)
     try {
       const user = await User.findById(req.user.id)
-      console.log(user)
+      // console.log(user)
       return user
     } catch (err) {
       console.error(err)
