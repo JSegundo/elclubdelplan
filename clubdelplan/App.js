@@ -14,6 +14,7 @@ import PaymentDetails from './src/screens/PaypmentDetails.js';
 import OwnPlans from './src/screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from './src/screens/planesUserScreens/UserWillAttendPlans';
 import UserHistoryPlans from './src/screens/planesUserScreens/UserHistoryPlans';
+import ComentScreen from "./src/screens/DetailsScreen";
 
 // Configuracion de Store redux
 import {store} from './src/store/index';
@@ -76,7 +77,7 @@ function App() {
         <Stack.Screen name="Plan" component={CardEvent} />
         <Stack.Screen name="NewPlanScreen" component={NewPlanScreen} />
         <Stack.Screen name="Detalles de entrada" component={PaymentDetails} />
-
+        <Stack.Screen name="Comentarios" component={ComentScreen} />
         <Stack.Screen
           name="Tus planes"
           component={OwnPlans}

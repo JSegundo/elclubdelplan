@@ -11,12 +11,12 @@ export const getAllComents = createAsyncThunk('COMENTS', async (eventId) => {
 });
 
 export const createComent = createAsyncThunk('CREATE_COMENT', async (newComent, thunkAPI) => {
-    const { user } = thunkAPI.getState();
-    const userid = user._id;
+    const { user, event } = thunkAPI.getState();
+    const eventId = event._id;
     const token = user.token;
     try {
         const res = await axios.post(
-            `http://localhost:3001/api/coments/${userid}`,
+            `http://localhost:3001/api/coments/${eventId}`,
             newComent,
             {
                 headers: { authorization: `Bearer ${token}` },

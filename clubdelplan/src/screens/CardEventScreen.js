@@ -96,7 +96,7 @@ const CardEvent = () => {
           <TouchableOpacity
             style={styles.buttonWrap}
             onPress={() =>
-              navigation.navigate('Detalles de entrada', { item: item })
+              navigation.navigate('Comentarios', { id: item.id })
             }>
             <Text style={styles.button}>Entradas</Text>
           </TouchableOpacity>
@@ -113,6 +113,13 @@ const CardEvent = () => {
             renderItem={({ item }) => renderItem(item)}
           />
         </View>) : null}
+        {eventDate.getTime() < dateNow.getTime() ? (<TouchableOpacity
+            style={styles.buttonWrap}
+            onPress={() =>
+              navigation.navigate('Detalles de entrada', { item: item })
+            }>
+            <Text style={styles.button}>Comentar</Text>
+          </TouchableOpacity>) : null}
       </ScrollView>
     </SafeAreaView>
   );
