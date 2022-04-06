@@ -12,7 +12,7 @@ import {
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 const HomeScreen = () => {
   const eventos = useSelector(state => state.event);
   let dispatch = useDispatch();
@@ -53,7 +53,9 @@ const HomeScreen = () => {
     return item.isPrivate === false ? (
       <View style={styles.itemWrapper}>
         <TouchableOpacity
-        onPress={()=> {navigation.navigate('Plan', {item: item})}}>
+          onPress={() => {
+            navigation.navigate('Plan', {item: item});
+          }}>
           <Image
             source={{
               uri: image,

@@ -9,11 +9,11 @@ import LogInScreen from './src/screens/LogInScreen';
 import UserProfileScreen from './src/screens/UserProfileScreen.js';
 import CardEvent from './src/screens/CardEventScreen.js';
 import NewPlanScreen from './src/screens/NewPlanScreen.js';
-import PaymentDetails from './src/screens/PaypmentDetails.js';
 
 import OwnPlans from './src/screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from './src/screens/planesUserScreens/UserWillAttendPlans';
 import UserHistoryPlans from './src/screens/planesUserScreens/UserHistoryPlans';
+import ComentScreen from "./src/screens/ComentScreen";
 
 // Configuracion de Store redux
 import {store} from './src/store/index';
@@ -41,26 +41,26 @@ function App() {
   const [user, setUser] = React.useState(null);
   const [token, setToken] = React.useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function getTokenAndUser() {
       try {
         let responseToken = await AsyncStorage.getItem(token_storage);
         let responseUser = await AsyncStorage.getItem(user_storage);
         setToken(JSON.parse(responseToken));
         setUser(JSON.parse(responseUser));
-      } catch ({err}) {
-        console.error({err});
+      } catch (err) {
+        console.error(err);
       }
     }
     getTokenAndUser();
   }, []);
-
+  console.log('hola!! esto es APP');
   useEffect(() => {
     if (!token) return;
     if (!user?._id) return;
     // const userid = user._id;
     dispatch(userData(token));
-  }, [user]);
+  }, [user, token]);
 
   return (
     <NavigationContainer>
@@ -76,6 +76,7 @@ function App() {
         <Stack.Screen name="Plan" component={CardEvent} />
         <Stack.Screen name="NewPlanScreen" component={NewPlanScreen} />
         <Stack.Screen name="Detalles de entrada" component={PaymentDetails} />
+        <Stack.Screen name="Comentarios" component={ComentScreen} />
 
         <Stack.Screen
           name="Tus planes"
