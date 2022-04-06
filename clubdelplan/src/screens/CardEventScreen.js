@@ -17,18 +17,11 @@ const CardEvent = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-<<<<<<< HEAD
-  const {item} = route.params;
-  console.log(item);
-  const {time, image, name, location, startDate, totalPrice, description} =
-    item;
-  const fakeMapImage =
-    'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
-=======
+
   const { item } = route.params;
   const { time, image, name, location, startDate, totalPrice, description, coments, endDate } = item;
   const fakeMapImage = 'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
->>>>>>> mateo/reviews
+
 
   const dateNow = new Date();
   const eventDate = new Date(endDate);
@@ -55,7 +48,6 @@ const CardEvent = () => {
         <View style={styles.cardWrap}>
           <Image style={styles.image} source={{ uri: image }} />
           <Text style={styles.title}>{name}</Text>
-
           <Ionicons
             name="house-outline"
             size={18}
@@ -95,13 +87,9 @@ const CardEvent = () => {
             <Text style={styles.line}>─────────────────────────</Text>
             <Text style={styles.subtitle}>Ubicación</Text>
             <Text style={styles.text}>--Incrustar mapa real--</Text>
-<<<<<<< HEAD
-            <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
-=======
             <Image
               style={styles.mapImage}
               source={{ uri: fakeMapImage }} />
->>>>>>> mateo/reviews
           </View>
 
           <View>
@@ -111,17 +99,16 @@ const CardEvent = () => {
           </View>
 
           {/* poner el button -fixed- at the buttom of the screen */}
-<<<<<<< HEAD
+
           <TouchableOpacity style={styles.buttonWrap}>
             <Text style={styles.button}>Compartir evento</Text>
-=======
+            </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonWrap}
             onPress={() =>
               navigation.navigate('Comentarios', { id: item.id })
             }>
             <Text style={styles.button}>Entradas</Text>
->>>>>>> mateo/reviews
           </TouchableOpacity>
         </View>
 
