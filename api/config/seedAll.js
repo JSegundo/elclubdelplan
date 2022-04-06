@@ -3,9 +3,7 @@ const events = require("../utils/fakeEvents");
 const mongoose = require("mongoose");
 const CategoryModel = require("../models/Category");
 const UserModel = require("../models/User");
-const ComentModel = require("../models/Coments");
 const categories = require("../utils/categories");
-const coments = require("../utils/coments");
 
 const seedDb = async () => {
   try {
@@ -20,12 +18,7 @@ const seedDb = async () => {
       city: "Plataforma 5",
     });
 
-    console.log("FAKE USER", fakeUser);
-
-    const createdComents = await ComentModel.insertMany(coments);
-    for (const coment of createdComents) {
-      coment.userName = fakeUser.name;
-    }
+    //console.log("FAKE USER", fakeUser);
 
     const createdCategories = await CategoryModel.insertMany(categories);
 
@@ -35,12 +28,16 @@ const seedDb = async () => {
       );
       event.category = category.categoryName;
       event.eventOwner = fakeUser._id;
-      event.coments = createdComents;
-    }
+      event.coments = {
+        userName: fakeUser.name,
+        vote: 5,
+        coment: "muy bueno"
+      }
+    };
 
     await EventModel.insertMany(events);
 
-    console.log("EVENTOS", events);
+    //console.log("EVENTOS", events);
 
     console.log("seed finalizado");
     process.exit(0); // --> p que finalice el proceso
