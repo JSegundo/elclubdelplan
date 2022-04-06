@@ -5,7 +5,6 @@ class ComentsController{
 
  static async getComents(req, res, next){
     const coments = await ComentsService.serviceGetComents(req, next);
-    console.log("COMENTARIO->", coments);
     return coments ? res.status(200).json(coments) : res.sendStatus(404);
   };
 

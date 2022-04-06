@@ -10,3 +10,5 @@ const coments = [
         coment: "increible"
     },
 ];
+
+module.exports = coments

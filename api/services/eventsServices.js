@@ -41,7 +41,7 @@ class EventsServices {
 
   static async serviceGetEvent(req, next) {
     try {
-      const event = await Events.findById(req.params.id)
+      const event = await Events.findById(req.params.id).populate('coments')
       return event
     } catch (err) {
       console.log(err)
