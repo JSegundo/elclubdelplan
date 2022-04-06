@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { createComent } from "../store/coment";
-import { getEvent } from "../store/event";
+import { getEvent } from "../store/singleEvent";
 
 const token_storage = '@Token';
 const user_storage = '@userData';
@@ -23,7 +23,7 @@ const Coment = () => {
     let dispatch = useDispatch();
 
     const { id } = route.params;
-
+    console.log("ID->", id);
     useEffect(() => {
         dispatch(getEvent(id))
         async function getTokenAndUser() {
@@ -60,13 +60,12 @@ const Coment = () => {
                     onChangeText={onChangeText}
                     placeholder="coment"
                     placeholderTextColor="#808080"
-                    value={email}
+                    value={coment}
                 />
                 <TextInput
-                    style={styles.comentInput}
+                    style={styles.comentInputVote}
                     onChangeText={onChangeNumber}
-                    value={psw}
-                    secureTextEntry={true}
+                    value={vote}
                     placeholder="vote"
                     placeholderTextColor="#808080"
                 />
@@ -103,6 +102,19 @@ const styles = {
     },
     comentInput: {
         width: 300,
+        height: 150,
+        margin: 10,
+        borderWidth: 4,
+        padding: 10,
+        borderRadius: 10,
+        borderColor: '#208383',
+        marginVertical: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 26,
+    },
+    comentInputVote: {
+        textAlign: 'center',
+        width: 100,
         height: 50,
         margin: 10,
         borderWidth: 4,
