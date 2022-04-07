@@ -3,6 +3,7 @@ import {Text, View, TextInput, Button, TouchableOpacity , FlatList ,Pressable} f
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import categories from '../utils/categories'
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Register = () => {
   const [name, onChangeName] = React.useState(null);
@@ -66,7 +67,12 @@ const Register = () => {
 
 
   return (
-    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+    <ScrollView
+      contentContainerStyle={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 200,
+      }}>
       <View style={styles.view}>
         <Text style={styles.tittle}>Por favor registrate!</Text>
 
@@ -129,7 +135,7 @@ const Register = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

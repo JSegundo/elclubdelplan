@@ -54,6 +54,7 @@ const UserProfileScreen = () => {
     }
   };
 
+<<<<<<< HEAD
   // const selectImage = () => {
   //   const options = {
   //     title: 'Selecciona una imagen',
@@ -84,6 +85,42 @@ const UserProfileScreen = () => {
     <View style={styles.profileWrapper}>
     { userInfo?._id ? 
       <>
+=======
+  const selectImage = () => {
+    const options = {
+      title: 'Selecciona una imagen',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+
+    launchImageLibrary(options, response => {
+      if (response.errorCode) {
+        console.error(response.errorMessage);
+      } else if (response.didCancel) {
+        console.log('El usuario canceló');
+      } else {
+        const selectedImage = response.assets[0].uri;
+        setImage(selectedImage);
+
+        // axios.put(`http://localhost:3001/api/users/img_data/${userInfo._id}` , image)
+      }
+    });
+  };
+
+  console.log(userInfo);
+
+  return userInfo?.email && tokenUser !== null ? (
+    <ScrollView
+      contentContainerStyle={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 200,
+      }}>
+      {/* <ScrollView style={styles.profileWrapper}> */}
+      {image === imgDefault ? (
+>>>>>>> 945f6be74ea99040e3467b71f8197d9c5044fdd3
         <Image
           source={{
             uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
@@ -98,8 +135,13 @@ const UserProfileScreen = () => {
       </Text>
       <Text style={{color: '#111'}}>{userInfo.email}</Text>
 
+<<<<<<< HEAD
       
       <ScrollView style={styles.buttonsWrapper}>
+=======
+      {/* BOTONES PARA VER MIS PLANES  */}
+      <View style={styles.buttonsWrapper}>
+>>>>>>> 945f6be74ea99040e3467b71f8197d9c5044fdd3
         <TouchableOpacity
           style={styles.BtnNavigateToPlans}
           onPress={() => navigation.navigate('Tus planes')}>
@@ -137,6 +179,7 @@ const UserProfileScreen = () => {
             <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
           </View>
         </TouchableOpacity>
+<<<<<<< HEAD
       </ScrollView>
    
 
@@ -149,6 +192,18 @@ const UserProfileScreen = () => {
       }
     </View>
   )
+=======
+      </View>
+      {/* BOTONES PARA VER MIS PLANES  */}
+
+      <TouchableOpacity onPress={logout} style={styles.logout}>
+        <Text style={{color: 'white', fontSize: 16}}>Cerrar sesión</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  ) : (
+    <LogInScreen />
+  );
+>>>>>>> 945f6be74ea99040e3467b71f8197d9c5044fdd3
 };
 
 const styles = StyleSheet.create({
@@ -193,6 +248,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 26,
     borderRadius: 8,
+    marginBottom: 100,
   },
 });
 

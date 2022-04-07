@@ -17,6 +17,7 @@ const user_storage = '@userData';
 
 import {userData} from '../store/user';
 import {useDispatch} from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Log = () => {
   const [email, onChangeText] = React.useState(null);
@@ -63,10 +64,37 @@ const Log = () => {
       console.error(e);
     }
   };
+<<<<<<< HEAD
   // console.log(user)
   // console.log(token)
   return  (
     <View style={{justifyContent: 'center', alignItems: 'center'}}>
+=======
+
+  useEffect(() => {
+    async function getTokenAndUser() {
+      try {
+        let responseToken = await AsyncStorage.getItem(token_storage);
+        let responseUser = await AsyncStorage.getItem(user_storage);
+        setToken(JSON.parse(responseToken));
+        setUser(JSON.parse(responseUser));
+      } catch ({err}) {
+        console.error({err});
+      }
+    }
+    getTokenAndUser();
+  }, []);
+
+  return token ? (
+    <UserProfileScreen />
+  ) : (
+    <ScrollView
+      contentContainerStyle={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 200,
+      }}>
+>>>>>>> 945f6be74ea99040e3467b71f8197d9c5044fdd3
       <View style={styles.view}>
         <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
         <Text style={styles.tittle}>
@@ -102,7 +130,7 @@ const Log = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
