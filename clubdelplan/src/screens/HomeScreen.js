@@ -178,10 +178,9 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: '58%',
-    // height: 180,
-    borderRadius: 20,
-    // borderTopLeftRadius: 20,
-    // borderTopRightRadius: 20,
+    borderRadius: 16,
+    // borderTopLeftRadius: 16,
+    // borderTopRightRadius: 16,
   },
   startDate: {
     marginEnd: 20,

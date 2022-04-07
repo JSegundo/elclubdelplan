@@ -79,7 +79,7 @@ const Coment = () => {
           multiline={true}
           style={styles.comentInput}
           onChangeText={onChangeText}
-          placeholder="coment"
+          placeholder="ingresa tu reseña"
           placeholderTextColor="#808080"
           value={coment}
         />
