@@ -1,15 +1,29 @@
-import React from 'react';
-import {Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
+import React, { useEffect } from 'react';
+import {Text, View, TextInput, Button, TouchableOpacity , FlatList ,Pressable} from 'react-native';
 import axios from 'axios';
+import {useNavigation} from '@react-navigation/native';
+import categories from '../utils/categories'
 import {ScrollView} from 'react-native-gesture-handler';
 
-const Register = ({navigation}) => {
+const Register = () => {
   const [name, onChangeName] = React.useState(null);
   const [email, onChangeText] = React.useState(null);
   const [psw, onChangePsw] = React.useState(null);
   const [number, onChangePhone] = React.useState(null);
   const [city, onChangeCity] = React.useState(null);
+  const [preferences , setPreferences] = React.useState([])
+  // const [categories, setCategories] = React.useState(null)
+  const navigation = useNavigation();
 
+
+  useEffect(()=> {
+    //  async function getCategories() {
+    //   const categories = await axios.get("http://localhost:3001/api/categories")
+    //   setCategories(categories)
+    // }
+    // getCategories()
+  }, [])
+  
   const onRegister = async () => {
     // let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(email);
 
@@ -28,19 +42,29 @@ const Register = ({navigation}) => {
       email,
       city,
       password: psw,
+      preferences
     };
+    console.log(preferences)
     console.log(newUser);
     try {
       const response = await axios.post(
         'http://localhost:3001/api/users/register',
         newUser,
       );
-      if (response) navigation.navigate('LogInScreen');
+    
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MiddleScreen' }],
+      });
       console.log(response);
     } catch (err) {
       console.log(err);
     }
   };
+  const handlePress = (item) => {
+   preferences.push(item.categoryName)
+  }
+
 
   return (
     <ScrollView
@@ -50,7 +74,7 @@ const Register = ({navigation}) => {
         marginBottom: 200,
       }}>
       <View style={styles.view}>
-        <Text style={styles.tittle}>Please register to see your Profile!</Text>
+        <Text style={styles.tittle}>Por favor registrate!</Text>
 
         <TextInput
           style={styles.input}
@@ -88,6 +112,23 @@ const Register = ({navigation}) => {
           placeholder="password"
           placeholderTextColor="#808080"
         />
+
+        <Text style= {styles.tittle}>Elije tus categorias preferidas</Text>
+        <FlatList
+          scrollEnabled={true}
+          contentContainerStyle={styles.flatListAlign}
+          numColumns={3}
+          data={categories}
+          renderItem={({ item }) => (
+            <Pressable
+                  style = {
+                    styles.pressable
+                  }
+              onPress={() => handlePress(item)}>
+              <Text >{item.categoryName}</Text>
+            </Pressable>
+          )}
+        />
         <TouchableOpacity onPress={onRegister} style={styles.buttonRegister}>
           <Text style={{color: 'white', textAlign: 'center', fontSize: 18}}>
             Register
@@ -103,7 +144,7 @@ const styles = {
     color: 'black',
     textAlign: 'center',
     fontSize: 20,
-    marginBottom: 50,
+    marginBottom: 30,
     marginTop: 10,
     fontWeight: 'bold',
   },
@@ -125,6 +166,7 @@ const styles = {
     marginVertical: 10,
     paddingVertical: 10,
     paddingHorizontal: 26,
+    color : '#111'
   },
   buttonRegister: {
     width: 300,
@@ -132,7 +174,26 @@ const styles = {
     marginVertical: 10,
     paddingVertical: 10,
     // paddingHorizontal: 20,
+    marginTop : 30,
     borderRadius: 6,
+  },
+  flatListAlign: {
+    
+    alignItems: 'center',
+    
+  },
+  pressable: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 2,
+    borderRadius: 15,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: '#208383',
+    margin: 8,
+    elevation: 5,
+    width: 90,
+    height: 40,
   },
 };
 export default Register;

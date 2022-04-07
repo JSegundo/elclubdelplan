@@ -28,8 +28,8 @@ const CardEvent = () => {
     startDate,
     endDate,
     paymentLimitDate,
-    totalPrice,
     description,
+    totalPrice,
     coments,
   } = item;
   const fakeMapImage =
@@ -66,7 +66,6 @@ const CardEvent = () => {
           <Text style={styles.text}> Empieza: {startDate?.split('T')[0]}</Text>
           <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
           <Text style={styles.text}>
-            {' '}
             Limite de confirmación: {paymentLimitDate?.split('T')[0]}
           </Text>
           {/* DATES */}
@@ -76,7 +75,7 @@ const CardEvent = () => {
           {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
 
           <Text> ARS ${totalPrice ? totalPrice : 0}</Text>
-          {/* <ButtonShare /> */}
+          <Text style={styles.text}> Compartir (componente de Gus) </Text>
 
           <View>
             {/* <Text style={styles.line}>─────────────────────────</Text> */}
@@ -170,7 +169,6 @@ const styles = StyleSheet.create({
     color: 'black',
     margin: 4,
   },
-
   image: {
     marginTop: 30,
     width: 250,

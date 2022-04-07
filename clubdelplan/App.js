@@ -1,36 +1,26 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet} from 'react-native';
-import Tabs from './src/navigation/Tabs.js';
-import Register from './src/screens/RegisterScreen.js';
-import LogInScreen from './src/screens/LogInScreen';
-import UserProfileScreen from './src/screens/UserProfileScreen.js';
-import CardEvent from './src/screens/CardEventScreen.js';
-import NewPlanScreen from './src/screens/NewPlanScreen.js';
-
-import OwnPlans from './src/screens/planesUserScreens/OwnPlans';
-import UserWillAttendPlans from './src/screens/planesUserScreens/UserWillAttendPlans';
-import UserHistoryPlans from './src/screens/planesUserScreens/UserHistoryPlans';
-import ComentScreen from "./src/screens/ComentScreen";
 
 // Configuracion de Store redux
-import {store} from './src/store/index';
+import {store} from './src/store/index.js';
 import {Provider} from 'react-redux';
-//--------------------------------------
+import HomeScreen from './src/screens/HomeScreen.js';
+import MiddleApp from './src/screens/MiddleApp.js';
 import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import {userData} from './src/store/user';
 import {LogBox} from 'react-native';
+//--------------------------------------
+
+const user_storage = '@userData';
+const token_storage = '@Token';
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
 ]);
-
-const token_storage = '@Token';
-const user_storage = '@userData';
 
 const Stack = createNativeStackNavigator();
 
@@ -72,35 +62,11 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="tabs"
-          component={Tabs}
+          name="MiddleApp"
           options={{headerShown: false}}
-        />
-        <Stack.Screen name="RegisterScreen" component={Register} />
-        <Stack.Screen name="LogInScreen" component={LogInScreen} />
-        <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
-        <Stack.Screen name="Plan" component={CardEvent} />
-        <Stack.Screen name="NewPlanScreen" component={NewPlanScreen} />
-        <Stack.Screen name="Comentarios" component={ComentScreen} />
-
-        <Stack.Screen
-          name="Tus planes"
-          component={OwnPlans}
-          options={{headerShadowVisible: false}}
-        />
-        <Stack.Screen
-          name="Fuiste invitado"
-          component={UserWillAttendPlans}
-          options={{headerShadowVisible: false}}
-        />
-        <Stack.Screen
-          name="Historial"
-          component={UserHistoryPlans}
-          options={{headerShadowVisible: false}}
-        />
+          component={MiddleApp}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
 export default appWrapper;

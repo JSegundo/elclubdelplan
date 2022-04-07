@@ -14,7 +14,6 @@ import axios from 'axios';
 import {Button} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {launchImageLibrary} from 'react-native-image-picker';
-// import FileBase64 from 'react-file-base64';
 
 const user_storage = '@userData';
 
@@ -28,11 +27,16 @@ const UserProfileScreen = () => {
   const [image, setImage] = useState(imgDefault);
 
   useEffect(() => {
+    console.log('aca');
     async function getUser() {
       let responseUser = await AsyncStorage.getItem(user_storage);
+      // let ImageUser = await AsyncStorage.getItem('@ImageUser')
+
       let infoUser = JSON.parse(responseUser);
 
       setUserInfo(infoUser);
+      console.log(infoUser);
+      console.log(userInfo);
     }
     getUser();
   }, []);
@@ -41,108 +45,108 @@ const UserProfileScreen = () => {
     try {
       await AsyncStorage.removeItem('@Token');
       await AsyncStorage.removeItem('@userData');
+      // await AsyncStorage.removeItem('@ImageUser');
       setToken(null);
+      navigation.replace('MiddleApp');
     } catch (err) {
       console.log(err);
       return false;
     }
   };
 
-  const selectImage = () => {
-    const options = {
-      title: 'Selecciona una imagen',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
+  // const selectImage = () => {
+  //   const options = {
+  //     title: 'Selecciona una imagen',
+  //     storageOptions: {
+  //       skipBackup: true,
+  //       path: 'images',
+  //     },
+  //   };
 
-    launchImageLibrary(options, response => {
-      if (response.errorCode) {
-        console.error(response.errorMessage);
-      } else if (response.didCancel) {
-        console.log('El usuario canceló');
-      } else {
-        const selectedImage = response.assets[0].uri;
-        setImage(selectedImage);
+  //   launchImageLibrary (options, response => {
+  //     if (response.errorCode) {
+  //       console.error(response.errorMessage);
+  //     } else if (response.didCancel) {
+  //       console.log('El usuario canceló');
+  //     } else {
+  //       const selectedImage = response.assets[0].uri;
+  //       setImage(selectedImage);
+  //       // async function setearImagen (){
 
-        // axios.put(`http://localhost:3001/api/users/img_data/${userInfo._id}` , image)
-      }
-    });
-  };
+  //       // }
+  //       // axios.put(`http://localhost:3001/api/users/img_data/${userInfo._id}` , image)
+  //     }
+  //   });
+  // };
 
-  console.log(userInfo);
-
-  return userInfo?.email && tokenUser !== null ? (
+  return (
     <ScrollView
-      contentContainerStyle={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 200,
-      }}>
-      {/* <ScrollView style={styles.profileWrapper}> */}
-      {image === imgDefault ? (
-        <Image
-          source={{
-            uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
-          }}
-          style={styles.imagen}
-        />
-      ) : (
-        <Image
-          source={{
-            uri: image,
-          }}
-          style={styles.imagen}
-        />
-      )}
-      <View>
-        <Button title={'Seleccionar foto de perfil'} onPress={selectImage} />
-      </View>
-      <Text style={{color: '#111', fontSize: 20, fontWeight: 'bold'}}>
-        {userInfo.name}
-      </Text>
-      <Text style={{color: '#111'}}>{userInfo.email}</Text>
-
-      {/* BOTONES PARA VER MIS PLANES  */}
-      <View style={styles.buttonsWrapper}>
-        <TouchableOpacity
-          style={styles.BtnNavigateToPlans}
-          onPress={() => navigation.navigate('Tus planes')}>
-          <View style={styles.textAndIconWrapper}>
-            <Text style={{color: 'white', fontSize: 16}}>Mis planes</Text>
-            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+      contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+      {userInfo?._id ? (
+        <>
+          <Image
+            source={{
+              uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
+            }}
+            style={styles.imagen}
+          />
+          <View>
+            <Button title={'Seleccionar foto de perfil'} />
           </View>
-        </TouchableOpacity>
+          <Text style={{color: '#111', fontSize: 20, fontWeight: 'bold'}}>
+            {userInfo.name}
+          </Text>
+          <Text style={{color: '#111'}}>{userInfo.email}</Text>
 
-        <TouchableOpacity
-          style={styles.BtnNavigateToPlans}
-          onPress={() => navigation.navigate('Fuiste invitado')}>
-          <View style={styles.textAndIconWrapper}>
-            <Text style={{color: 'white', fontSize: 16}}>
-              Planes que me invitaron
-            </Text>
-            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+          {/* BOTONES PARA VER MIS PLANES  */}
+          <View style={styles.buttonsWrapper}>
+            <TouchableOpacity
+              style={styles.BtnNavigateToPlans}
+              onPress={() => navigation.navigate('Tus planes')}>
+              <View style={styles.textAndIconWrapper}>
+                <Text style={{color: 'white', fontSize: 16}}>Mis planes</Text>
+                <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.BtnNavigateToPlans}
+              onPress={() => navigation.navigate('Editar preferencias')}>
+              <View style={styles.textAndIconWrapper}>
+                <Text style={{color: 'white', fontSize: 16}}>
+                  Editar tus preferencias
+                </Text>
+                <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.BtnNavigateToPlans}
+              onPress={() => navigation.navigate('Fuiste invitado')}>
+              <View style={styles.textAndIconWrapper}>
+                <Text style={{color: 'white', fontSize: 16}}>
+                  Planes que me invitaron
+                </Text>
+                <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.BtnNavigateToPlans}
+              onPress={() => navigation.navigate('Historial')}>
+              <View style={styles.textAndIconWrapper}>
+                <Text style={{color: 'white', fontSize: 16}}>Historial</Text>
+                <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.BtnNavigateToPlans}
-          onPress={() => navigation.navigate('Historial')}>
-          <View style={styles.textAndIconWrapper}>
-            <Text style={{color: 'white', fontSize: 16}}>Historial</Text>
-            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
-          </View>
-        </TouchableOpacity>
-      </View>
-      {/* BOTONES PARA VER MIS PLANES  */}
-
-      <TouchableOpacity onPress={logout} style={styles.logout}>
-        <Text style={{color: 'white', fontSize: 16}}>Cerrar sesión</Text>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={logout} style={styles.logout}>
+            <Text style={{color: 'white', fontSize: 16}}>Cerrar sesión</Text>
+          </TouchableOpacity>
+        </>
+      ) : null}
     </ScrollView>
-  ) : (
-    <LogInScreen />
   );
 };
 

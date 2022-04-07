@@ -26,6 +26,19 @@ const Log = () => {
   const [token, setToken] = React.useState(null);
   const navigation = useNavigation();
 
+  useEffect(() => {
+    async function getTokenAndUser() {
+      let responseToken = await AsyncStorage.getItem(token_storage);
+      let responseUser = await AsyncStorage.getItem(user_storage);
+      // console.log('aqui estoy esperando el store de user' , responseUser)
+      let tokenParsed = JSON.parse(responseToken);
+
+      setToken(tokenParsed);
+      setUser(responseUser);
+    }
+    getTokenAndUser();
+  }, []);
+
   const onSubmit = async () => {
     const valid = {
       email,
@@ -38,38 +51,23 @@ const Log = () => {
       );
       setUser(response.data.user);
       const tokenPrev = JSON.stringify(response.data.token);
+      // console.log(tokenPrev)
       setToken(tokenPrev);
       await AsyncStorage.setItem('@Token', tokenPrev);
+
+      // console.log('este este es el user onSubit', response.data.user);
       const userJson = JSON.stringify(response.data.user);
       await AsyncStorage.setItem('@userData', userJson);
+      navigation.replace('MiddleApp');
     } catch (e) {
       console.error(e);
     }
   };
-
-  useEffect(() => {
-    async function getTokenAndUser() {
-      try {
-        let responseToken = await AsyncStorage.getItem(token_storage);
-        let responseUser = await AsyncStorage.getItem(user_storage);
-        setToken(JSON.parse(responseToken));
-        setUser(JSON.parse(responseUser));
-      } catch ({err}) {
-        console.error({err});
-      }
-    }
-    getTokenAndUser();
-  }, []);
-
-  return token ? (
-    <UserProfileScreen />
-  ) : (
+  // console.log(user)
+  // console.log(token)
+  return (
     <ScrollView
-      contentContainerStyle={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 200,
-      }}>
+      contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
       <View style={styles.view}>
         <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
         <Text style={styles.tittle}>
@@ -93,7 +91,7 @@ const Log = () => {
         <TouchableOpacity
           style={styles.buttonLogin}
           onPress={() => {
-            navigation.navigate('RegisterScreen');
+            navigation.navigate('Register');
           }}>
           <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
             Registrarse
@@ -143,6 +141,7 @@ const styles = {
     borderWidth: 4,
     padding: 10,
     borderRadius: 10,
+    color: '#111',
     borderColor: '#208383',
     marginVertical: 10,
     paddingVertical: 10,
