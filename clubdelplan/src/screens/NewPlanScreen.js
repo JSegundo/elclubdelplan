@@ -8,20 +8,16 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import DateField from 'react-native-datefield';
-import {Button, CheckBox, Icon} from 'react-native-elements';
-import {Input} from 'react-native-elements';
+import {Button, CheckBox, Icon, Input} from 'react-native-elements';
 import {Dropdown} from 'react-native-element-dropdown';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import {useNavigation} from '@react-navigation/native';
-import axios from 'axios';
 import {useDispatch} from 'react-redux';
 import {createEvent} from '../store/event';
-
 import {launchImageLibrary} from 'react-native-image-picker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import DateField from 'react-native-datefield';
+import axios from 'axios';
 
 const NewPlanScreen = () => {
   const navigation = useNavigation();
@@ -38,6 +34,9 @@ const NewPlanScreen = () => {
   const [pricePerPerson, setPricePerPerson] = useState(null);
   const [privadoCheck, setPrivadoCheck] = useState(true);
   const [submited, setSubmited] = useState(false);
+
+  const [Plan, setPlan] = useState(null);
+
   // state categories for dropdown input
   const [allCategories, setAllCategories] = useState(null);
   // GET list of categories available
@@ -95,19 +94,34 @@ const NewPlanScreen = () => {
     name: text,
     description,
     location,
-    date: [startDate, endDate, paymentLimitDate],
+    startDate,
+    endDate,
+    paymentLimitDate,
     privado: privadoCheck,
     category,
     image,
     pricePerPerson,
   };
 
+  const refreshPage = () => {
+    onChangeText('');
+    onChangeDescription('');
+    setCategory('');
+    onChangeLocation('');
+    setStartDate(new Date());
+    setEndDate(new Date());
+    setPaymentLimitDate(new Date());
+    setImage('https://via.placeholder.com/300x150');
+    setPricePerPerson('');
+    setPrivadoCheck(true);
+    setSubmited(false);
+  };
+
   const onSubmit = e => {
     e.preventDefault();
-
     setSubmited(true);
-    console.log(newPlan);
-    dispatch(createEvent(newPlan));
+    console.log(' nuevo plan on submit', newPlan);
+    dispatch(createEvent(newPlan)).then(res => setPlan(res.payload));
   };
 
   return (
@@ -165,7 +179,9 @@ const NewPlanScreen = () => {
           name="calendar"
           style={{textAlign: 'center', color: 'green', fontSize: 20}}
         />
+
         <Text style={styles.dateTitle}>Cuando inicia el evento?</Text>
+
         <View style={styles.datePickerWrapper}>
           <DateField
             style={{justifyContent: 'center'}}
@@ -240,14 +256,26 @@ const NewPlanScreen = () => {
         )}
         {/* SEND DATA*/}
         {submited ? (
-          <TouchableOpacity
-            style={styles.btnVerPlan}
-            onPress={() => navigation.navigate('Plan', {item: newPlan})}>
-            <Text style={{color: 'white', textAlign: 'center'}}>Ver plan</Text>
-            <Ionicons
-              style={styles.btnIcon}
-              name="checkmark-outline"></Ionicons>
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity
+              style={styles.btnVerPlan}
+              onPress={() => navigation.navigate('Plan', {item: Plan})}>
+              <Text style={{color: 'white', textAlign: 'center'}}>
+                Ver plan
+              </Text>
+              <Ionicons
+                style={styles.btnIcon}
+                name="checkmark-outline"></Ionicons>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnCrearPlan} onPress={refreshPage}>
+              <Text style={{color: 'white', textAlign: 'center'}}>
+                Crear otro plan
+              </Text>
+              <Ionicons
+                style={styles.btnIcon}
+                name="checkmark-outline"></Ionicons>
+            </TouchableOpacity>
+          </View>
         ) : (
           <TouchableOpacity style={styles.btnCrearPlan} onPress={onSubmit}>
             <Text style={{color: 'white', textAlign: 'center'}}>

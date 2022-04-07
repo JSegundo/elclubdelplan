@@ -11,8 +11,8 @@ export const getAllComents = createAsyncThunk('COMENTS', async (eventId) => {
 });
 
 export const createComent = createAsyncThunk('CREATE_COMENT', async (newComent, thunkAPI) => {
-    const { user, event } = thunkAPI.getState();
-    const eventId = event._id;
+    const { user, singleEvent } = thunkAPI.getState();
+    const eventId = singleEvent._id;
     const token = user.token;
     try {
         const res = await axios.post(
