@@ -80,9 +80,7 @@ const CardEvent = () => {
           <View>
             {/* <Text style={styles.line}>─────────────────────────</Text> */}
             <Text style={styles.subtitle}>Descripción</Text>
-            <Text style={styles.text}>
-              {description ? description : 'no hay description'}
-            </Text>
+            <Text style={styles.text}>{description}</Text>
           </View>
 
           <View>
@@ -93,18 +91,17 @@ const CardEvent = () => {
           </View>
 
           <View>
-            <Text style={styles.line}>─────────────────────────</Text>
+            {/* <Text style={styles.line}>─────────────────────────</Text>
             <Text style={styles.subtitle}>Más eventos como este</Text>
-            <Text style={styles.text}>--Carrousel--</Text>
+            <Text style={styles.text}>--Carrousel--</Text> */}
           </View>
 
           {/* poner el button -fixed- at the buttom of the screen */}
 
-          <TouchableOpacity style={styles.buttonWrap}>
+          {/* <TouchableOpacity style={styles.buttonWrap}>
             <Text style={styles.button}>Compartir evento</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
-
         {eventDate.getTime() < dateNow.getTime() ? (
           <View style={styles.comentWrapper}>
             <Text style={styles.line}>─────────────────────────</Text>
@@ -117,13 +114,13 @@ const CardEvent = () => {
               renderItem={({item}) => renderItem(item)}
             />
           </View>
-        ) : null}
+        ) : (
+          <ButtonShare item={item} />
+        )}
         {eventDate.getTime() < dateNow.getTime() ? (
           <TouchableOpacity
             style={styles.buttonWrap}
-            onPress={() =>
-              navigation.navigate('Detalles de entrada', {item: item})
-            }>
+            onPress={() => navigation.navigate('Comentarios', {id: item._id})}>
             <Text style={styles.button}>Comentar</Text>
           </TouchableOpacity>
         ) : null}

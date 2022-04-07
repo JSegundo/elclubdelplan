@@ -2,7 +2,8 @@ const events = [
   {
     id: 1,
     name: "Lollapalooza",
-    description: "z",
+    description:
+      "Lollapalooza​ es un festival musical de los Estados Unidos que originalmente ofrecía bandas de rock alternativo, indie y punk rock; también hay actuaciones cómicas y de danza. Concebido en 1991 por Perry Farrell, cantante de Jane's Addiction, Lollapalooza se realizó anualmente hasta 1997 y fue revivido en 2003.",
     image:
       "https://pbs.twimg.com/profile_images/1500933654830276608/PBf2KquH_400x400.jpg",
     startDate: new Date(2022, 04, 21),
@@ -18,7 +19,8 @@ const events = [
   {
     id: 2,
     name: "Cosquín Rock",
-    description: "lorem ipsum...",
+    description:
+      "El Cosquín Rock es un festival de música que se lleva a cabo anualmente, desde 2001, en la provincia de Córdoba, con una duración promedio de 2 a 3 días.",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpE500YCm2dI6vMH2K6qMuPgMkDvJALf9RRg&usqp=CAU",
 
@@ -35,7 +37,8 @@ const events = [
   {
     id: 3,
     name: "Quilmes Rock",
-    description: "lorem ipsum...",
+    description:
+      "Quilmes Rock es una presentación musical anual patrocinada por Cervecería Quilmes y realizada en Argentina. Convoca tanto a artistas argentinos como así también de otras nacionalidades. ",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVjZhYW7SVyf8Akzzd-NNqmzXVEpJ6svC62Q&usqp=CAU",
 
@@ -55,7 +58,8 @@ const events = [
   {
     id: 4,
     name: "Coldplay",
-    description: "lorem ipsum...",
+    description:
+      "Coldplay es una banda británica de pop rock y rock alternativo formada en Londres en 1996.​​ Está integrada por Chris Martin, Jon Buckland, Guy Berryman y Will Champion. Es uno de los grupos más relevantes de principios de la década de los 2000. Wikipedia",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0Kt5VeujJ0DyJ2SXR956PDmi0sgAtcGKZhg&usqp=CAU",
 
@@ -75,7 +79,8 @@ const events = [
   {
     id: 5,
     name: "Cumpleaños Marcos",
-    description: "lorem ipsum...",
+    description:
+      "Hola amigues, hago mi cumple el día 21 de Abril. Tienen todos los detalles en el evento. PD: El que no trae regalo, no entra.",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEesccfOXtsDa18cKUjoB0aL8xtPr9-1gyWQ&usqp=CAU",
 
@@ -94,7 +99,8 @@ const events = [
   {
     id: 6,
     name: "Cumpleaños Agustina",
-    description: "lorem ipsum...",
+    description:
+      "Hola amigues, los invito a mi birthday. Tienen todos los detalles en el evento. PD: El que no trae regalo, no entra.",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0TgWEh39xjel0fQfshgcY3TrSyn21hsj_Xg&usqp=CAU",
 
@@ -113,7 +119,8 @@ const events = [
   {
     id: 7,
     name: "Cumpleaños Maggy",
-    description: "lorem ipsum...",
+    description:
+      "Hola amigues, los invito a mi birthday. Tienen todos los detalles en el evento. PD: El que no trae regalo, no entra.",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREmFuC9yq-ZFwYGiyDNPXbjdyzB5gyNQHiGw&usqp=CAU",
 
@@ -133,7 +140,8 @@ const events = [
   {
     id: 8,
     name: "Cumpleaños Gonzalo",
-    description: "lorem ipsum...",
+    description:
+      "Hola amigues, los invito a mi birthday. Tienen todos los detalles en el evento. PD: El que no trae regalo, no entra.",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCy-dcspdIfjaL6dDUiRTP_LnFWGcA0kszMw&usqp=CAU",
 
@@ -152,7 +160,7 @@ const events = [
   {
     id: 9,
     name: "After Office Globant",
-    description: "lorem ipsum...",
+    description: "Muchaches, hacemos after después de la ofi, no falten...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxc21-gVXu_MP75NtGhUb1ZgOUBul90D2XRg&usqp=CAU",
 
@@ -171,7 +179,7 @@ const events = [
   {
     id: 10,
     name: "After Office Santex",
-    description: "lorem ipsum...",
+    description: "Muchaches, hacemos after después de la ofi, no falten...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCy-dcspdIfjaL6dDUiRTP_LnFWGcA0kszMw&usqp=CAU",
 
@@ -190,7 +198,7 @@ const events = [
   {
     id: 11,
     name: "After Office Apex",
-    description: "lorem ipsum...",
+    description: "Muchaches, hacemos after después de la ofi, no falten...",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpeUvbserY2xOoPDrsGXRBZJ_sbQB4c6pWQQ&usqp=CAU",
 
@@ -209,7 +217,8 @@ const events = [
   {
     id: 12,
     name: "Futbol 7 - Juan",
-    description: "lorem ipsum...",
+    description:
+      "Se arma fulbito, va a ser mixto. La idea es quedarnos a tomar algo después del partido.",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
 
@@ -227,7 +236,8 @@ const events = [
   {
     id: 13,
     name: "Futbol 7 - Marcos",
-    description: "lorem ipsum...",
+    description:
+      "Se arma fulbito, va a ser mixto. La idea es quedarnos a tomar algo después del partido.",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
 
@@ -245,7 +255,8 @@ const events = [
   {
     id: 14,
     name: "Futbol 7 - Micaela",
-    description: "lorem ipsum...",
+    description:
+      "Se arma fulbito, va a ser mixto. La idea es quedarnos a tomar algo después del partido.",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
 
@@ -264,7 +275,8 @@ const events = [
   {
     id: 15,
     name: "Futbol 7 - Pedro",
-    description: "lorem ipsum...",
+    description:
+      "Se arma fulbito, va a ser mixto. La idea es quedarnos a tomar algo después del partido.",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
 
@@ -283,7 +295,7 @@ const events = [
   {
     id: 16,
     name: "Lista Flor ",
-    description: "lorem ipsum...",
+    description: "Nos juntamos a tomar algo",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyP3Hr_QSJrNZhIxvJnxi98mD4SFnUyoUD8sPiGEAWYTdHV4JIRIG9q5Y8Z8zWaxugiSE&usqp=CAU",
 
@@ -302,7 +314,8 @@ const events = [
   {
     id: 17,
     name: "Lista Agus",
-    description: "lorem ipsum...",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyP3Hr_QSJrNZhIxvJnxi98mD4SFnUyoUD8sPiGEAWYTdHV4JIRIG9q5Y8Z8zWaxugiSE&usqp=CAU",
 
@@ -321,7 +334,8 @@ const events = [
   {
     id: 18,
     name: "Lista Cande",
-    description: "lorem ipsum...",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyP3Hr_QSJrNZhIxvJnxi98mD4SFnUyoUD8sPiGEAWYTdHV4JIRIG9q5Y8Z8zWaxugiSE&usqp=CAU",
     startDate: new Date(2022, 04, 21),
@@ -339,7 +353,8 @@ const events = [
   {
     id: 19,
     name: "Spydi y sus amigos",
-    description: "lorem ipsum...",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIWCNfj4tROoI0ZQRLa_dpI-_76pvNY-o5cQ&usqp=CAU",
 
@@ -359,7 +374,8 @@ const events = [
   {
     id: 20,
     name: "Batman",
-    description: "lorem ipsum...",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
     image:
       "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.rNWoTqiGrlXCznxK5vnRpwHaEK%26pid%3DApi&f=1",
 
@@ -379,7 +395,8 @@ const events = [
   {
     id: 21,
     name: "Spiderman",
-    description: "lorem ipsum...",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIWCNfj4tROoI0ZQRLa_dpI-_76pvNY-o5cQ&usqp=CAU",
     startDate: new Date(2022, 04, 14),
@@ -397,7 +414,8 @@ const events = [
   {
     id: 22,
     name: "Kolombo",
-    description: "lorem ipsum...",
+    description:
+      "El belga Olivier Grégoire, conocido como el «genio del groove», se ha convertido en uno de los artistas más reconocidos y respetados de la escena musical. Se destaca por su espíritu innovador y creativo, ingredientes clave para el éxito cosechado hasta el momento. No te duermas con las entradas, 17/6.",
     image: "https://virtualtkt.com/repo/images/VAG4X9.jpg",
     startDate: new Date(2022, 06, 17),
     endDate: new Date(2022, 06, 18),
@@ -415,7 +433,8 @@ const events = [
   {
     id: 23,
     name: "Hernán Cattáneo",
-    description: "lorem ipsum...",
+    description:
+      "Hernán Cattaneo es un DJ y productor argentino, que se dedica principalmente al Progressive House.​ En el año 2018, ganó el premio al mejor DJ en este género otorgado por DJ Awards de Ibiza.",
     image:
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/536/860/products/libro-hernan-cattaneo1-4d6d150966d1dce0fa16230298728167-480-0.jpg",
 
@@ -435,7 +454,8 @@ const events = [
   {
     id: 24,
     name: "Feria degustar",
-    description: "lorem ipsum...",
+    description:
+      "El gobierno municipal invita a los vecinos y las vecinas a participar de esta la Feria donde podrán visitar puestos de artesanías y propuestas gastronómicas",
     image:
       "https://www.infobae.com/new-resizer/wd2nNWDrR-JsJvAgXNGQtbZeOvs=/1200x900/filters:format(webp:quality(85//s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20114815/vinos-41.jpg",
 
@@ -455,7 +475,8 @@ const events = [
   {
     id: 25,
     name: "Maldini Fest",
-    description: "lorem ipsum...",
+    description:
+      "Maldini es un espacio donde predomina la buena vibra y el clima festivo. Bajo lucecitas, banderines y mesas al aire libre, propone ser la casa de encuentros entre amigos, familias y parejas, y se prepara para convertirse en uno de los principales spots de la ciudad en la temporada que está por comenzar.",
     image:
       "https://www.saavedraonline.com.ar/wp-content/uploads/2020/03/maldini.jpg",
 
@@ -474,7 +495,8 @@ const events = [
   {
     id: 26,
     name: "Pltz",
-    description: "lorem ipsum...",
+    description:
+      "PLTZ Street Pub abrió sus puertas el pasado viernes 4 de diciembre en el polo gastronómico del ex Paseo de la Infanta en Palermo a pasos del Rosedal. Con una propuesta diferente y disruptiva, que viene a responder a una necesidad tajante del público de reunirse en lugares descontracturados y versátiles. ",
     image:
       "https://i0.wp.com/revistag7.com/wp-content/uploads/2021/02/MG_6734_edicion_alta.jpg?fit=1080%2C720&ssl=1",
     startDate: new Date(2022, 06, 14),
@@ -491,7 +513,8 @@ const events = [
   {
     id: 27,
     name: "Teatro Ciego",
-    description: "lorem ipsum...",
+    description:
+      "Somos una compañía de teatro experta en contar historias en absoluta oscuridad. Cada obra es un mundo y una aventura en la que te invitamos a jugar mas allá.",
     image:
       "https://encolombia.com/wp-content/uploads/2021/07/Elementos-del-Teatro.jpg",
 
@@ -510,7 +533,8 @@ const events = [
   {
     id: 28,
     name: "A ciegas Gourmet",
-    description: "lorem ipsum...",
+    description:
+      "A Ciegas Gourmet Show teatral y musical gourmet en completa oscuridad. Jueves, viernes, sábados y domingos 21 hs. Valor de la entrada $3800.",
     image:
       "https://offloadmedia.feverup.com/madridsecreto.co/wp-content/uploads/2021/03/03044328/dining-in-the-dark-madrid-3.jpg",
 
@@ -524,13 +548,14 @@ const events = [
     isPrivate: false,
 
     category: "Gastronomy",
-    totalPrice: 600,
+    totalPrice: 3800,
     destacado: true,
   },
   {
     id: 29,
     name: "The Hobbit",
-    description: "lorem ipsum...",
+    description:
+      "La trilogía de El hobbit, adaptación cinematográfica basada en la novela homónima, comprende tres películas épicas de fantasía, acción y aventuras: El hobbit: un viaje inesperado.",
     image: "https://wallpaperaccess.com/full/830842.jpg",
 
     startDate: new Date(2022, 06, 14),
@@ -549,7 +574,8 @@ const events = [
   {
     id: 30,
     name: "Dune",
-    description: "lorem ipsum...",
+    description:
+      "Arrakis, también denominado Dune, se ha convertido en el planeta más importante del universo. A su alrededor comienza una gigantesca lucha por el poder que culmina en una guerra interestelar.",
     image:
       "https://lh3.googleusercontent.com/-km726JvA5ds/YTlfBh2p8dI/AAAAAAAAOCo/3iyoTQtCoBArMzkOP2Q9tDgmfAneRwZJgCLcBGAsYHQ/w437-h640/E-xdddtWQAQ3YLh.jpg",
 

@@ -7,6 +7,7 @@ export const userOwnPlans = createAsyncThunk(
     try {
       const {user} = thunkAPI.getState();
       const token = user.token;
+      console.log('TOKENNNNNNNNNN', token);
       const res = await axios.get(`http://localhost:3001/api/events/me`, {
         headers: {authorization: `Bearer ${token}`},
       });
