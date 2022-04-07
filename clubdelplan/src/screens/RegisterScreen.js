@@ -166,6 +166,7 @@ const styles = {
     marginVertical: 10,
     paddingVertical: 10,
     paddingHorizontal: 26,
+    color : '#111'
   },
   buttonRegister: {
     width: 300,
