@@ -11,7 +11,7 @@ class ComentsController{
 
   static async addComent(req, res, next){
     const coment = await ComentsService.serviceAddComent(req, next);
-    return res.status(201).send(coment);
+    return coment ? res.status(201).json(coment) : res.sendStatus(404);
   };
   
 }

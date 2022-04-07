@@ -54,7 +54,7 @@ function App() {
     }
     getTokenAndUser();
   }, []);
-  console.log('hola!! esto es APP');
+
   useEffect(() => {
     if (!token) return;
     if (!user?._id) return;
