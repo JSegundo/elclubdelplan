@@ -17,6 +17,7 @@ const user_storage = '@userData';
 
 import {userData} from '../store/user';
 import {useDispatch} from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Log = () => {
   const [email, onChangeText] = React.useState(null);
@@ -63,7 +64,12 @@ const Log = () => {
   return token ? (
     <UserProfileScreen />
   ) : (
-    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+    <ScrollView
+      contentContainerStyle={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 200,
+      }}>
       <View style={styles.view}>
         <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
         <Text style={styles.tittle}>
@@ -99,7 +105,7 @@ const Log = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

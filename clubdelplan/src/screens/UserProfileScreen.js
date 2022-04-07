@@ -74,7 +74,13 @@ const UserProfileScreen = () => {
   console.log(userInfo);
 
   return userInfo?.email && tokenUser !== null ? (
-    <View style={styles.profileWrapper}>
+    <ScrollView
+      contentContainerStyle={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 200,
+      }}>
+      {/* <ScrollView style={styles.profileWrapper}> */}
       {image === imgDefault ? (
         <Image
           source={{
@@ -99,7 +105,7 @@ const UserProfileScreen = () => {
       <Text style={{color: '#111'}}>{userInfo.email}</Text>
 
       {/* BOTONES PARA VER MIS PLANES  */}
-      <ScrollView style={styles.buttonsWrapper}>
+      <View style={styles.buttonsWrapper}>
         <TouchableOpacity
           style={styles.BtnNavigateToPlans}
           onPress={() => navigation.navigate('Tus planes')}>
@@ -128,13 +134,13 @@ const UserProfileScreen = () => {
             <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
           </View>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
       {/* BOTONES PARA VER MIS PLANES  */}
 
       <TouchableOpacity onPress={logout} style={styles.logout}>
         <Text style={{color: 'white', fontSize: 16}}>Cerrar sesión</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   ) : (
     <LogInScreen />
   );
@@ -182,6 +188,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 26,
     borderRadius: 8,
+    marginBottom: 100,
   },
 });
 
