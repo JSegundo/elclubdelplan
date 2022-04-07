@@ -27,9 +27,11 @@ const Log = () => {
       let responseToken = await AsyncStorage.getItem(token_storage);
       let responseUser = await AsyncStorage.getItem(user_storage);
       // console.log('aqui estoy esperando el store de user' , responseUser)
-      setToken(responseToken);
+      let tokenParsed = JSON.parse(responseToken)
+
+      setToken(tokenParsed);
       setUser(responseUser);
-      // console.log('aqui seteo al renderizar el user' , token)
+
     }
     getTokenAndUser();
   }, []);
@@ -47,22 +49,22 @@ const Log = () => {
       );
       setUser(response.data.user);
       const tokenPrev = JSON.stringify(response.data.token);
+      // console.log(tokenPrev)
       setToken(tokenPrev);
       await AsyncStorage.setItem('@Token', tokenPrev);
 
-      console.log('este este es el user onSubit', response.data.user);
+      // console.log('este este es el user onSubit', response.data.user);
       const userJson = JSON.stringify(response.data.user);
 
       await AsyncStorage.setItem('@userData', userJson);
+      navigation.replace('MiddleApp')
     } catch (e) {
       console.error(e);
     }
   };
   // console.log(user)
   // console.log(token)
-  return token ? (
-    <UserProfileScreen />
-  ) : (
+  return  (
     <View style={{justifyContent: 'center', alignItems: 'center'}}>
       <View style={styles.view}>
         <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
@@ -87,7 +89,7 @@ const Log = () => {
         <TouchableOpacity
           style={styles.buttonLogin}
           onPress={() => {
-            navigation.navigate('RegisterScreen');
+            navigation.navigate('Register');
           }}>
           <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
             Registrarse

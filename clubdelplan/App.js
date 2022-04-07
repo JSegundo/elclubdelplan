@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -11,57 +11,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import OwnPlans from './src/screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from './src/screens/planesUserScreens/UserWillAttendPlans';
 import UserHistoryPlans from './src/screens/planesUserScreens/UserHistoryPlans';
+import middleScreen from './src/screens/MiddleScreen.js';
 
 // Configuracion de Store redux
 import {store} from './src/store/index.js';
 import {Provider} from 'react-redux';
+import HomeScreen from './src/screens/HomeScreen.js';
+import MiddleApp from './src/screens/MiddleApp.js';
 //--------------------------------------
 
 const user_storage = '@userData';
 
 const Stack = createNativeStackNavigator();
 
+
 function App() {
-  // useEffect(() => {
-  //   async function getUser() {
-  //     let responseUser = await AsyncStorage.getItem(user_storage);
-  //     // let ImageUser = await AsyncStorage.getItem('@ImageUser')
-
-  //     let infoUser = JSON.parse(responseUser);
-
-  //     setUserInfo(infoUser);
-  //     setImage(ImageUser)
-  //   }
-  //   getUser();
-  // }, []);
 
   return (
+    
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="tabs"
-          component={Tabs}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen name="RegisterScreen" component={Register} />
-        <Stack.Screen name="LogInScreen" component={LogInScreen} />
-        <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
-        <Stack.Screen
-          name="Tus planes"
-          component={OwnPlans}
-          options={{headerShadowVisible: false}}
-        />
-        <Stack.Screen
-          name="Fuiste invitado"
-          component={UserWillAttendPlans}
-          options={{headerShadowVisible: false}}
-        />
-        <Stack.Screen
-          name="Historial"
-          component={UserHistoryPlans}
-          options={{headerShadowVisible: false}}
-        />
-      </Stack.Navigator>
+        <Stack.Navigator>
+          <Stack.Screen name="MiddleApp" options={{headerShown: false}} component={MiddleApp} ></Stack.Screen>
+        </Stack.Navigator> 
     </NavigationContainer>
   );
 }

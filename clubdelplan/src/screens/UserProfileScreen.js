@@ -29,14 +29,16 @@ const UserProfileScreen = () => {
   const [image, setImage] = useState(imgDefault);
 
   useEffect(() => {
+    console.log('aca')
     async function getUser() {
       let responseUser = await AsyncStorage.getItem(user_storage);
       // let ImageUser = await AsyncStorage.getItem('@ImageUser')
-
+      
       let infoUser = JSON.parse(responseUser);
-
+      
       setUserInfo(infoUser);
-      setImage(ImageUser)
+      console.log(infoUser)
+      console.log(userInfo)
     }
     getUser();
   }, []);
@@ -47,58 +49,51 @@ const UserProfileScreen = () => {
       await AsyncStorage.removeItem('@userData');
       // await AsyncStorage.removeItem('@ImageUser');
       setToken(null);
+      navigation.replace('MiddleApp')
     } catch (err) {
       console.log(err);
       return false;
     }
   };
 
-  const selectImage = () => {
-    const options = {
-      title: 'Selecciona una imagen',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
+  // const selectImage = () => {
+  //   const options = {
+  //     title: 'Selecciona una imagen',
+  //     storageOptions: {
+  //       skipBackup: true,
+  //       path: 'images',
+  //     },
+  //   };
 
-    launchImageLibrary (options, response => {
-      if (response.errorCode) {
-        console.error(response.errorMessage);
-      } else if (response.didCancel) {
-        console.log('El usuario canceló');
-      } else {
-        const selectedImage = response.assets[0].uri;
-        setImage(selectedImage);
-        // async function setearImagen (){
+  //   launchImageLibrary (options, response => {
+  //     if (response.errorCode) {
+  //       console.error(response.errorMessage);
+  //     } else if (response.didCancel) {
+  //       console.log('El usuario canceló');
+  //     } else {
+  //       const selectedImage = response.assets[0].uri;
+  //       setImage(selectedImage);
+  //       // async function setearImagen (){
 
-        // }
-        // axios.put(`http://localhost:3001/api/users/img_data/${userInfo._id}` , image)
-      }
-    });
-  };
+  //       // }
+  //       // axios.put(`http://localhost:3001/api/users/img_data/${userInfo._id}` , image)
+  //     }
+  //   });
+  // };
 
-  console.log(userInfo);
 
-  return userInfo?.email && tokenUser !== null ? (
+  return (
     <View style={styles.profileWrapper}>
-      {image === imgDefault ? (
+    { userInfo?._id ? 
+      <>
         <Image
           source={{
             uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
           }}
           style={styles.imagen}
         />
-      ) : (
-        <Image
-          source={{
-            uri: image,
-          }}
-          style={styles.imagen}
-        />
-      )}
       <View>
-        <Button title={'Seleccionar foto de perfil'} onPress={selectImage} />
+        <Button title={'Seleccionar foto de perfil'}  />
       </View>
       <Text style={{color: '#111', fontSize: 20, fontWeight: 'bold'}}>
         {userInfo.name}
@@ -106,7 +101,7 @@ const UserProfileScreen = () => {
       <Text style={{color: '#111'}}>{userInfo.email}</Text>
       <TouchableOpacity></TouchableOpacity>
 
-      {/* BOTONES PARA VER MIS PLANES  */}
+      
       <ScrollView style={styles.buttonsWrapper}>
         <TouchableOpacity
           style={styles.BtnNavigateToPlans}
@@ -117,6 +112,15 @@ const UserProfileScreen = () => {
           </View>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={styles.BtnNavigateToPlans}
+          onPress={() => navigation.navigate('Editar preferencias')}>
+          <View style={styles.textAndIconWrapper}>
+            <Text style={{color: 'white', fontSize: 16}}>Editar tus preferencias</Text>
+            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+          </View>
+        </TouchableOpacity>
+          
         <TouchableOpacity
           style={styles.BtnNavigateToPlans}
           onPress={() => navigation.navigate('Fuiste invitado')}>
@@ -137,15 +141,17 @@ const UserProfileScreen = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-      {/* BOTONES PARA VER MIS PLANES  */}
+   
 
       <TouchableOpacity onPress={logout} style={styles.logout}>
         <Text style={{color: 'white', fontSize: 16}}>Cerrar sesión</Text>
-      </TouchableOpacity>
+      </TouchableOpacity>  
+      </>
+      :
+      null
+      }
     </View>
-  ) : (
-    <LogInScreen />
-  );
+  )
 };
 
 const styles = StyleSheet.create({
