@@ -1,7 +1,14 @@
-import { View, Text, StyleSheet, TouchableOpacity, Pressable, Button } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+  Button,
+} from 'react-native';
 import React from 'react';
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
@@ -12,9 +19,7 @@ import middleScreen from '../screens/MiddleScreen';
 
 const Tab = createBottomTabNavigator();
 
-const Tabs = ({ user }) => {
-
-
+const Tabs = ({user}) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -40,7 +45,7 @@ const Tabs = ({ user }) => {
           // headerTransparent: true,
           headerShadowVisible: false,
           // headerTitleStyle: {color: '#900'},
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color="#900" />
           ),
         }}
@@ -69,13 +74,13 @@ const Tabs = ({ user }) => {
         options={{
           headerShown: true,
           headerShadowVisible: false,
-          headerRight: () => (
-            <Button
-              onPress={() => alert('This is a button!')}
-              title="Info"
-              color="#111"
-            />),
-          tabBarIcon: ({ color }) => (
+          // headerRight: () => (
+          //   <Button
+          //     onPress={() => alert('This is a button!')}
+          //     title="Info"
+          //     color="#111"
+          //   />),
+          tabBarIcon: ({color}) => (
             <Ionicons name="person-outline" size={22} color="#900" />
           ),
         }}

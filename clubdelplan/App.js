@@ -54,6 +54,7 @@ function App() {
   useEffect(() => {
     if (!token) return;
     if (!user?._id) return;
+    console.log('SE RENDERIZO APP');
     // const userid = user._id;
     dispatch(userData(token));
   }, [user, token]);

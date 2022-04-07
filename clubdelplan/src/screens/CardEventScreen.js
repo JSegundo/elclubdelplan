@@ -16,6 +16,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import ButtonShare from '../components/ButtonShare';
 import emptyStar from '../assets/star_corner.png';
 import fullStar from '../assets/star_filled.png';
+import {useSelector, useDispatch} from 'react-redux';
 
 const CardEvent = () => {
   const navigation = useNavigation();
@@ -23,6 +24,9 @@ const CardEvent = () => {
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
   const [defaultRating, setDefaultRating] = useState(1);
 
+  const user = useSelector(state => state.user);
+
+  console.log('ESTE ES EL USUARIO --->  ', user);
 
   const {item} = route.params;
   console.log('ITEM! EVENT DETAILS: --> ', item);
@@ -82,16 +86,6 @@ const CardEvent = () => {
             <Image style={styles.image} source={{uri: image}} />
           </View>
           <Text style={styles.title}>{name}</Text>
-          <Text style={styles.text}>
-            <Ionicons
-              name="pin"
-              style={{
-                color: '#208383',
-                fontSize: 20,
-              }}
-            />
-            {location}
-          </Text>
 
           <Text style={styles.text}> Empieza: {startDate?.split('T')[0]}</Text>
           <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
@@ -101,6 +95,7 @@ const CardEvent = () => {
             </Text>
           ) : null}
           {/* DATES */}
+          <Text>{user.name}</Text>
 
           {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
           <Text style={styles.text}>Hora de inicio: {time} hs</Text>
@@ -108,7 +103,6 @@ const CardEvent = () => {
           <Text style={styles.text}>
             Precio: ARS ${pricePerPerson ? pricePerPerson : 0}
           </Text>
-
 
           <View styles={{}}>
             <Text style={styles.subtitle}>Descripción</Text>
@@ -143,8 +137,7 @@ const CardEvent = () => {
 
           {eventDate.getTime() < dateNow.getTime() ? (
             <View style={styles.comentWrapper}>
-              <Text style={styles.line}>─────────────────────────</Text>
-              <Text style={styles.subtitle}>Dejá tu reseña</Text>
+              <Text style={styles.subtitle}>Reseñas de usuarios</Text>
               <FlatList
                 contentContainerStyle={{paddingTop: 40}}
                 showsHorizontalScrollIndicator={false}
@@ -156,7 +149,8 @@ const CardEvent = () => {
           ) : (
             <ButtonShare item={item} />
           )}
-          {eventDate.getTime() < dateNow.getTime() ? (
+
+          {user?._id && eventDate.getTime() < dateNow.getTime() ? (
             <TouchableOpacity
               style={styles.buttonWrap}
               onPress={() =>
