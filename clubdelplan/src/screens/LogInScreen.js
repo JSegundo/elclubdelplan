@@ -1,69 +1,58 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
   TextInput,
-  Button,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import UserProfileScreen from './UserProfileScreen';
-import {useNavigation} from '@react-navigation/native';
-
-const token_storage = '@Token';
-const user_storage = '@userData';
-
-import {userData} from '../store/user';
-import {useDispatch} from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import { userData, userLogin } from "../store/user";
 
 const Log = () => {
-  const [email, onChangeText] = React.useState(null);
-  const [psw, onChangeNumber] = React.useState(null);
-  const [user, setUser] = React.useState(null);
-  const [token, setToken] = React.useState(null);
-  const navigation = useNavigation();
+  const [email, onChangeText] = useState(null);
+  const [psw, onChangeNumber] = useState(null);
+  console.log("MAIL->", email);
+  console.log("PSW->", psw);
+  const user = useSelector(state => state.user);
 
-  const onSubmit = async () => {
-    const valid = {
-      email,
-      password: psw,
-    };
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  useEffect( () => {
+    async function getUser () {
+      try {
+        const token = await JSON.parse(AsyncStorage.getItem('@Token'));
+        dispatch(userData(token))
+      } catch (error) {
+        console.error({ err });
+      }
+    }
+    getUser();
+  }, []);
+
+  const onSubmit = () => {
     try {
-      const response = await axios.post(
-        'http://localhost:3001/api/users/login',
-        valid,
-      );
-      setUser(response.data.user);
-      const tokenPrev = JSON.stringify(response.data.token);
-      setToken(tokenPrev);
-      await AsyncStorage.setItem('@Token', tokenPrev);
-      const userJson = JSON.stringify(response.data.user);
-      await AsyncStorage.setItem('@userData', userJson);
+      dispatch(userLogin({
+        email,
+        password: psw,
+      })).then( (res) => {
+        console.log("RESPUESTA->", res);
+        //const token = JSON.stringify(res.payload.token);
+        //await AsyncStorage.setItem('@Token', token);
+        //dispatch(userData(token));
+      })
     } catch (e) {
       console.error(e);
     }
   };
 
-  useEffect(() => {
-    async function getTokenAndUser() {
-      try {
-        let responseToken = await AsyncStorage.getItem(token_storage);
-        let responseUser = await AsyncStorage.getItem(user_storage);
-        setToken(JSON.parse(responseToken));
-        setUser(JSON.parse(responseUser));
-      } catch ({err}) {
-        console.error({err});
-      }
-    }
-    getTokenAndUser();
-  }, []);
-
-  return token ? (
+  return user._id ? (
     <UserProfileScreen />
   ) : (
-    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
       <View style={styles.view}>
         <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
         <Text style={styles.tittle}>
@@ -89,12 +78,12 @@ const Log = () => {
           onPress={() => {
             navigation.navigate('RegisterScreen');
           }}>
-          <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
             Registrarse
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonLogin} onPress={onSubmit}>
-          <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
             Iniciar sesion
           </Text>
         </TouchableOpacity>

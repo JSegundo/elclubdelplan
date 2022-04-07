@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -44,29 +44,19 @@ const appWrapper = () => {
 
 function App() {
   const dispatch = useDispatch();
-  const [user, setUser] = React.useState(null);
-  const [token, setToken] = React.useState(null);
+  const [token, setToken] = useState(null);
 
-  useEffect(() => {
-    async function getTokenAndUser() {
-      try {
-        let responseToken = await AsyncStorage.getItem(token_storage);
-        let responseUser = await AsyncStorage.getItem(user_storage);
-        setToken(JSON.parse(responseToken));
-        setUser(JSON.parse(responseUser));
-      } catch (err) {
-        console.error(err);
-      }
+  const user = useSelector(state => state.user);
+
+  useEffect(async () => {
+    try {
+      const token = await JSON.parse(AsyncStorage.getItem('@Token'));
+      if (!token) return;
+      dispatch(userData(token))
+    } catch (error) {
+      console.error({ err });
     }
-    getTokenAndUser();
   }, []);
-
-  useEffect(() => {
-    if (!token) return;
-    if (!user?._id) return;
-    // const userid = user._id;
-    dispatch(userData(token));
-  }, [user, token]);
 
   return (
     <NavigationContainer>

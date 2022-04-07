@@ -1,13 +1,19 @@
-import React from 'react';
-import {Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import { userRegister } from "../store/user";
 
-const Register = ({navigation}) => {
-  const [name, onChangeName] = React.useState(null);
-  const [email, onChangeText] = React.useState(null);
-  const [psw, onChangePsw] = React.useState(null);
-  const [number, onChangePhone] = React.useState(null);
-  const [city, onChangeCity] = React.useState(null);
+const Register = () => {
+  const [name, onChangeName] = useState(null);
+  const [email, onChangeText] = useState(null);
+  const [psw, onChangePsw] = useState(null);
+  const [number, onChangePhone] = useState(null);
+  const [city, onChangeCity] = useState(null);
+
+  const navigation = useNavigation();
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const onRegister = async () => {
     // let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(email);
@@ -21,28 +27,24 @@ const Register = ({navigation}) => {
     // if(!password){
     //   return alert("Ivalid password")
     // }
-
-    const newUser = {
-      name,
-      email,
-      city,
-      password: psw,
-    };
-    console.log(newUser);
-    try {
-      const response = await axios.post(
-        'http://localhost:3001/api/users/register',
-        newUser,
-      );
-      if (response) navigation.navigate('LogInScreen');
-      console.log(response);
+      try {
+      dispatch(userRegister({
+        name,
+        email,
+        city,
+        password: psw,
+      })).then((res) => {
+        alert("Usuario creado con éxito");
+        console.log("USUARIO->", user);
+        navigation.navigate('LogInScreen');
+      })
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
       <View style={styles.view}>
         <Text style={styles.tittle}>Please register to see your Profile!</Text>
 
@@ -83,7 +85,7 @@ const Register = ({navigation}) => {
           placeholderTextColor="#808080"
         />
         <TouchableOpacity onPress={onRegister} style={styles.buttonRegister}>
-          <Text style={{color: 'white', textAlign: 'center', fontSize: 18}}>
+          <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>
             Register
           </Text>
         </TouchableOpacity>

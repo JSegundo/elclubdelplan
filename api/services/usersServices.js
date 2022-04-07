@@ -17,6 +17,7 @@ class UsersService {
   }
 
   static async serviceLogin(req) {
+    console.log("ENTRO AL SERVICE LOGIN");
     const { email, password } = req.body
     try {
       if (email && password) {
