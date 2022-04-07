@@ -58,13 +58,13 @@ function App() {
   }, [user, token]);
 
   return (
-    <Provider store={store}>
+    
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="MiddleApp" options={{ headerShown: false }} component={MiddleApp} ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
-    </Provider>
+    
   );
 }
 export default appWrapper

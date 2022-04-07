@@ -99,7 +99,7 @@ const UserProfileScreen = () => {
       <Text style={{color: '#111'}}>{userInfo.email}</Text>
 
       {/* BOTONES PARA VER MIS PLANES  */}
-      <ScrollView style={styles.buttonsWrapper}>
+      <View style={styles.buttonsWrapper}>
         <TouchableOpacity
           style={styles.BtnNavigateToPlans}
           onPress={() => navigation.navigate('Tus planes')}>
@@ -137,7 +137,7 @@ const UserProfileScreen = () => {
             <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
           </View>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
    
 
       <TouchableOpacity onPress={logout} style={styles.logout}>
