@@ -14,9 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ScrollView} from 'react-native-gesture-handler';
 import ButtonShare from '../components/ButtonShare';
 
-
 const CardEvent = () => {
-
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -63,7 +61,6 @@ const CardEvent = () => {
 
           <Text style={styles.title}>{name}</Text>
 
-
           <Text style={styles.text}>{location}</Text>
 
           <Text style={styles.text}> Empieza: {startDate?.split('T')[0]}</Text>
@@ -79,8 +76,7 @@ const CardEvent = () => {
           {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
 
           <Text> ARS ${totalPrice ? totalPrice : 0}</Text>
-          <Text style={styles.text}> Compartir (componente de Gus) </Text>
-
+          {/* <ButtonShare /> */}
 
           <View>
             {/* <Text style={styles.line}>─────────────────────────</Text> */}
@@ -97,18 +93,17 @@ const CardEvent = () => {
           </View>
 
           <View>
-            <Text style={styles.line}>─────────────────────────</Text>
+            {/* <Text style={styles.line}>─────────────────────────</Text>
             <Text style={styles.subtitle}>Más eventos como este</Text>
-            <Text style={styles.text}>--Carrousel--</Text>
+            <Text style={styles.text}>--Carrousel--</Text> */}
           </View>
 
           {/* poner el button -fixed- at the buttom of the screen */}
 
-          <TouchableOpacity style={styles.buttonWrap}>
+          {/* <TouchableOpacity style={styles.buttonWrap}>
             <Text style={styles.button}>Compartir evento</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
-
         {eventDate.getTime() < dateNow.getTime() ? (
           <View style={styles.comentWrapper}>
             <Text style={styles.line}>─────────────────────────</Text>
@@ -121,13 +116,13 @@ const CardEvent = () => {
               renderItem={({item}) => renderItem(item)}
             />
           </View>
-        ) : null}
+        ) : (
+          <ButtonShare item={item} />
+        )}
         {eventDate.getTime() < dateNow.getTime() ? (
           <TouchableOpacity
             style={styles.buttonWrap}
-            onPress={() =>
-              navigation.navigate('Comentarios', {id: item._id})
-            }>
+            onPress={() => navigation.navigate('Comentarios', {id: item._id})}>
             <Text style={styles.button}>Comentar</Text>
           </TouchableOpacity>
         ) : null}
