@@ -82,16 +82,6 @@ const CardEvent = () => {
             <Image style={styles.image} source={{uri: image}} />
           </View>
           <Text style={styles.title}>{name}</Text>
-          <Text style={styles.text}>
-            <Ionicons
-              name="pin"
-              style={{
-                color: '#208383',
-                fontSize: 20,
-              }}
-            />
-            {location}
-          </Text>
 
           <Text style={styles.text}> Empieza: {startDate?.split('T')[0]}</Text>
           <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
