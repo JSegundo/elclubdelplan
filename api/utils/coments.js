@@ -6,7 +6,7 @@ const coments = [
     },
     {
         userName: "",
-        vote: 10,
+        vote: 5,
         coment: "increible"
     },
 ];

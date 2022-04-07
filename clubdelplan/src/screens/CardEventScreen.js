@@ -9,14 +9,18 @@ import {
   FlatList,
 } from 'react-native';
 import React from 'react';
+import {useState} from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ScrollView} from 'react-native-gesture-handler';
 import ButtonShare from '../components/ButtonShare';
+import emptyStar from '../assets/star_corner.png';
+import fullStar from '../assets/star_filled.png';
 
 const CardEvent = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
 
   const {item} = route.params;
   console.log('ITEM! EVENT DETAILS: --> ', item);
@@ -29,24 +33,40 @@ const CardEvent = () => {
     endDate,
     paymentLimitDate,
     description,
-    totalPrice,
+    pricePerPerson,
     coments,
   } = item;
   const fakeMapImage =
     'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
-
   const dateNow = new Date();
   const eventDate = new Date(endDate);
+
+  const Rating = () => {
+    return (
+      <View style={styles.ratingBarStyle}>
+        {maxRating.map((item, key) => {
+          return (
+            <View>
+              <Image
+                style={styles.starImgStyle}
+                source={item <= defaultRating ? fullStar : emptyStar}
+              />
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
 
   const renderItem = item => {
     const {userName, coment, vote} = item;
     return (
       <View style={styles.reviewWrapper}>
         <View style={{padding: 4}}>
+          <Rating />
           <Text style={styles.nombreUsuario}>{userName}</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.textComent}>{coment}</Text>
-            <Text style={styles.textComent}>{vote}</Text>
           </View>
         </View>
       </View>
@@ -61,21 +81,21 @@ const CardEvent = () => {
 
           <Text style={styles.title}>{name}</Text>
 
-          <Text style={styles.text}>{location}</Text>
-
           <Text style={styles.text}> Empieza: {startDate?.split('T')[0]}</Text>
           <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
-          <Text style={styles.text}>
-            Limite de confirmación: {paymentLimitDate?.split('T')[0]}
-          </Text>
+          {paymentLimitDate ? (
+            <Text style={styles.text}>
+              Limite de confirmación: {paymentLimitDate?.split('T')[0]}
+            </Text>
+          ) : null}
           {/* DATES */}
 
           {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
-          <Text style={styles.text}>{time} hs</Text>
+          <Text style={styles.text}>Hora de inicio: {time} hs</Text>
           {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
-
-          <Text> ARS ${totalPrice ? totalPrice : 0}</Text>
-          <Text style={styles.text}> Compartir (componente de Gus) </Text>
+          <Text style={styles.text}>
+            Precio: ARS ${pricePerPerson ? pricePerPerson : 0}
+          </Text>
 
           <View>
             {/* <Text style={styles.line}>─────────────────────────</Text> */}
@@ -86,7 +106,16 @@ const CardEvent = () => {
           <View>
             <Text style={styles.line}>─────────────────────────</Text>
             <Text style={styles.subtitle}>Ubicación</Text>
-            <Text style={styles.text}>--Incrustar mapa real--</Text>
+            <Text style={styles.text}>
+              <Ionicons
+                name="pin"
+                style={{
+                  color: '#208383',
+                  fontSize: 20,
+                }}
+              />
+              {location}
+            </Text>
             <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
           </View>
 
@@ -101,29 +130,32 @@ const CardEvent = () => {
           {/* <TouchableOpacity style={styles.buttonWrap}>
             <Text style={styles.button}>Compartir evento</Text>
           </TouchableOpacity> */}
+
+          {eventDate.getTime() < dateNow.getTime() ? (
+            <View style={styles.comentWrapper}>
+              <Text style={styles.line}>─────────────────────────</Text>
+              <Text style={styles.subtitle}>Dejá tu reseña</Text>
+              <FlatList
+                contentContainerStyle={{paddingTop: 40}}
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+                data={coments}
+                renderItem={({item}) => renderItem(item)}
+              />
+            </View>
+          ) : (
+            <ButtonShare item={item} />
+          )}
+          {eventDate.getTime() < dateNow.getTime() ? (
+            <TouchableOpacity
+              style={styles.buttonWrap}
+              onPress={() =>
+                navigation.navigate('Comentarios', {id: item._id})
+              }>
+              <Text style={styles.button}>Dejá tu reseña</Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
-        {eventDate.getTime() < dateNow.getTime() ? (
-          <View style={styles.comentWrapper}>
-            <Text style={styles.line}>─────────────────────────</Text>
-            <Text style={styles.subtitle}>Comentarios</Text>
-            <FlatList
-              contentContainerStyle={{paddingTop: 40}}
-              showsHorizontalScrollIndicator={false}
-              horizontal={true}
-              data={coments}
-              renderItem={({item}) => renderItem(item)}
-            />
-          </View>
-        ) : (
-          <ButtonShare item={item} />
-        )}
-        {eventDate.getTime() < dateNow.getTime() ? (
-          <TouchableOpacity
-            style={styles.buttonWrap}
-            onPress={() => navigation.navigate('Comentarios', {id: item._id})}>
-            <Text style={styles.button}>Comentar</Text>
-          </TouchableOpacity>
-        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
@@ -186,8 +218,8 @@ const styles = StyleSheet.create({
   },
   reviewWrapper: {
     width: 203,
-    height: 100,
-    // height: 320,
+    //height: 100,
+    height: 250,
     marginHorizontal: 10,
     // padding: 2,
     borderRadius: 20,
@@ -202,9 +234,20 @@ const styles = StyleSheet.create({
   },
   textComent: {
     color: '#000000',
-    fontWeight: 'bold',
     margin: 1,
     marginLeft: 5,
+  },
+  starImgStyle: {
+    marginTop: -10,
+    marginRight: 12,
+    width: 18,
+    height: 18,
+    resizeMode: 'cover',
+  },
+  ratingBarStyle: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginTop: 30,
   },
 });
 

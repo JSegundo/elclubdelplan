@@ -74,12 +74,12 @@ const Coment = () => {
   return (
     <View style={{justifyContent: 'center', alignItems: 'center'}}>
       <View style={styles.view}>
-        <Text style={styles.comentTitle}>Comentario</Text>
+        <Text style={styles.comentTitle}>Reseña</Text>
         <TextInput
           multiline={true}
           style={styles.comentInput}
           onChangeText={onChangeText}
-          placeholder="coment"
+          placeholder="Hacé tu reseña"
           placeholderTextColor="#808080"
           value={coment}
         />

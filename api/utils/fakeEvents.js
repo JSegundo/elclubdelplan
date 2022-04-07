@@ -14,7 +14,7 @@ const events = [
     isPrivate: false,
     category: "Concert",
     destacado: true,
-    totalPrice: 11000,
+    pricePerPerson: 11000,
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const events = [
     isPrivate: false,
     category: "Concert",
     destacado: true,
-    totalPrice: 9000,
+    pricePerPerson: 9000,
   },
   {
     id: 3,
@@ -53,7 +53,7 @@ const events = [
 
     category: "Concert",
     destacado: true,
-    totalPrice: 10500,
+    pricePerPerson: 10500,
   },
   {
     id: 4,
@@ -74,7 +74,7 @@ const events = [
 
     category: "Concert",
     destacado: true,
-    totalPrice: 15000,
+    pricePerPerson: 15000,
   },
   {
     id: 5,
@@ -369,7 +369,7 @@ const events = [
 
     category: "Cinema",
     destacado: true,
-    totalPrice: 900,
+    pricePerPerson: 900,
   },
   {
     id: 20,
@@ -390,7 +390,7 @@ const events = [
 
     category: "Cinema",
     destacado: true,
-    totalPrice: 900,
+    pricePerPerson: 900,
   },
   {
     id: 21,
@@ -409,7 +409,7 @@ const events = [
     isPrivate: false,
 
     category: "Cinema",
-    totalPrice: 800,
+    pricePerPerson: 800,
   },
   {
     id: 22,
@@ -427,7 +427,7 @@ const events = [
     isPrivate: false,
 
     category: "Party",
-    totalPrice: 6000,
+    pricePerPerson: 6000,
     destacado: true,
   },
   {
@@ -448,7 +448,7 @@ const events = [
     isPrivate: false,
 
     category: "Party",
-    totalPrice: 4500,
+    pricePerPerson: 4500,
     destacado: true,
   },
   {
@@ -470,7 +470,7 @@ const events = [
 
     category: "Gastronomy",
 
-    totalPrice: 2100,
+    pricePerPerson: 2100,
   },
   {
     id: 25,
@@ -490,7 +490,7 @@ const events = [
     isPrivate: false,
 
     category: "Bar",
-    totalPrice: 6000,
+    pricePerPerson: 6000,
   },
   {
     id: 26,
@@ -508,7 +508,7 @@ const events = [
     location: "Palermo - Buenos Aires",
     category: "Bar",
     isPrivate: false,
-    totalPrice: 3000,
+    pricePerPerson: 3000,
   },
   {
     id: 27,
@@ -528,7 +528,7 @@ const events = [
     isPrivate: false,
 
     category: "Social event",
-    totalPrice: 1400,
+    pricePerPerson: 1400,
   },
   {
     id: 28,
@@ -548,7 +548,7 @@ const events = [
     isPrivate: false,
 
     category: "Gastronomy",
-    totalPrice: 3800,
+    pricePerPerson: 3800,
     destacado: true,
   },
   {
@@ -568,7 +568,7 @@ const events = [
     isPrivate: false,
 
     category: "Cinema",
-    totalPrice: 1000,
+    pricePerPerson: 1000,
     destacado: true,
   },
   {
@@ -589,7 +589,7 @@ const events = [
     isPrivate: false,
 
     category: "Cinema",
-    totalPrice: 900,
+    pricePerPerson: 900,
   },
 ];
 
