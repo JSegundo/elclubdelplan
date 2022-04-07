@@ -81,8 +81,7 @@ const CardEvent = () => {
           <View>
             {/* <Text style={styles.line}>─────────────────────────</Text> */}
             <Text style={styles.subtitle}>Descripción</Text>
-            <Text style={styles.text}>
-              {description}</Text>
+            <Text style={styles.text}>{description}</Text>
           </View>
 
           <View>
@@ -104,12 +103,12 @@ const CardEvent = () => {
             <Text style={styles.button}>Compartir evento</Text>
           </TouchableOpacity> */}
         </View>
+
         {eventDate.getTime() < dateNow.getTime() ? (
           <View style={styles.comentWrapper}>
-            <Text style={styles.line}>─────────────────────────</Text>
             <Text style={styles.subtitle}>Comentarios</Text>
             <FlatList
-              contentContainerStyle={{paddingTop: 40}}
+              contentContainerStyle={{paddingTop: 30}}
               showsHorizontalScrollIndicator={false}
               horizontal={true}
               data={coments}
@@ -120,11 +119,28 @@ const CardEvent = () => {
           <ButtonShare item={item} />
         )}
         {eventDate.getTime() < dateNow.getTime() ? (
-          <TouchableOpacity
-            style={styles.buttonWrap}
-            onPress={() => navigation.navigate('Comentarios', {id: item._id})}>
-            <Text style={styles.button}>Comentar</Text>
-          </TouchableOpacity>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <TouchableOpacity
+              style={styles.buttonWrap}
+              onPress={() =>
+                navigation.navigate('Comentarios', {id: item._id})
+              }>
+              <Text style={styles.button}>AGREGAR COMENTARIO</Text>
+              <Ionicons
+                name="chatbubbles"
+                style={{
+                  // textAlign: 'center',
+                  color: 'white',
+                  fontSize: 20,
+                  // marginTop: 20,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
         ) : null}
       </ScrollView>
     </SafeAreaView>
@@ -139,6 +155,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   subtitle: {
+    textAlign: 'center',
     marginTop: 10,
     fontSize: 18,
     fontWeight: 'bold',
@@ -167,6 +184,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 20,
     marginBottom: 20,
     alignItems: 'center',
@@ -186,6 +205,7 @@ const styles = StyleSheet.create({
   comentWrapper: {
     margin: 0,
     width: '100%',
+    marginTop: 20,
   },
   reviewWrapper: {
     width: 203,
