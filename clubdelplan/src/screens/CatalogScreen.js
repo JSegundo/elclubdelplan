@@ -33,7 +33,7 @@ const CatalogScreen = () => {
       image,
       location,
       isPrivate,
-      totalPrice,
+      pricePerPerson,
     } = item;
 
     return item.isPrivate === false ? (
@@ -55,7 +55,7 @@ const CatalogScreen = () => {
             <Text style={{color: 'black'}}>{category}</Text>
             <Text style={{fontSize: 10, color: 'black'}}>{location}</Text>
             {/* <Text>{startDate.split('T')[0]}</Text> */}
-            <Text>${totalPrice}</Text>
+            {pricePerPerson ? <Text>${totalPrice}</Text> : null}
           </View>
         </View>
       </TouchableOpacity>
@@ -72,16 +72,10 @@ const CatalogScreen = () => {
 
   return (
     <View style={styles.pageWrapper}>
-      {/* <View>
-        <Button
-          title="Go to Home"
-          onPress={() => navigation.navigate('Home')}
-        />
-      </View> */}
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search by Category"
+          placeholder="Busca por categoría"
           placeholderTextColor={'black'}
           onChangeText={value => setSearchTerm(value)}
         />
@@ -89,16 +83,14 @@ const CatalogScreen = () => {
           style={styles.buttonSearch}
           title="Search"
           onPress={handleSearch}>
-          <Text style={{color: '#111'}}>Search</Text>
+          <Text style={{color: '#111'}}>Buscar</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.contentWrapper}>
         <Text style={styles.title}>Catalogo de eventos públicos</Text>
         {results[0] ? (
-          <Text style={{padding: 5}}>
-            {results.length} resultados encontrados
-          </Text>
+          <Text style={{padding: 5}}>{results.length} Resultados</Text>
         ) : null}
 
         <FlatList
@@ -130,7 +122,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 100,
+    marginBottom: 130,
   },
   infoWrapper: {
     padding: 5,
@@ -177,6 +169,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     color: '#111',
     borderRadius: 3,
+    maxWidth: 200,
   },
 });
 

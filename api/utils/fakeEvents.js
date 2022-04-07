@@ -12,7 +12,7 @@ const events = [
     time: "17:00",
     location: "Hipódromo de Palermo, Buenos Aires",
     isPrivate: false,
-    category: "Concert",
+    category: "Concierto",
     destacado: true,
     pricePerPerson: 11000,
   },
@@ -30,7 +30,7 @@ const events = [
     time: "15:00",
     location: "Aeroclub Santa María de Punilla, Córdoba",
     isPrivate: false,
-    category: "Concert",
+    category: "Concierto",
     destacado: true,
     pricePerPerson: 9000,
   },
@@ -51,7 +51,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Concert",
+    category: "Concierto",
     destacado: true,
     pricePerPerson: 10500,
   },
@@ -72,7 +72,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Concert",
+    category: "Concierto",
     destacado: true,
     pricePerPerson: 15000,
   },
@@ -93,7 +93,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Social event",
+    category: "Evento social",
     destacado: false,
   },
   {
@@ -113,7 +113,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Social event",
+    category: "Evento social",
     destacado: false,
   },
   {
@@ -134,7 +134,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Social event",
+    category: "Evento social",
     destacado: false,
   },
   {
@@ -154,7 +154,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Social event",
+    category: "Evento social",
     destacado: false,
   },
   {
@@ -173,7 +173,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Social event",
+    category: "Evento social",
     destacado: false,
   },
   {
@@ -192,7 +192,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Social event",
+    category: "Evento social",
     destacado: false,
   },
   {
@@ -211,7 +211,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Social event",
+    category: "Evento social",
     destacado: false,
   },
   {
@@ -230,7 +230,7 @@ const events = [
     location: "La Gran 7 -  Concepción Arenal, Córdoba",
     isPrivate: true,
 
-    category: "Sports",
+    category: "Deporte",
     destacado: false,
   },
   {
@@ -249,7 +249,7 @@ const events = [
     location: "La Gran 7 -  Concepción Arenal, Córdoba",
     isPrivate: true,
 
-    category: "Sports",
+    category: "Deporte",
     destacado: false,
   },
   {
@@ -269,7 +269,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Sports",
+    category: "Deporte",
     destacado: false,
   },
   {
@@ -289,7 +289,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Sports",
+    category: "Deporte",
     destacado: false,
   },
   {
@@ -308,7 +308,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Social event",
+    category: "Evento social",
     destacado: false,
   },
   {
@@ -328,7 +328,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Social event",
+    category: "Evento social",
     destacado: false,
   },
   {
@@ -347,7 +347,7 @@ const events = [
 
     isPrivate: true,
 
-    category: "Social event",
+    category: "Evento social",
     destacado: false,
   },
   {
@@ -367,7 +367,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Cinema",
+    category: "Cine",
     destacado: true,
     pricePerPerson: 900,
   },
@@ -388,7 +388,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Cinema",
+    category: "Cine",
     destacado: true,
     pricePerPerson: 900,
   },
@@ -408,7 +408,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Cinema",
+    category: "Cine",
     pricePerPerson: 800,
   },
   {
@@ -426,7 +426,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Party",
+    category: "Fiesta",
     pricePerPerson: 6000,
     destacado: true,
   },
@@ -447,7 +447,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Party",
+    category: "Fiesta",
     pricePerPerson: 4500,
     destacado: true,
   },
@@ -468,7 +468,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Gastronomy",
+    category: "Gastronomía",
 
     pricePerPerson: 2100,
   },
@@ -527,7 +527,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Social event",
+    category: "Evento social",
     pricePerPerson: 1400,
   },
   {
@@ -547,7 +547,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Gastronomy",
+    category: "Gastronomía",
     pricePerPerson: 3800,
     destacado: true,
   },
@@ -567,7 +567,7 @@ const events = [
 
     isPrivate: false,
 
-    category: "Cinema",
+    category: "Cine",
     pricePerPerson: 1000,
     destacado: true,
   },
@@ -588,9 +588,9 @@ const events = [
 
     isPrivate: false,
 
-    category: "Cinema",
+    category: "Cine",
     pricePerPerson: 900,
   },
-];
+]
 
-module.exports = events;
+module.exports = events

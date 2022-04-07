@@ -78,9 +78,20 @@ const CardEvent = () => {
     <SafeAreaView>
       <ScrollView>
         <View style={styles.cardWrap}>
-          <Image style={styles.image} source={{uri: image}} />
-
+          <View style={styles.ImageWrapper}>
+            <Image style={styles.image} source={{uri: image}} />
+          </View>
           <Text style={styles.title}>{name}</Text>
+          <Text style={styles.text}>
+            <Ionicons
+              name="pin"
+              style={{
+                color: '#208383',
+                fontSize: 20,
+              }}
+            />
+            {location}
+          </Text>
 
           <Text style={styles.text}> Empieza: {startDate?.split('T')[0]}</Text>
           <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
@@ -98,14 +109,13 @@ const CardEvent = () => {
             Precio: ARS ${pricePerPerson ? pricePerPerson : 0}
           </Text>
 
-          <View>
-            {/* <Text style={styles.line}>─────────────────────────</Text> */}
+
+          <View styles={{}}>
             <Text style={styles.subtitle}>Descripción</Text>
             <Text style={styles.text}>{description}</Text>
           </View>
 
           <View>
-            <Text style={styles.line}>─────────────────────────</Text>
             <Text style={styles.subtitle}>Ubicación</Text>
             <Text style={styles.text}>
               <Ionicons
@@ -119,7 +129,6 @@ const CardEvent = () => {
             </Text>
             <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
           </View>
-
           <View>
             {/* <Text style={styles.line}>─────────────────────────</Text>
             <Text style={styles.subtitle}>Más eventos como este</Text>
@@ -170,6 +179,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   subtitle: {
+    // textAlign: 'center',
     marginTop: 10,
     fontSize: 18,
     fontWeight: 'bold',
@@ -179,16 +189,26 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    // padding: 20,
   },
   text: {
     color: 'black',
     margin: 4,
   },
+  ImageWrapper: {
+    marginTop: 20,
+    width: '100%',
+    height: 200,
+  },
   image: {
-    marginTop: 30,
-    width: 250,
-    height: 360,
-    borderRadius: 20,
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'contain',
+    // marginTop: 30,
+    // width: 250,
+    // height: 360,
+    borderRadius: 4,
   },
   mapImage: {
     marginTop: 30,
@@ -197,6 +217,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 20,
     marginBottom: 20,
     alignItems: 'center',
@@ -216,6 +238,7 @@ const styles = StyleSheet.create({
   comentWrapper: {
     margin: 0,
     width: '100%',
+    marginTop: 20,
   },
   reviewWrapper: {
     width: 203,
