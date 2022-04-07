@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -8,38 +8,56 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import DateField from 'react-native-datefield';
-import {Button, CheckBox, Icon} from 'react-native-elements';
-import {Input} from 'react-native-elements';
-import {Dropdown} from 'react-native-element-dropdown';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import {Button, CheckBox, Icon, Input} from 'react-native-elements';
+import {Dropdown} from 'react-native-element-dropdown';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {createEvent} from '../store/event';
 import {launchImageLibrary} from 'react-native-image-picker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import DateField from 'react-native-datefield';
+import axios from 'axios';
 
 const NewPlanScreen = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const [text, onChangeText] = React.useState('');
   const [description, onChangeDescription] = React.useState('');
   const [category, setCategory] = React.useState('');
   const [location, onChangeLocation] = React.useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [paymentLimitDate, setPaymentLimitDate] = useState('');
-  const [privadoCheck, setPrivadoCheck] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [paymentLimitDate, setPaymentLimitDate] = useState(new Date());
   const [image, setImage] = useState('https://via.placeholder.com/300x150');
+  const [pricePerPerson, setPricePerPerson] = useState(null);
+  const [privadoCheck, setPrivadoCheck] = useState(true);
+  const [submited, setSubmited] = useState(false);
 
-  //formatear date para enviarla
-  // const formatDate = value => {
-  //   const cutDate = value.toString().split(' ');
+  const [Plan, setPlan] = useState(null);
 
-  //   const date = {
-  //     day: cutDate[0],
-  //     month: cutDate[1],
-  //     dayNum: cutDate[2],
-  //     year: cutDate[3],
-  //   };
-
-  //   setDate(date);
-  // };
+  // state categories for dropdown input
+  const [allCategories, setAllCategories] = useState(null);
+  // GET list of categories available
+  useEffect(() => {
+    async function getAllCategories() {
+      try {
+        const responseCat = await axios.get(
+          'http://localhost:3001/api/categories',
+        );
+        setAllCategories(responseCat.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getAllCategories();
+  }, []);
+  // DATA for render in dropdown
+  const data = allCategories?.map(cat => ({
+    label: cat.categoryName,
+    value: cat.categoryName,
+  }));
 
   // SUBIR IMAGEN
   const selectImage = () => {
@@ -63,17 +81,6 @@ const NewPlanScreen = () => {
     });
   };
 
-  // CATEGORIAS HARCODEADAS
-  const data = [
-    {label: 'Restaurante', value: 'restaurante'},
-    {label: 'Cine', value: 'cine'},
-    {label: 'Concierto', value: 'concierto'},
-    {label: 'Fiesta', value: 'fiesta'},
-    {label: 'Item 5', value: '5'},
-    {label: 'Item 6', value: '6'},
-    {label: 'Item 7', value: '7'},
-    {label: 'Item 8', value: '8'},
-  ];
   // RENDER ITEMS CATEGORY DROPDOWN
   const renderItemCategory = item => {
     return (
@@ -83,37 +90,50 @@ const NewPlanScreen = () => {
     );
   };
 
-  const onSubmit = () => {
-    const newPlan = {
-      name: text,
-      description,
-      location,
-      startDate,
-      endDate,
-      paymentLimitDate,
-      privado: privadoCheck,
-      category,
-      image,
-    };
+  const newPlan = {
+    name: text,
+    description,
+    location,
+    startDate,
+    endDate,
+    paymentLimitDate,
+    privado: privadoCheck,
+    category,
+    image,
+    pricePerPerson,
+  };
 
-    console.log(newPlan);
+  const refreshPage = () => {
+    onChangeText('');
+    onChangeDescription('');
+    setCategory('');
+    onChangeLocation('');
+    setStartDate(new Date());
+    setEndDate(new Date());
+    setPaymentLimitDate(new Date());
+    setImage('https://via.placeholder.com/300x150');
+    setPricePerPerson('');
+    setPrivadoCheck(true);
+    setSubmited(false);
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    setSubmited(true);
+    console.log(' nuevo plan on submit', newPlan);
+    dispatch(createEvent(newPlan)).then(res => setPlan(res.payload));
   };
 
   return (
     <ScrollView>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom: 100,
-        }}>
+      <View style={styles.pageWrapper}>
         <Input
           label={'Nombre'}
           placeholder={'Dale un nombre a tu plan..'}
           onChangeText={onChangeText}
           value={text}
         />
-
+        {/* DESCRIPTION  */}
         <Input
           multiline
           // numberOfLines={2}
@@ -122,7 +142,6 @@ const NewPlanScreen = () => {
           placeholder="Los detalles que quieras aclarar sobre tu plan.."
           value={description}
         />
-
         {/* CATEGORY DROPDOWN */}
         <Text style={styles.inputLabel}>Elegí la categoría</Text>
         <Dropdown
@@ -137,54 +156,84 @@ const NewPlanScreen = () => {
           }}
           renderItem={renderItemCategory}
         />
-        {/* CATEGORY DROPDOWN */}
-
         {/* LOCATION INPUT */}
+
+        <Ionicons
+          name="compass"
+          style={{
+            textAlign: 'center',
+            color: 'green',
+            fontSize: 20,
+            marginTop: 20,
+          }}
+        />
         <Input
           onChangeText={onChangeLocation}
           placeholder={'Donde se van a encontrar?'}
           label={'Ubicación'}
           value={location}
         />
-        {/* LOCATION INPUT */}
-        
         {/* DATE input */}
-        <View style={{justifyContent: 'center'}}>
-          <Text>Cuando inicia el evento?</Text>
-          {/* <DateField labelDate="Dia" labelMonth="Mes" labelYear="Año" /> */}
+
+        <Ionicons
+          name="calendar"
+          style={{textAlign: 'center', color: 'green', fontSize: 20}}
+        />
+
+        <Text style={styles.dateTitle}>Cuando inicia el evento?</Text>
+
+        <View style={styles.datePickerWrapper}>
           <DateField
+            style={{justifyContent: 'center'}}
             defaultValue={new Date()}
             styleInput={{fontSize: 15}}
             onSubmit={value => setStartDate(value)}
-            // containerStyle={{marginVertical: 10}}
           />
         </View>
-        <View style={{justifyContent: 'center'}}>
-          <Text>Cuando termina?</Text>
-          {/* <DateField labelDate="Dia" labelMonth="Mes" labelYear="Año" /> */}
+
+        <Text style={styles.dateTitle}>Cuando termina?</Text>
+        <View style={styles.datePickerWrapper}>
           <DateField
+            style={{justifyContent: 'center'}}
             defaultValue={new Date()}
             styleInput={{fontSize: 15}}
             onSubmit={value => setEndDate(value)}
-            // containerStyle={{marginVertical: 10}}
           />
         </View>
-        <View style={{justifyContent: 'center'}}>
-          <Text>Fecha limite de confirmación:</Text>
-          {/* <DateField labelDate="Dia" labelMonth="Mes" labelYear="Año" /> */}
+        <Text style={styles.dateTitle}>Fecha limite de confirmación:</Text>
+        <View style={styles.datePickerWrapper}>
           <DateField
+            style={{justifyContent: 'center'}}
             defaultValue={new Date()}
             styleInput={{fontSize: 15}}
             onSubmit={value => setPaymentLimitDate(value)}
-            // containerStyle={{marginVertical: 10}}
           />
         </View>
-        {/* DATE input */}
+        {/* SELECT PRICE */}
+        <View style={{marginVertical: 20}}>
+          <Ionicons
+            name="card"
+            style={{
+              textAlign: 'center',
+              color: 'green',
+              fontSize: 20,
+            }}
+          />
+          <Text style={styles.dateTitle}>Precio por persona</Text>
+          <TextInput
+            style={styles.priceInput}
+            placeholder={'$1500'}
+            keyboardType="numeric"
+            onChangeText={setPricePerPerson}
+            value={pricePerPerson}
+            maxLength={10} //setting limit of input
+          />
+        </View>
+        {/* SELECT IMAGE */}
         <View>
           <Button title={'Seleccionar imagen'} onPress={selectImage} />
           <Image style={{width: 300, height: 150}} source={{uri: image}} />
         </View>
-
         {/* SET PRIVATE OR PUBLIC */}
         <CheckBox
           containerStyle={{
@@ -193,30 +242,62 @@ const NewPlanScreen = () => {
           }}
           iconRight
           center
-          title="Mi evento es publico"
+          title="Mi evento es privado"
           checked={privadoCheck}
-          onPress={() => setPrivadoCheck(!privadoCheck)}
+          onPress={() => {
+            setPrivadoCheck(!privadoCheck);
+            console.log(privadoCheck);
+          }}
         />
-        {privadoCheck && (
+        {!privadoCheck && (
           <Text style={{fontSize: 10, padding: 5}}>
-            (Todo el mundo podrá ver tu evento)
+            (Si tu evento es publico, todo el mundo podrá ver tu evento)
           </Text>
         )}
-        {/* SET PRIVATE OR PUBLIC */}
-
         {/* SEND DATA*/}
-        <TouchableOpacity style={styles.btnCrearPlan} onPress={onSubmit}>
-          <Text style={{color: 'white', textAlign: 'center'}}>Crear Plan</Text>
-          <Ionicons style={styles.btnIcon} name="checkmark-outline"></Ionicons>
-        </TouchableOpacity>
-        {/* SEND DATA*/}
+        {submited ? (
+          <View>
+            <TouchableOpacity
+              style={styles.btnVerPlan}
+              onPress={() => navigation.navigate('Plan', {item: Plan})}>
+              <Text style={{color: 'white', textAlign: 'center'}}>
+                Ver plan
+              </Text>
+              <Ionicons
+                style={styles.btnIcon}
+                name="checkmark-outline"></Ionicons>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnCrearPlan} onPress={refreshPage}>
+              <Text style={{color: 'white', textAlign: 'center'}}>
+                Crear otro plan
+              </Text>
+              <Ionicons
+                style={styles.btnIcon}
+                name="checkmark-outline"></Ionicons>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <TouchableOpacity style={styles.btnCrearPlan} onPress={onSubmit}>
+            <Text style={{color: 'white', textAlign: 'center'}}>
+              Crear Plan
+            </Text>
+            <Ionicons
+              style={styles.btnIcon}
+              name="checkmark-outline"></Ionicons>
+          </TouchableOpacity>
+        )}
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  tittle: {color: 'black', textAlign: 'center', fontSize: 20, marginBottom: 50},
+  pageWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 100,
+    padding: 10,
+  },
   view: {
     flex: 1,
     justifyContent: 'center',
@@ -234,6 +315,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#900',
+    width: 300,
+    // width: '100%',
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+  },
+  btnVerPlan: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: 'green',
     width: 300,
     // width: '100%',
     paddingVertical: 15,
@@ -284,6 +375,22 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  priceInput: {
+    borderBottomColor: 'green',
+    borderBottomWidth: 2,
+  },
+  // date
+  datePickerWrapper: {
+    marginBottom: 10,
+    borderBottomColor: '#900',
+    borderBottomWidth: 2,
+  },
+  dateTitle: {
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 16,
+    marginTop: 20,
   },
 });
 

@@ -9,21 +9,18 @@ import {
   Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import {useSelector, useDispatch} from 'react-redux';
+import {getAllEvents} from '../store/event';
+import {useNavigate} from 'react-router-dom';
+import {useNavigation} from '@react-navigation/native';
 
-const CatalogScreen = ({navigation}) => {
-  const [eventos, setEventos] = useState({});
+const CatalogScreen = () => {
+  const eventos = useSelector(state => state.event);
+  let dispatch = useDispatch();
+  const navigation = useNavigation();
 
   useEffect(() => {
-    async function getAllEvents() {
-      try {
-        const response = await axios.get('http://localhost:3001/api/events');
-        setEventos(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    getAllEvents();
+    dispatch(getAllEvents());
   }, []);
 
   const renderItem = item => {
@@ -39,10 +36,11 @@ const CatalogScreen = ({navigation}) => {
       totalPrice,
     } = item;
 
-    console.log(isPrivate);
-
     return item.isPrivate === false ? (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Plan', {item: item});
+        }}>
         <View style={styles.itemWrapper}>
           <Image
             source={{

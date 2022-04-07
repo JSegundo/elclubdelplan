@@ -15,6 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 const token_storage = '@Token';
 const user_storage = '@userData';
 
+import {userData} from '../store/user';
+import {useDispatch} from 'react-redux';
+
 const Log = () => {
   const [email, onChangeText] = React.useState(null);
   const [psw, onChangeNumber] = React.useState(null);
@@ -37,7 +40,6 @@ const Log = () => {
   }, []);
 
   const onSubmit = async () => {
-    console.log(email);
     const valid = {
       email,
       password: psw,
@@ -55,7 +57,6 @@ const Log = () => {
 
       // console.log('este este es el user onSubit', response.data.user);
       const userJson = JSON.stringify(response.data.user);
-
       await AsyncStorage.setItem('@userData', userJson);
       navigation.replace('MiddleApp')
     } catch (e) {

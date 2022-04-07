@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const CategoryController = "../controllers/categoriesControllers.JS"
-
-
-// router.get("/", CategoryController.getAllCategory);
-
-// router.get("/:id", CategoryController.getOneCategory);
+const CategoriesController = require("../controllers/categoriesControllers");
+// RUTA PARA BUSCAR CATEGORIAS
+router.get("/", CategoriesController.getAllCategory);
+// RUTA PARA BUSCAR UNA CATERGORIA
+router.get("/:id", CategoriesController.getOneCategory);
 
 module.exports = router;

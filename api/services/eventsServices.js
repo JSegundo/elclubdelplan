@@ -1,50 +1,50 @@
-const Events = require("../models/Events");
+const Events = require("../models/Events")
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
     try {
-      const events = await Events.find({ isPrivate: false });
-      return events;
+      const events = await Events.find({ isPrivate: false }).populate('coments')
+      return events
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
 
   static async serviceGetAllMyEvents(req, next) {
-    console.log(req.params.userid);
+    console.log(req.user.id)
     try {
       const events = await Events.find({
-        eventOwner: req.params.userid,
+        eventOwner: req.user.id,
         isPrivate: true,
-      });
-      return events;
+      })
+      return events
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
 
   static async serviceGetAllMyPastEvents(req, next) {
     try {
-      const date = new Date();
+      const date = new Date()
 
       const events = await Events.find({
-        eventOwner: req.params.userid,
+        eventOwner: req.user.id,
         isPrivate: true,
         endDate: { $lt: date },
-      });
-      return events;
+      })
+      return events
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
 
   static async serviceGetEvent(req, next) {
     try {
-      const event = await Events.findById(req.params.id);
-      return event;
+      const event = await Events.findById(req.params.id).populate('coments')
+      return event
     } catch (err) {
-      console.log(err);
-      next(err);
+      console.log(err)
+      next(err)
     }
   }
 
@@ -54,41 +54,45 @@ class EventsServices {
         category: req.params.name,
         isPrivate: false,
       })
-      return events;
+      return events
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
 
   static async serviceUpdateEvent(req, next) {
     try {
-      const event = await Events.findByIdAndUpdate(req.params.id, req.body, {new: true});
-      return event;
+      const event = await Events.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      })
+      return event
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
 
   static async serviceAddEvent(req, next) {
+    console.log("req.body de serviceAddEvent: ---->", req.body)
     try {
-      const newEvent = new Events(req.body);
-      newEvent.eventOwner = req.user._id;
-      await newEvent.save();
-      return newEvent;
+      const newEvent = new Events(req.body)
+      newEvent.eventOwner = req.params.userid
+      console.log("evento: ", newEvent)
+      await newEvent.save()
+      return newEvent
     } catch (err) {
-      console.error(err);
-      next(err);
+      console.error(err)
+      next(err)
     }
   }
 
   static async serviceDeleteEvent(req, next) {
     try {
-      const res = await Events.findByIdAndDelete(req.params.id);
-      return res;
+      const res = await Events.findByIdAndDelete(req.params.id)
+      return res
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
 }
 
-module.exports = EventsServices;
+module.exports = EventsServices

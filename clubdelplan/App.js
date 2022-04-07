@@ -28,12 +28,14 @@ const Stack = createNativeStackNavigator();
 function App() {
 
   return (
-    
+    <Provider store = {store}>
     <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="MiddleApp" options={{headerShown: false}} component={MiddleApp} ></Stack.Screen>
+
         </Stack.Navigator> 
     </NavigationContainer>
+    </Provider>
   );
 }
 

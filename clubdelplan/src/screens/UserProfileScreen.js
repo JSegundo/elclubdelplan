@@ -5,8 +5,6 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  Pressable,
-  TouchableHighlight,
   ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -99,7 +97,6 @@ const UserProfileScreen = () => {
         {userInfo.name}
       </Text>
       <Text style={{color: '#111'}}>{userInfo.email}</Text>
-      <TouchableOpacity></TouchableOpacity>
 
       
       <ScrollView style={styles.buttonsWrapper}>

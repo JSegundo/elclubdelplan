@@ -1,78 +1,78 @@
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
+const User = require("../models/User")
+const jwt = require("jsonwebtoken")
 
-require("dotenv").config();
+require("dotenv").config()
 
-const { verifyHash } = require("../config/passwordHash");
+const { verifyHash } = require("../config/passwordHash")
 
 class UsersService {
   static async serviceResgisterUser(req) {
     try {
-      const newUser = await User.create(req.body);
-      console.log(newUser);
-      return newUser;
+      const newUser = await User.create(req.body)
+      console.log(newUser)
+      return newUser
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
   }
 
   static async serviceLogin(req) {
-    const { email, password } = req.body;
+    const { email, password } = req.body
     try {
       if (email && password) {
-        let user = await User.findOne({ email });
-        console.log(user);
+        let user = await User.findOne({ email })
+        console.log(user)
         if (!user) {
-          return { msg: "No such user found", user };
+          return { msg: "No such user found", user }
         }
 
-        let verifyUser = await verifyHash(password, user.password, user.salt);
+        let verifyUser = await verifyHash(password, user.password, user.salt)
 
         if (!verifyUser) {
-          console.log("LAS CONTRASEÑAS NO COINCIDEN");
-          return { msg: "Password is incorrect" };
+          console.log("LAS CONTRASEÑAS NO COINCIDEN")
+          return { msg: "Password is incorrect" }
         } else {
-          let payload = { id: user._id };
-          let token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
-          return { msg: "ok", token: token, user: user };
+          let payload = { id: user._id }
+          let token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: "365d",
+          })
+          return { msg: "ok", token: token, user: user }
         }
       }
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
   }
 
   static async serviceGetMe(req) {
+    console.log("REQ.USER: ", req.user.id)
     try {
-      const user = await User.findById(req.user._id);
-      return {
-        name: user.name,
-        email: user.email,
-        id: user._id,
-      };
+      const user = await User.findById(req.user.id)
+      // console.log(user)
+      return user
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
   }
 
   static async serviceEditUser(req, next) {
     try {
-      const { id } = req.params;
-      const user = await User.findByIdAndUpdate(id, req.body, { new: true });
-      return user;
+      const { id } = req.params
+      const user = await User.findByIdAndUpdate(id, req.body, { new: true })
+      return user
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
 
   static async serviceGetOneUser(req, next) {
     try {
-      const user = await User.findById(req.params.id);
-      return user;
+      const user = await User.findById(req.params.id)
+      return user
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
 }
 
-module.exports = UsersService;
+module.exports = UsersService
