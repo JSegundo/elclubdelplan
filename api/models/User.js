@@ -9,7 +9,6 @@ const UserSchema = new Schema({
   salt: String,
   ownPlans: [{ type: Schema.ObjectId, ref: "Event" }], //--> puede ser para los que quiere administrar pero no los ownea
   userWillAttend: [{ type: Schema.ObjectId, ref: "Event" }], // ok
-  // preferredPlans: [{ type: Schema.ObjectId, ref: "Event" }] --> sprint3
 });
 
 UserSchema.pre("save", async function () {

@@ -36,8 +36,10 @@ const EventSchema = new Schema({
   pricePerPerson: {
     type: Number,
   },
-  category: { type: String }, // --> ref to Category schema
-  eventOwner: { type: Schema.ObjectId, ref: "User" }, //--> ref to User schema
+  category: { type: String }, 
+  guests: [{ type: Schema.ObjectId, ref: "User" }], //invitados hardcodeado
+  willAttend: [{ type: Schema.ObjectId, ref: "User" }], //ya funciona sin hardcodeo
+  eventOwner: { type: Schema.ObjectId, ref: "User" }, 
   coments: [{ type: Schema.ObjectId, ref: "Coments" }]
 })
 
