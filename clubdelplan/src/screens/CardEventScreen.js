@@ -127,7 +127,7 @@ const CardEvent = () => {
           <TouchableOpacity
             style={styles.buttonWrap}
             onPress={() =>
-              navigation.navigate('Detalles de entrada', {item: item})
+              navigation.navigate('Comentarios', {id: item._id})
             }>
             <Text style={styles.button}>Comentar</Text>
           </TouchableOpacity>
