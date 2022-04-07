@@ -12,6 +12,8 @@ import OwnPlans from '../screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from '../screens/planesUserScreens/UserWillAttendPlans';
 import UserHistoryPlans from '../screens/planesUserScreens/UserHistoryPlans';
 import editPref from './planesUserScreens/EditPreferences';
+import ComentScreen from './ComentScreen'
+import CardEventScreen from './CardEventScreen'
 // import middleScreen from './src/screens/MiddleScreen.js';
 
 // Configuracion de Store redux
@@ -69,6 +71,8 @@ function MiddleApp() {
                 component={UserHistoryPlans}
                 options={{ headerShadowVisible: false }}
             />
+            <Stack.Screen name="Comentarios" component={ComentScreen} />
+            <Stack.Screen name="Plan" component={CardEventScreen} />
         </Stack.Navigator>
 
     );
