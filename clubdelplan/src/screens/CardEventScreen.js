@@ -21,6 +21,8 @@ const CardEvent = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
+  const [defaultRating, setDefaultRating] = useState(1);
+
 
   const {item} = route.params;
   console.log('ITEM! EVENT DETAILS: --> ', item);
@@ -72,7 +74,6 @@ const CardEvent = () => {
       </View>
     );
   };
-
   return (
     <SafeAreaView>
       <ScrollView>
