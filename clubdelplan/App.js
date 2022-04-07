@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import 'react-native-gesture-handler';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet } from 'react-native';
+import {NavigationContainer, StackActions} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {StyleSheet} from 'react-native';
 
 // Configuracion de Store redux
-import { store } from './src/store/index.js';
-import { Provider } from 'react-redux';
+import {store} from './src/store/index.js';
+import {Provider} from 'react-redux';
 import HomeScreen from './src/screens/HomeScreen.js';
 import MiddleApp from './src/screens/MiddleApp.js';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { userData } from './src/store/user';
-import { LogBox } from 'react-native';
+import {userData} from './src/store/user';
+import {LogBox} from 'react-native';
 //--------------------------------------
 
 const user_storage = '@userData';
+const token_storage = '@Token';
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
@@ -58,13 +59,14 @@ function App() {
   }, [user, token]);
 
   return (
-    
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="MiddleApp" options={{ headerShown: false }} component={MiddleApp} ></Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
-    
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="MiddleApp"
+          options={{headerShown: false}}
+          component={MiddleApp}></Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-export default appWrapper
+export default appWrapper;

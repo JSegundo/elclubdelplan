@@ -31,11 +31,10 @@ const Log = () => {
       let responseToken = await AsyncStorage.getItem(token_storage);
       let responseUser = await AsyncStorage.getItem(user_storage);
       // console.log('aqui estoy esperando el store de user' , responseUser)
-      let tokenParsed = JSON.parse(responseToken)
+      let tokenParsed = JSON.parse(responseToken);
 
       setToken(tokenParsed);
       setUser(responseUser);
-
     }
     getTokenAndUser();
   }, []);
@@ -59,15 +58,16 @@ const Log = () => {
       // console.log('este este es el user onSubit', response.data.user);
       const userJson = JSON.stringify(response.data.user);
       await AsyncStorage.setItem('@userData', userJson);
-      navigation.replace('MiddleApp')
+      navigation.replace('MiddleApp');
     } catch (e) {
       console.error(e);
     }
   };
   // console.log(user)
   // console.log(token)
-  return  (
-    <ScrollView style={{justifyContent: 'center', alignItems: 'center'}}>
+  return (
+    <ScrollView
+      contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
       <View style={styles.view}>
         <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
         <Text style={styles.tittle}>
@@ -141,7 +141,7 @@ const styles = {
     borderWidth: 4,
     padding: 10,
     borderRadius: 10,
-    color : '#111',
+    color: '#111',
     borderColor: '#208383',
     marginVertical: 10,
     paddingVertical: 10,

@@ -27,16 +27,16 @@ const UserProfileScreen = () => {
   const [image, setImage] = useState(imgDefault);
 
   useEffect(() => {
-    console.log('aca')
+    console.log('aca');
     async function getUser() {
       let responseUser = await AsyncStorage.getItem(user_storage);
       // let ImageUser = await AsyncStorage.getItem('@ImageUser')
-      
+
       let infoUser = JSON.parse(responseUser);
-      
+
       setUserInfo(infoUser);
-      console.log(infoUser)
-      console.log(userInfo)
+      console.log(infoUser);
+      console.log(userInfo);
     }
     getUser();
   }, []);
@@ -47,7 +47,7 @@ const UserProfileScreen = () => {
       await AsyncStorage.removeItem('@userData');
       // await AsyncStorage.removeItem('@ImageUser');
       setToken(null);
-      navigation.replace('MiddleApp')
+      navigation.replace('MiddleApp');
     } catch (err) {
       console.log(err);
       return false;
@@ -79,76 +79,75 @@ const UserProfileScreen = () => {
   //   });
   // };
 
-
   return (
-    <View style={styles.profileWrapper}>
-    { userInfo?._id ? 
-      <>
-        <Image
-          source={{
-            uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
-          }}
-          style={styles.imagen}
-        />
-      <View>
-        <Button title={'Seleccionar foto de perfil'}  />
-      </View>
-      <Text style={{color: '#111', fontSize: 20, fontWeight: 'bold'}}>
-        {userInfo.name}
-      </Text>
-      <Text style={{color: '#111'}}>{userInfo.email}</Text>
-
-      {/* BOTONES PARA VER MIS PLANES  */}
-      <View style={styles.buttonsWrapper}>
-        <TouchableOpacity
-          style={styles.BtnNavigateToPlans}
-          onPress={() => navigation.navigate('Tus planes')}>
-          <View style={styles.textAndIconWrapper}>
-            <Text style={{color: 'white', fontSize: 16}}>Mis planes</Text>
-            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+    <ScrollView
+      contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+      {userInfo?._id ? (
+        <>
+          <Image
+            source={{
+              uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
+            }}
+            style={styles.imagen}
+          />
+          <View>
+            <Button title={'Seleccionar foto de perfil'} />
           </View>
-        </TouchableOpacity>
+          <Text style={{color: '#111', fontSize: 20, fontWeight: 'bold'}}>
+            {userInfo.name}
+          </Text>
+          <Text style={{color: '#111'}}>{userInfo.email}</Text>
 
-        <TouchableOpacity
-          style={styles.BtnNavigateToPlans}
-          onPress={() => navigation.navigate('Editar preferencias')}>
-          <View style={styles.textAndIconWrapper}>
-            <Text style={{color: 'white', fontSize: 16}}>Editar tus preferencias</Text>
-            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
-          </View>
-        </TouchableOpacity>
-          
-        <TouchableOpacity
-          style={styles.BtnNavigateToPlans}
-          onPress={() => navigation.navigate('Fuiste invitado')}>
-          <View style={styles.textAndIconWrapper}>
-            <Text style={{color: 'white', fontSize: 16}}>
-              Planes que me invitaron
-            </Text>
-            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
-          </View>
-        </TouchableOpacity>
+          {/* BOTONES PARA VER MIS PLANES  */}
+          <View style={styles.buttonsWrapper}>
+            <TouchableOpacity
+              style={styles.BtnNavigateToPlans}
+              onPress={() => navigation.navigate('Tus planes')}>
+              <View style={styles.textAndIconWrapper}>
+                <Text style={{color: 'white', fontSize: 16}}>Mis planes</Text>
+                <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+              </View>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.BtnNavigateToPlans}
-          onPress={() => navigation.navigate('Historial')}>
-          <View style={styles.textAndIconWrapper}>
-            <Text style={{color: 'white', fontSize: 16}}>Historial</Text>
-            <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
-          </View>
-        </TouchableOpacity>
-      </View>
-   
+            <TouchableOpacity
+              style={styles.BtnNavigateToPlans}
+              onPress={() => navigation.navigate('Editar preferencias')}>
+              <View style={styles.textAndIconWrapper}>
+                <Text style={{color: 'white', fontSize: 16}}>
+                  Editar tus preferencias
+                </Text>
+                <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+              </View>
+            </TouchableOpacity>
 
-      <TouchableOpacity onPress={logout} style={styles.logout}>
-        <Text style={{color: 'white', fontSize: 16}}>Cerrar sesión</Text>
-      </TouchableOpacity>  
-      </>
-      :
-      null
-      }
-    </View>
-  )
+            <TouchableOpacity
+              style={styles.BtnNavigateToPlans}
+              onPress={() => navigation.navigate('Fuiste invitado')}>
+              <View style={styles.textAndIconWrapper}>
+                <Text style={{color: 'white', fontSize: 16}}>
+                  Planes que me invitaron
+                </Text>
+                <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.BtnNavigateToPlans}
+              onPress={() => navigation.navigate('Historial')}>
+              <View style={styles.textAndIconWrapper}>
+                <Text style={{color: 'white', fontSize: 16}}>Historial</Text>
+                <Ionicons name="arrow-forward" style={styles.IconBtnNav} />
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity onPress={logout} style={styles.logout}>
+            <Text style={{color: 'white', fontSize: 16}}>Cerrar sesión</Text>
+          </TouchableOpacity>
+        </>
+      ) : null}
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
