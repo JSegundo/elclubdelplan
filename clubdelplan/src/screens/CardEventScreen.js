@@ -86,13 +86,7 @@ const CardEvent = () => {
             {/* <Text style={styles.line}>─────────────────────────</Text> */}
             <Text style={styles.subtitle}>Descripción</Text>
             <Text style={styles.text}>
-              {description} Un evento es todo acontecimiento previamente
-              organizado que reúne a un determinado número de personas en tiempo
-              y lugar preestablecidos, que desarrollarán y compartirán una serie
-              de actividades afines a un mismo objetivo para estímulo del
-              comercio, la industria, el intercambio social y la cultura
-              general.
-            </Text>
+              {description}</Text>
           </View>
 
           <View>
