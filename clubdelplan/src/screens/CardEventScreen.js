@@ -29,7 +29,7 @@ const CardEvent = () => {
     endDate,
     paymentLimitDate,
     description,
-    totalPrice,
+    pricePerPerson,
     coments,
   } = item;
   const fakeMapImage =
@@ -57,50 +57,44 @@ const CardEvent = () => {
     <SafeAreaView>
       <ScrollView>
         <View style={styles.cardWrap}>
-          <Image style={styles.image} source={{uri: image}} />
-
+          <View style={styles.ImageWrapper}>
+            <Image style={styles.image} source={{uri: image}} />
+          </View>
           <Text style={styles.title}>{name}</Text>
-
-          <Text style={styles.text}>{location}</Text>
+          <Text style={styles.text}>
+            <Ionicons
+              name="pin"
+              style={{
+                color: '#208383',
+                fontSize: 20,
+              }}
+            />
+            {location}
+          </Text>
 
           <Text style={styles.text}> Empieza: {startDate?.split('T')[0]}</Text>
           <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
-          <Text style={styles.text}>
-            Limite de confirmación: {paymentLimitDate?.split('T')[0]}
-          </Text>
+          {paymentLimitDate ? (
+            <Text style={styles.text}>
+              Limite de confirmación: {paymentLimitDate?.split('T')[0]}
+            </Text>
+          ) : null}
+
           {/* DATES */}
 
-          {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
           <Text style={styles.text}>{time} hs</Text>
-          {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
+          <Text> ARS ${pricePerPerson ? pricePerPerson : 0}</Text>
 
-          <Text> ARS ${totalPrice ? totalPrice : 0}</Text>
-          <Text style={styles.text}> Compartir (componente de Gus) </Text>
-
-          <View>
-            {/* <Text style={styles.line}>─────────────────────────</Text> */}
+          <View styles={{}}>
             <Text style={styles.subtitle}>Descripción</Text>
             <Text style={styles.text}>{description}</Text>
           </View>
 
           <View>
-            <Text style={styles.line}>─────────────────────────</Text>
             <Text style={styles.subtitle}>Ubicación</Text>
             <Text style={styles.text}>--Incrustar mapa real--</Text>
             <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
           </View>
-
-          <View>
-            {/* <Text style={styles.line}>─────────────────────────</Text>
-            <Text style={styles.subtitle}>Más eventos como este</Text>
-            <Text style={styles.text}>--Carrousel--</Text> */}
-          </View>
-
-          {/* poner el button -fixed- at the buttom of the screen */}
-
-          {/* <TouchableOpacity style={styles.buttonWrap}>
-            <Text style={styles.button}>Compartir evento</Text>
-          </TouchableOpacity> */}
         </View>
 
         {eventDate.getTime() < dateNow.getTime() ? (
@@ -154,7 +148,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   subtitle: {
-    textAlign: 'center',
+    // textAlign: 'center',
     marginTop: 10,
     fontSize: 18,
     fontWeight: 'bold',
@@ -164,16 +158,26 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    // padding: 20,
   },
   text: {
     color: 'black',
     margin: 4,
   },
+  ImageWrapper: {
+    marginTop: 20,
+    width: '100%',
+    height: 200,
+  },
   image: {
-    marginTop: 30,
-    width: 250,
-    height: 360,
-    borderRadius: 20,
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'contain',
+    // marginTop: 30,
+    // width: 250,
+    // height: 360,
+    borderRadius: 4,
   },
   mapImage: {
     marginTop: 30,
