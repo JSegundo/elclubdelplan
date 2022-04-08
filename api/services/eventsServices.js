@@ -20,7 +20,7 @@ class EventsServices {
       const events = await Events.find({
         eventOwner: req.user.id,
         isPrivate: true,
-      })
+      }).populate("coments")
       return events
     } catch (err) {
       next(err)
@@ -35,7 +35,7 @@ class EventsServices {
         eventOwner: req.user.id,
         isPrivate: true,
         endDate: { $lt: date },
-      })
+      }).populate("coments")
       return events
     } catch (err) {
       next(err)

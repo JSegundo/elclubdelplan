@@ -293,6 +293,82 @@ const events = [
     destacado: false,
   },
   {
+    id: 15,
+    name: "Tocada con la banda",
+    description: "Traigan los instrumentos.",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
+
+    startDate: new Date(2022, 02, 21),
+    endDate: new Date(2022, 02, 21),
+    paymentDay: null,
+
+    time: "20:00",
+    location: "La Gran 7 -  Concepción Arenal, Córdoba",
+
+    isPrivate: true,
+
+    category: "Deporte",
+    destacado: false,
+  },
+  {
+    id: 15,
+    name: "Skatepark",
+    description: "Vamos a andar en rollers al skatepark.",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
+
+    startDate: new Date(2022, 02, 21),
+    endDate: new Date(2022, 02, 21),
+    paymentDay: null,
+
+    time: "20:00",
+    location: "La Gran 7 -  Concepción Arenal, Córdoba",
+
+    isPrivate: true,
+
+    category: "Deporte",
+    destacado: false,
+  },
+  {
+    id: 15,
+    name: "Hackaton",
+    description: "El que codea mas rapido gana.",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
+
+    startDate: new Date(2022, 02, 21),
+    endDate: new Date(2022, 02, 21),
+    paymentDay: null,
+
+    time: "20:00",
+    location: "La Gran 7 -  Concepción Arenal, Córdoba",
+
+    isPrivate: true,
+
+    category: "Deporte",
+    destacado: false,
+  },
+  {
+    id: 15,
+    name: "Juntada en lo de mate",
+    description: "Asado .",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPL4Q6vuNOp5wxqkn2QqFv1xhStEKW9__cpw&usqp=CAU",
+
+    startDate: new Date(2022, 02, 21),
+    endDate: new Date(2022, 02, 21),
+    paymentDay: null,
+
+    time: "20:00",
+    location: "La Gran 7 -  Concepción Arenal, Córdoba",
+
+    isPrivate: true,
+
+    category: "Deporte",
+    destacado: false,
+  },
+  {
     id: 16,
     name: "Lista Flor ",
     description: "Nos juntamos a tomar algo",
@@ -519,7 +595,6 @@ const events = [
       "https://encolombia.com/wp-content/uploads/2021/07/Elementos-del-Teatro.jpg",
 
     startDate: new Date(2022, 04, 29),
-    endDate: new Date(2022, 04, 29),
     paymentDay: null,
 
     time: "20:20",

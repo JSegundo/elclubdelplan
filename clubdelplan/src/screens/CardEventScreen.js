@@ -185,15 +185,17 @@ const CardEvent = () => {
             </TouchableOpacity>
           ) : null}
 
-          <View>
-            <Text style={styles.subtitle}>Eventos del mismo creador</Text>
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              horizontal={true}
-              data={donePlans}
-              renderItem={({item}) => renderItem(item)}
-            />
-          </View>
+          {donePlans[0] ? (
+            <View>
+              <Text style={styles.subtitle}>Eventos del mismo creador</Text>
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+                data={donePlans}
+                renderItem={({item}) => renderItem(item)}
+              />
+            </View>
+          ) : null}
         </View>
       </ScrollView>
     </SafeAreaView>

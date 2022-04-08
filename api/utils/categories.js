@@ -1,25 +1,25 @@
 const categories = [
   {
-    categoryName: "Concert",
+    categoryName: "Concierto",
   },
   {
-    categoryName: "Cinema",
+    categoryName: "Cine",
   },
   {
-    categoryName: "Gastronomy",
+    categoryName: "Gastronomía",
   },
   {
-    categoryName: "Social event",
+    categoryName: "Evento social",
   },
   {
-    categoryName: "Sports",
+    categoryName: "Deportes",
   },
   {
     categoryName: "Bar",
   },
   {
-    categoryName: "Party",
+    categoryName: "Fiesta",
   },
-];
+]
 
-module.exports = categories;
+module.exports = categories
