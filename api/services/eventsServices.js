@@ -6,7 +6,7 @@ class EventsServices {
       const date = new Date();
       const events = await Events.find({
         isPrivate: false,
-        startDate: { $lt: date },
+        startDate: { $gt: date },
       }).populate("coments");
       return events;
     } catch (err) {
