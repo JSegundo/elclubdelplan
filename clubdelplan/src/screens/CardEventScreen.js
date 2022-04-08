@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
   subtitle: {
     marginTop: 10,
     fontSize: 18,
+    paddingLeft: 15,
     fontWeight: 'bold',
     color: 'black',
   },
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
   },
   buttonWrap: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginTop: 20,
     marginBottom: 20,
     alignItems: 'center',

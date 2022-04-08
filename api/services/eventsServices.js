@@ -17,9 +17,12 @@ class EventsServices {
   static async serviceGetAllMyEvents(req, next) {
     console.log(req.user.id)
     try {
+      const date = new Date()
+
       const events = await Events.find({
         eventOwner: req.user.id,
         isPrivate: true,
+        startDate: { $gt: date },
       }).populate("coments")
       return events
     } catch (err) {

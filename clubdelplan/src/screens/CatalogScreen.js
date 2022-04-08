@@ -55,7 +55,7 @@ const CatalogScreen = () => {
             <Text style={{color: 'black'}}>{category}</Text>
             <Text style={{fontSize: 10, color: 'black'}}>{location}</Text>
             {/* <Text>{startDate.split('T')[0]}</Text> */}
-            {pricePerPerson ? <Text>${totalPrice}</Text> : null}
+            {pricePerPerson ? <Text>${pricePerPerson}</Text> : null}
           </View>
         </View>
       </TouchableOpacity>

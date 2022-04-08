@@ -1,8 +1,16 @@
-import React, { useEffect } from 'react';
-import {Text, View, TextInput, Button, TouchableOpacity , FlatList ,Pressable} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  Text,
+  View,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  FlatList,
+  Pressable,
+} from 'react-native';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
-import categories from '../utils/categories'
+import categories from '../utils/categories';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Register = () => {
@@ -11,30 +19,31 @@ const Register = () => {
   const [psw, onChangePsw] = React.useState(null);
   const [number, onChangePhone] = React.useState(null);
   const [city, onChangeCity] = React.useState(null);
-  const [preferences , setPreferences] = React.useState([])
+  const [preferences, setPreferences] = React.useState([]);
   // const [categories, setCategories] = React.useState(null)
   const navigation = useNavigation();
 
+  // useEffect(()=> {
+  //  async function getCategories() {
+  //   const categories = await axios.get("http://localhost:3001/api/categories")
+  //   setCategories(categories)
+  // }
+  // getCategories()
+  // }, [])
 
-  useEffect(()=> {
-    //  async function getCategories() {
-    //   const categories = await axios.get("http://localhost:3001/api/categories")
-    //   setCategories(categories)
-    // }
-    // getCategories()
-  }, [])
-  
   const onRegister = async () => {
-    // let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(email);
+    // let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(
+    //   email,
+    // );
 
-    // if(!validEMail) {
-    //   return alert('Inalid email')
+    // if (!validEMail) {
+    //   return alert('Inalid email');
     // }
 
     // let password = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$/.test(psw);
 
-    // if(!password){
-    //   return alert("Ivalid password")
+    // if (!password) {
+    //   return alert('Ivalid password');
     // }
 
     const newUser = {
@@ -42,29 +51,28 @@ const Register = () => {
       email,
       city,
       password: psw,
-      preferences
+      preferences,
     };
-    console.log(preferences)
+    console.log(preferences);
     console.log(newUser);
     try {
       const response = await axios.post(
         'http://localhost:3001/api/users/register',
         newUser,
       );
-    
+
       navigation.reset({
         index: 0,
-        routes: [{ name: 'MiddleScreen' }],
+        routes: [{name: 'MiddleScreen'}],
       });
       console.log(response);
     } catch (err) {
       console.log(err);
     }
   };
-  const handlePress = (item) => {
-   preferences.push(item.categoryName)
-  }
-
+  const handlePress = item => {
+    preferences.push(item.categoryName);
+  };
 
   return (
     <ScrollView
@@ -113,19 +121,17 @@ const Register = () => {
           placeholderTextColor="#808080"
         />
 
-        <Text style= {styles.tittle}>Elije tus categorias preferidas</Text>
+        <Text style={styles.tittle}>Elije tus categorias preferidas</Text>
         <FlatList
           scrollEnabled={true}
           contentContainerStyle={styles.flatListAlign}
           numColumns={3}
           data={categories}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <Pressable
-                  style = {
-                    styles.pressable
-                  }
+              style={styles.pressable}
               onPress={() => handlePress(item)}>
-              <Text >{item.categoryName}</Text>
+              <Text>{item.categoryName}</Text>
             </Pressable>
           )}
         />
@@ -166,7 +172,7 @@ const styles = {
     marginVertical: 10,
     paddingVertical: 10,
     paddingHorizontal: 26,
-    color : '#111'
+    color: '#111',
   },
   buttonRegister: {
     width: 300,
@@ -174,13 +180,11 @@ const styles = {
     marginVertical: 10,
     paddingVertical: 10,
     // paddingHorizontal: 20,
-    marginTop : 30,
+    marginTop: 30,
     borderRadius: 6,
   },
   flatListAlign: {
-    
     alignItems: 'center',
-    
   },
   pressable: {
     justifyContent: 'center',

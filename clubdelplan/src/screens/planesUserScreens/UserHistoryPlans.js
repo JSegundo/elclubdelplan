@@ -64,6 +64,15 @@ const UserHistoryPlans = () => {
   return (
     <View>
       {/* <Text>Historial de planes</Text> */}
+      <Text
+        style={{
+          textAlign: 'center',
+          padding: 10,
+          fontSize: 16,
+          fontWeight: 'bold',
+        }}>
+        Planes realizados
+      </Text>
       <FlatList
         data={donePlans}
         renderItem={({item}) => renderItem(item)}

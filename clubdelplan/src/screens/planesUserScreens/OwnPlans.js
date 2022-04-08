@@ -61,6 +61,15 @@ const OwnPlans = () => {
 
   return (
     <View>
+      <Text
+        style={{
+          textAlign: 'center',
+          padding: 10,
+          fontSize: 16,
+          fontWeight: 'bold',
+        }}>
+        Planes que creaste
+      </Text>
       <FlatList
         data={ownPlans}
         renderItem={({item}) => renderItem(item)}
