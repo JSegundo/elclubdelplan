@@ -13,10 +13,35 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {userData} from '../store/user';
+
+const token_storage = '@Token';
+
 const HomeScreen = () => {
   const eventos = useSelector(state => state.event);
   let dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const [token, setToken] = React.useState(null);
+
+  useEffect(() => {
+    async function getTokenAndUser() {
+      try {
+        let responseToken = await AsyncStorage.getItem(token_storage);
+        setToken(JSON.parse(responseToken));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getTokenAndUser();
+  }, []);
+
+  useEffect(() => {
+    if (!token) return;
+    console.log('SE RENDERIZO APP');
+    dispatch(userData(token));
+  }, [token]);
 
   useEffect(() => {
     dispatch(getAllEvents());
@@ -25,16 +50,16 @@ const HomeScreen = () => {
   // filtro por categoría para mostrar en sus respectivos carruseles.
   // arrays que se les pasa a los Flatlist's en "data"
   const eventosCine = eventos[0]
-    ? eventos.filter(ev => ev.category === 'Cinema')
+    ? eventos.filter(ev => ev.category === 'Cine')
     : '';
   const eventosFiesta = eventos[0]
-    ? eventos.filter(ev => ev.category === 'Party')
+    ? eventos.filter(ev => ev.category === 'Fiesta')
     : '';
   const eventosBares = eventos[0]
     ? eventos.filter(ev => ev.category === 'Bar')
     : '';
   const seleccionEspecial = eventos[0]
-    ? eventos.filter(ev => ev.category === 'Concert')
+    ? eventos.filter(ev => ev.category === 'Concierto')
     : '';
 
   const renderItem = item => {
@@ -112,7 +137,7 @@ const HomeScreen = () => {
           />
         </View>
         <View style={styles.contentWrapper}>
-          <Text style={styles.subtitle}>Bares</Text>
+          <Text style={styles.subtitle}>Bar</Text>
           <FlatList
             contentContainerStyle={{paddingTop: 40}}
             showsHorizontalScrollIndicator={false}

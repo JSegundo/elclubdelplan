@@ -7,7 +7,7 @@ import {createComent} from '../store/coment';
 import {getEvent} from '../store/singleEvent';
 import emptyStar from '../assets/star_corner.png';
 import fullStar from '../assets/star_filled.png';
-
+import {useNavigation} from '@react-navigation/native';
 const token_storage = '@Token';
 const user_storage = '@userData';
 
@@ -19,6 +19,8 @@ const Coment = () => {
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
   const route = useRoute();
   let dispatch = useDispatch();
+
+  const navigation = useNavigation();
 
   const {id} = route.params;
   console.log('ID->', id);
@@ -45,7 +47,10 @@ const Coment = () => {
           coment,
           vote: defaultRating,
         }),
-      );
+      ).then(() => {
+        alert('Gracias por dejar tu reseña!');
+        navigation.navigate('Perfil');
+      });
     } catch (e) {
       console.error(e);
     }
@@ -118,7 +123,7 @@ const styles = {
   },
   comentInput: {
     width: 300,
-    height: 150,
+    height: 15,
     margin: 10,
     borderWidth: 4,
     padding: 10,
