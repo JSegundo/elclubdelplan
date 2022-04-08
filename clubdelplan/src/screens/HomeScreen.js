@@ -13,10 +13,35 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {userData} from '../store/user';
+
+const token_storage = '@Token';
+
 const HomeScreen = () => {
   const eventos = useSelector(state => state.event);
   let dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const [token, setToken] = React.useState(null);
+
+  useEffect(() => {
+    async function getTokenAndUser() {
+      try {
+        let responseToken = await AsyncStorage.getItem(token_storage);
+        setToken(JSON.parse(responseToken));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getTokenAndUser();
+  }, []);
+
+  useEffect(() => {
+    if (!token) return;
+    console.log('SE RENDERIZO APP');
+    dispatch(userData(token));
+  }, [token]);
 
   useEffect(() => {
     dispatch(getAllEvents());

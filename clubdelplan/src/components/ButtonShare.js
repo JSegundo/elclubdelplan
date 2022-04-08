@@ -42,7 +42,7 @@ const ButtonShare = ({item}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.containerButton}>
       <View style={styles.containerSub}>
         <Text style={styles.text_1}> COMPARTIR PLAN </Text>
       </View>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
     borderRadius: 50,
   },
-  container: {
+  containerButton: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
