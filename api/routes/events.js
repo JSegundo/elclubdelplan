@@ -9,6 +9,8 @@ router.get("/", EventsControllers.getAllEvents)
 router.get("/me", checkJWT, EventsControllers.getMyEvents)
 //RUTA PARA BUSCAR EVENTOS PASADOS DE UN USUARIO
 router.get("/done", checkJWT, EventsControllers.getMyPastEvents)
+//RUTA PARA BUSCAR EVENTOS PASADOS DE UN USUARIO
+router.get("/attend", checkJWT, EventsControllers.getMyAttendEvents)
 //RUTA PARA BUSCAR UN EVENTO
 router.get("/:id", EventsControllers.getEvent)
 //RUTA PARA BUSCAR EVENTOS POR CATEGORIAS

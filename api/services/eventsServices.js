@@ -42,6 +42,21 @@ class EventsServices {
     }
   }
 
+  static async serviceGetAllMyAttendEvents(req, next) {
+    //METODO PARA MOSTRAR EN LA DEMO - NO FILTRA CORRECTAMENTE
+    try {
+      const date = new Date()
+      const events = await Events.find({
+        eventOwner: req.user.id,
+        isPrivate: true,
+        startDate: { $gt: date },
+      }).populate("coments")
+      return events
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async serviceGetEvent(req, next) {
     try {
       const event = await Events.findById(req.params.id).populate("coments")
