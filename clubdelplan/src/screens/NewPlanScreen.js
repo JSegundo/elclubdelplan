@@ -8,14 +8,13 @@ import {
   ScrollView,
   Image,
   FlatList,
-  Pressable,
 } from 'react-native';
 import {getAllUsers} from '../store/user/allUsers';
 
 import {Button, CheckBox, Icon, Input} from 'react-native-elements';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {createEvent} from '../store/event';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -119,6 +118,7 @@ const NewPlanScreen = () => {
     setPricePerPerson('');
     setPrivadoCheck(true);
     setSubmited(false);
+    setGuests([]);
   };
 
   const onSubmit = e => {
@@ -129,49 +129,86 @@ const NewPlanScreen = () => {
   };
 
   // buscar usuarios para agregar al evento
-  const [allUsers, setAllUsers] = useState([]);
+  const allUsers = useSelector(state => state.allUsers);
 
   useEffect(() => {
-    dispatch(getAllUsers()).then(users => setAllUsers(users.payload));
+    dispatch(getAllUsers());
   }, []);
 
   const [searchQuery, setSearchQuery] = useState('');
 
   const searchUsers = e => {
     const results = allUsers
-      ? allUsers
-          .filter(user => user.name.toLowerCase().includes(e.toLowerCase()))
-          .splice(0, 4)
+      ? allUsers.filter(user =>
+          user.name.toLowerCase().includes(e.toLowerCase()),
+        )
       : '';
-    console.log(results);
     setSearchQuery(results);
   };
 
   const renderSearchResults = item => {
-    console.log(item);
-    let {name, _id, email} = item;
     return (
-      <TouchableOpacity
-        styles={{flexDirection: 'row', marginRight: 30}}
-        onPress={(name, _id) => addGuest(name)}>
+      <TouchableOpacity onPress={() => addGuest(item)}>
         <Text
           style={{
             fontSize: 20,
             marginRight: 30,
+            textAlign: 'center',
           }}>
-          {name}
+          {item.name}
         </Text>
-        <Ionicons
-          name="person-add"
-          style={{fontSize: 18, paddingLeft: 20, color: '#208383'}}
-        />
+        {guests.includes(item) ? (
+          <Ionicons
+            name="remove-circle"
+            style={{fontSize: 18, textAlign: 'center', color: '#900'}}
+          />
+        ) : (
+          <Ionicons
+            name="person-add"
+            style={{
+              fontSize: 18,
+              textAlign: 'center',
+              color: '#208383',
+              marginTop: 6,
+            }}
+          />
+        )}
       </TouchableOpacity>
     );
   };
 
   const addGuest = user => {
-    console.log(user);
-    // setGuests(user);
+    // console.log(user);
+    if (guests?.includes(user)) {
+      // let spliceado = guests.splice(guests.indexOf(user), 1);
+      // console.log('spliceado', spliceado);
+
+      setGuests(prevState => {
+        let spliceado = guests.splice(guests.indexOf(user), 1);
+        return [...prevState];
+      });
+      console.log('guest desp del splice', guests);
+      return;
+    } else {
+      if (guests[0]) {
+        setGuests([...guests, user]);
+      } else {
+        setGuests([user]);
+      }
+    }
+    console.log('GUESTS EN ADD', guests);
+  };
+
+  const showGuests = guest => {
+    // console.log(guests);
+    // if (guests?.includes(guest)) {
+    return (
+      <View style={{marginEnd: 10}}>
+        <Text>{guest.name}</Text>
+      </View>
+    );
+    // }
+    return;
   };
 
   return (
@@ -294,6 +331,13 @@ const NewPlanScreen = () => {
             horizontal={true}
             style={{width: '100%', paddingHorizontal: 10}}
           />
+          <FlatList
+            extraData={guests}
+            data={guests}
+            renderItem={({item}) => showGuests(item)}
+            horizontal={true}
+            style={{width: '100%', paddingHorizontal: 10}}
+          />
           {/* </View> */}
         </View>
 
@@ -384,7 +428,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#900',
     width: 300,
-    // width: '100%',
     paddingVertical: 15,
     paddingHorizontal: 25,
     borderRadius: 8,
@@ -392,12 +435,12 @@ const styles = StyleSheet.create({
   btnVerPlan: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: 'green',
+    backgroundColor: '#208383',
     width: 300,
-    // width: '100%',
     paddingVertical: 15,
     paddingHorizontal: 25,
     borderRadius: 8,
+    marginBottom: 15,
   },
   btnIcon: {
     color: 'white',
@@ -411,10 +454,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     shadowColor: '#000',
-
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-
     elevation: 2,
   },
   icon: {
