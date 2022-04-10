@@ -1,11 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import userReducer from './user';
+import userReducer from './user/user';
 import eventsReducer from './event';
-import userEventsReducer from './userEvents';
+import userEventsReducer from './user/userEvents';
 import comentReducer from './coment';
-import singleEventReducer from "./singleEvent";
-
+import singleEventReducer from './singleEvent';
+import allUsersReducer from './user/allUsers';
 export const store = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
   reducer: {
@@ -13,6 +13,7 @@ export const store = configureStore({
     userEvents: userEventsReducer,
     event: eventsReducer,
     singleEvent: singleEventReducer,
-    coment: comentReducer
+    coment: comentReducer,
+    allUsers: allUsersReducer,
   },
 });

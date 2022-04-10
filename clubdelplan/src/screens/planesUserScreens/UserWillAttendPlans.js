@@ -6,11 +6,11 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { userAttendPlans } from '../../store/userEvents';
-import { useNavigation } from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
+import {userAttendPlans} from '../../store/user/userEvents';
+import {useNavigation} from '@react-navigation/native';
 
 const UserWillAttendPlans = () => {
   const navigation = useNavigation();
@@ -40,7 +40,7 @@ const UserWillAttendPlans = () => {
       <View style={styles.viewWrapper}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Plan', { item: item });
+            navigation.navigate('Plan', {item: item});
           }}>
           <View style={styles.itemWrapper}>
             <Image
@@ -50,16 +50,18 @@ const UserWillAttendPlans = () => {
               style={styles.image}
             />
             <View style={styles.infoWrapper}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#900' }}>
+              <Text style={{fontSize: 16, fontWeight: 'bold', color: '#900'}}>
                 {name}
               </Text>
-              <Text style={{ fontSize: 12 }}>{startDate?.split('T')[0]}</Text>
+              <Text style={{fontSize: 12}}>{startDate?.split('T')[0]}</Text>
             </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.confirmButtonWrap}
-          onPress={() => { alert("Que lo disfrutes!") }}>
+          onPress={() => {
+            alert('Que lo disfrutes!');
+          }}>
           <Text style={styles.textButton}>Confirmar</Text>
         </TouchableOpacity>
       </View>
@@ -70,9 +72,9 @@ const UserWillAttendPlans = () => {
     <View>
       <FlatList
         data={attendPlans}
-        renderItem={({ item }) => renderItem(item)}
+        renderItem={({item}) => renderItem(item)}
         style={styles.flatlist}
-        contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
       />
     </View>
   );

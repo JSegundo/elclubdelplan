@@ -1,4 +1,5 @@
 const Events = require("../models/Events")
+const User = require("../models/User")
 
 class EventsServices {
   static async serviceGetAllEvents(req, next) {
@@ -95,10 +96,12 @@ class EventsServices {
 
   static async serviceAddEvent(req, next) {
     console.log("req.body de serviceAddEvent: ---->", req.body)
+    console.log(req.user)
     try {
       const newEvent = new Events(req.body)
-      newEvent.eventOwner = req.params.userid
-      console.log("evento: ", newEvent)
+      newEvent.eventOwner = req.user.id
+      // User.updateOne({ _id: req.user.id }, { $push: { ownPlans: [newEvent] } })
+      console.log("nuevo evento: ", newEvent)
       await newEvent.save()
       return newEvent
     } catch (err) {

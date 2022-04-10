@@ -7,7 +7,10 @@ import {
   Text,
   ScrollView,
   Image,
+  FlatList,
+  Pressable,
 } from 'react-native';
+import {getAllUsers} from '../store/user/allUsers';
 
 import {Button, CheckBox, Icon, Input} from 'react-native-elements';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -23,10 +26,11 @@ const NewPlanScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const [text, onChangeText] = React.useState('');
-  const [description, onChangeDescription] = React.useState('');
-  const [category, setCategory] = React.useState('');
-  const [location, onChangeLocation] = React.useState('');
+  const [text, onChangeText] = useState('');
+  const [description, onChangeDescription] = useState('');
+  const [category, setCategory] = useState('');
+  const [location, onChangeLocation] = useState('');
+  const [guests, setGuests] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [paymentLimitDate, setPaymentLimitDate] = useState(new Date());
@@ -34,7 +38,6 @@ const NewPlanScreen = () => {
   const [pricePerPerson, setPricePerPerson] = useState(null);
   const [privadoCheck, setPrivadoCheck] = useState(true);
   const [submited, setSubmited] = useState(false);
-
   const [Plan, setPlan] = useState(null);
 
   // state categories for dropdown input
@@ -101,6 +104,7 @@ const NewPlanScreen = () => {
     category,
     image,
     pricePerPerson,
+    guests,
   };
 
   const refreshPage = () => {
@@ -122,6 +126,52 @@ const NewPlanScreen = () => {
     setSubmited(true);
     console.log(' nuevo plan on submit', newPlan);
     dispatch(createEvent(newPlan)).then(res => setPlan(res.payload));
+  };
+
+  // buscar usuarios para agregar al evento
+  const [allUsers, setAllUsers] = useState([]);
+
+  useEffect(() => {
+    dispatch(getAllUsers()).then(users => setAllUsers(users.payload));
+  }, []);
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const searchUsers = e => {
+    const results = allUsers
+      ? allUsers
+          .filter(user => user.name.toLowerCase().includes(e.toLowerCase()))
+          .splice(0, 4)
+      : '';
+    console.log(results);
+    setSearchQuery(results);
+  };
+
+  const renderSearchResults = item => {
+    console.log(item);
+    let {name, _id, email} = item;
+    return (
+      <TouchableOpacity
+        styles={{flexDirection: 'row', marginRight: 30}}
+        onPress={(name, _id) => addGuest(name)}>
+        <Text
+          style={{
+            fontSize: 20,
+            marginRight: 30,
+          }}>
+          {name}
+        </Text>
+        <Ionicons
+          name="person-add"
+          style={{fontSize: 18, paddingLeft: 20, color: '#208383'}}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const addGuest = user => {
+    console.log(user);
+    // setGuests(user);
   };
 
   return (
@@ -229,6 +279,24 @@ const NewPlanScreen = () => {
             maxLength={10} //setting limit of input
           />
         </View>
+
+        {/* INVITADOS */}
+        <View style={{width: '100%', height: 200}}>
+          <Input
+            label={'Elegí a los invitados'}
+            placeholder={'Busca por nombre de usuario'}
+            onChangeText={searchUsers}
+          />
+          {/* <View style={{width: '100%'}}> */}
+          <FlatList
+            data={searchQuery}
+            renderItem={({item}) => renderSearchResults(item)}
+            horizontal={true}
+            style={{width: '100%', paddingHorizontal: 10}}
+          />
+          {/* </View> */}
+        </View>
+
         {/* SELECT IMAGE */}
         <View>
           <Button title={'Seleccionar imagen'} onPress={selectImage} />

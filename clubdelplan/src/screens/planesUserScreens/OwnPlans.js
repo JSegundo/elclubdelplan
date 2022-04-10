@@ -9,7 +9,7 @@ import {
 import React, {useEffect} from 'react';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {userOwnPlans} from '../../store/userEvents';
+import {userOwnPlans} from '../../store/user/userEvents';
 import {useNavigation} from '@react-navigation/native';
 
 const OwnPlans = () => {
@@ -60,7 +60,7 @@ const OwnPlans = () => {
   };
 
   return (
-    <View>
+    <View style={{marginBottom: 50}}>
       <Text
         style={{
           textAlign: 'center',
