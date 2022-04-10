@@ -15,7 +15,7 @@ import ButtonShare from '../components/ButtonShare';
 import emptyStar from '../assets/star_corner.png';
 import fullStar from '../assets/star_filled.png';
 import {useSelector, useDispatch} from 'react-redux';
-import {userDonePlans} from '../store/userEvents';
+import {userDonePlans} from '../store/user/userEvents';
 
 const CardEvent = () => {
   const navigation = useNavigation();

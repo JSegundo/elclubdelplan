@@ -122,10 +122,11 @@ const Register = () => {
         />
 
         <Text style={styles.tittle}>Elije tus categorias preferidas</Text>
-        <FlatList
+        {/* <FlatList
           scrollEnabled={true}
           contentContainerStyle={styles.flatListAlign}
           numColumns={3}
+          // horizontal={true}
           data={categories}
           renderItem={({item}) => (
             <Pressable
@@ -134,7 +135,7 @@ const Register = () => {
               <Text>{item.categoryName}</Text>
             </Pressable>
           )}
-        />
+        /> */}
         <TouchableOpacity onPress={onRegister} style={styles.buttonRegister}>
           <Text style={{color: 'white', textAlign: 'center', fontSize: 18}}>
             Register

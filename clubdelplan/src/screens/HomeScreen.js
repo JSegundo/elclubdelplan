@@ -14,7 +14,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {userData} from '../store/user';
+import {userData} from '../store/user/user';
 
 const token_storage = '@Token';
 

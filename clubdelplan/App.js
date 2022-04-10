@@ -11,7 +11,7 @@ import HomeScreen from './src/screens/HomeScreen.js';
 import MiddleApp from './src/screens/MiddleApp.js';
 import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {userData} from './src/store/user';
+import {userData} from './src/store/user/user';
 import {LogBox} from 'react-native';
 //--------------------------------------
 

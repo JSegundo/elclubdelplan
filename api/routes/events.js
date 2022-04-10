@@ -18,7 +18,7 @@ router.get("/category/:name", EventsControllers.eventByCategory)
 //RUTA PARA EDITAR UN EVENTO
 router.put("/:id", checkJWT, EventsControllers.updateEvent)
 //RUTA PARA AGREGAR UN EVENTO
-router.post("/add/:userid", EventsControllers.addEvent)
+router.post("/add", checkJWT, EventsControllers.addEvent)
 //RUTA PARA ELIMINAR UN EVENTO
 router.delete("/:id", checkJWT, EventsControllers.deleteEvent)
 

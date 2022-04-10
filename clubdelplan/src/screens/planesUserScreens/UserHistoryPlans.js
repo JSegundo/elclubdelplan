@@ -9,7 +9,7 @@ import {
 import React, {Children, useEffect, useState} from 'react';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {userDonePlans} from '../../store/userEvents';
+import {userDonePlans} from '../../store/user/userEvents';
 import {useNavigation} from '@react-navigation/native';
 
 const UserHistoryPlans = () => {
