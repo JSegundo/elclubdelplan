@@ -44,14 +44,14 @@ const ButtonShare = ({item}) => {
   return (
     <View style={styles.containerButton}>
       <View style={styles.containerSub}>
-        <Text style={styles.text_1}> COMPARTIR PLAN </Text>
+        <Text style={styles.text_1}> Compartí con tus amigos </Text>
       </View>
 
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'space-around',
           width: '50%',
         }}>
         <View style={styles.buttonWrap}>
@@ -62,7 +62,7 @@ const ButtonShare = ({item}) => {
                 textAlign: 'center',
                 color: 'white',
                 fontSize: 30,
-                padding: 20,
+                padding: 5,
                 borderRadius: 15,
               }}
             />
@@ -77,7 +77,7 @@ const ButtonShare = ({item}) => {
                 textAlign: 'center',
                 color: 'white',
                 fontSize: 30,
-                padding: 20,
+                padding: 5,
                 borderRadius: 15,
               }}
             />
@@ -116,8 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
-    paddingHorizontal: 18,
-    borderRadius: 20,
+    // paddingHorizontal: 18,
   },
   containerSub: {
     alignItems: 'center',

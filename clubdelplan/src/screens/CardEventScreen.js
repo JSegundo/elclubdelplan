@@ -15,7 +15,7 @@ import ButtonShare from '../components/ButtonShare';
 import emptyStar from '../assets/star_corner.png';
 import fullStar from '../assets/star_filled.png';
 import {useSelector, useDispatch} from 'react-redux';
-import {userDonePlans} from '../store/user/userEvents';
+import {getOwnerPastEvents} from '../store/user/ownerPastEvents';
 
 const CardEvent = () => {
   const navigation = useNavigation();
@@ -23,11 +23,11 @@ const CardEvent = () => {
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
 
   const dispatch = useDispatch();
-  const donePlans = useSelector(store => store.userEvents);
+  const ownerPastEvents = useSelector(store => store.ownerPastEvents);
   const user = useSelector(state => state.user);
 
   useEffect(() => {
-    dispatch(userDonePlans());
+    dispatch(getOwnerPastEvents(eventOwner));
   }, []);
 
   const {item} = route.params;
@@ -42,7 +42,11 @@ const CardEvent = () => {
     description,
     pricePerPerson,
     coments,
+    isPrivate,
+    eventOwner,
   } = item;
+
+  console.log(eventOwner);
   const fakeMapImage =
     'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
   const dateNow = new Date();
@@ -126,28 +130,70 @@ const CardEvent = () => {
             <Image style={styles.image} source={{uri: image}} />
           </View>
           <Text style={styles.title}>{name}</Text>
-          <Text style={styles.text}> Empieza: {startDate?.split('T')[0]}</Text>
-          <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
-          {paymentLimitDate ? (
-            <Text style={styles.text}>
-              Limite de confirmación: {paymentLimitDate?.split('T')[0]}
-            </Text>
-          ) : null}
-          {/* DATES */}
-          <Text>{user.name}</Text>
-          {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
-          <Text style={styles.text}>Hora de inicio: {time} hs</Text>
-          {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
-          <Text style={styles.text}>
-            Precio: ARS ${pricePerPerson ? pricePerPerson : 0}
-          </Text>
-          <View>
-            <Text style={styles.subtitle}>Descripción</Text>
-            <Text style={styles.text}>{description}</Text>
+          {isPrivate ? (
+            <Ionicons
+              name="lock-closed-outline"
+              style={{
+                color: '#900',
+                fontSize: 30,
+              }}
+            />
+          ) : (
+            <Ionicons
+              name="lock-open-outline"
+              style={{
+                color: '#208383',
+                fontSize: 30,
+              }}
+            />
+          )}
+          {/* SECCION DE FECHAS  */}
+          <View style={styles.sectionWrapper}>
+            <View style={styles.sectionIconWrapper}>
+              <Ionicons
+                name="calendar"
+                style={{
+                  color: '#208383',
+                  fontSize: 20,
+                }}
+              />
+            </View>
+            <View style={styles.sectionInfoWrapper}>
+              <Text>Fecha y hora</Text>
+              <Text style={styles.text}>
+                Empieza: {startDate?.split('T')[0]}
+              </Text>
+              <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
+              {paymentLimitDate ? (
+                <Text style={styles.text}>
+                  Limite de confirmación: {paymentLimitDate?.split('T')[0]}
+                </Text>
+              ) : null}
+              <Text style={styles.text}>Hora de inicio: {time} hs</Text>
+            </View>
           </View>
-          <View>
-            <Text style={styles.subtitle}>Ubicación</Text>
-            <Text style={styles.text}>
+          {/* SECCION DE FECHAS  */}
+
+          {/* DESCRIPTION  */}
+          <View style={styles.sectionWrapper}>
+            <View style={styles.sectionIconWrapper}>
+              <Ionicons
+                name="book"
+                style={{
+                  color: '#208383',
+                  fontSize: 20,
+                }}
+              />
+            </View>
+            <View style={styles.sectionInfoWrapper}>
+              <Text>Descripción</Text>
+              <Text style={styles.text}>{description}</Text>
+            </View>
+          </View>
+
+          {/* SECCION DE UBICACIÓN */}
+          <View style={styles.sectionWrapper}>
+            <View style={styles.sectionIconWrapper}>
               <Ionicons
                 name="pin"
                 style={{
@@ -155,10 +201,18 @@ const CardEvent = () => {
                   fontSize: 20,
                 }}
               />
-              {location}
-            </Text>
-            <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
+            </View>
+            <View style={styles.sectionInfoWrapper}>
+              <Text>Ubicación</Text>
+              <Text style={styles.text}>{location}</Text>
+              <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
+            </View>
           </View>
+
+          <Text style={styles.text}>
+            Precio: ARS ${pricePerPerson ? pricePerPerson : 0}
+          </Text>
+
           {/* CARROUSEL */}
 
           {eventDate.getTime() < dateNow.getTime() ? (
@@ -185,13 +239,13 @@ const CardEvent = () => {
             </TouchableOpacity>
           ) : null}
 
-          {donePlans[0] ? (
+          {ownerPastEvents[0] ? (
             <View>
               <Text style={styles.subtitle}>Eventos del mismo creador</Text>
               <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal={true}
-                data={donePlans}
+                data={ownerPastEvents}
                 renderItem={({item}) => renderItem(item)}
               />
             </View>
@@ -219,6 +273,7 @@ const styles = StyleSheet.create({
   cardWrap: {
     justifyContent: 'space-between',
     alignItems: 'center',
+    padding: 10,
   },
   text: {
     color: 'black',
@@ -237,10 +292,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   mapImage: {
-    marginTop: 30,
-    width: 380,
+    width: 250,
     height: 250,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   buttonWrap: {
     flexDirection: 'row',
@@ -298,12 +352,32 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
 
+  // SECCIONES DE INFORMACIÓN
+
+  sectionWrapper: {
+    width: '100%',
+    flexDirection: 'row',
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#900',
+    borderBottomColor: 'grey',
+  },
+  sectionIconWrapper: {
+    width: '20%',
+  },
+  sectionInfoWrapper: {
+    width: '80%',
+  },
+
   // planes del owner del plan
 
   itemWrapper: {
     width: 203,
     height: 250,
     marginHorizontal: 10,
+    marginVertical: 20,
     borderRadius: 20,
     backgroundColor: '#FFFFFF',
   },

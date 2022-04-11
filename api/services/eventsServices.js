@@ -2,6 +2,20 @@ const Events = require("../models/Events")
 const User = require("../models/User")
 
 class EventsServices {
+  static async serviceGetOwnerPastEvents(req, next) {
+    try {
+      const date = new Date()
+      const events = await Events.find({
+        eventOwner: req.params.ownerid,
+        isPrivate: true,
+        endDate: { $lt: date },
+      }).populate("coments")
+      return events
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async serviceGetAllEvents(req, next) {
     try {
       const date = new Date()
