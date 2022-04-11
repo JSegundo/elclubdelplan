@@ -12,22 +12,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { userAttendPlans } from '../../store/user/userEvents';
 import { useNavigation } from '@react-navigation/native';
 import { addGuest } from '../../store/singleEvent';
+import { userConfirmPlans } from "../../store/user/userConfirmEvents";
 
 const UserWillAttendPlans = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const attendPlans = useSelector(store => store.userEvents);
-  const user = useSelector(store => store.user);
+  const confirmPlans = useSelector(store => store.confirmPlans);
 
   useEffect(() => {
     dispatch(userAttendPlans());
+    dispatch(userConfirmPlans());
   }, []);
-
-  //FILTRO DE ARREGLOS
-  const confirmEvents = attendPlans[0]
-    ? attendPlans.filter(ev => ev.willAttend.includes(user))
-    : '';
 
   //render items
   const renderItem = item => {
@@ -97,16 +94,16 @@ const UserWillAttendPlans = () => {
   return (
     <View style={styles.screenWrapper}>
       <ScrollView>
-        <View style={styles.itemWrapper}>
+        <View style={styles.planWrapper}>
           <Text style={styles.itemTitle}>Eventos Confirmados</Text>
           <FlatList
-            data={confirmEvents}
+            data={confirmPlans}
             renderItem={({ item }) => renderConfirmItem(item)}
             style={styles.flatlist}
             contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
           />
         </View>
-        <View style={styles.itemWrapper}>
+        <View style={styles.planWrapper}>
           <Text style={styles.itemTitle}>Invitaciones</Text>
           <FlatList
             data={attendPlans}
@@ -127,7 +124,7 @@ const styles = StyleSheet.create({
   screenWrapper: {
     marginBottom: 80,
   },
-  itemWrapper: {
+  planWrapper: {
     margin: 0,
     width: '100%',
   },

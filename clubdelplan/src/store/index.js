@@ -7,6 +7,7 @@ import comentReducer from './coment';
 import singleEventReducer from './singleEvent';
 import allUsersReducer from './user/allUsers';
 import ownerEventsReducer from './user/ownerPastEvents';
+import userConfirmEventsReducer from "./user/userConfirmEvents"
 
 export const store = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
@@ -18,5 +19,6 @@ export const store = configureStore({
     coment: comentReducer,
     allUsers: allUsersReducer,
     ownerPastEvents: ownerEventsReducer,
+    confirmEvents: userConfirmEventsReducer
   },
 });
