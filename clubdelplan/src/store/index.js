@@ -6,6 +6,8 @@ import userEventsReducer from './user/userEvents';
 import comentReducer from './coment';
 import singleEventReducer from './singleEvent';
 import allUsersReducer from './user/allUsers';
+import ownerEventsReducer from './user/ownerPastEvents';
+
 export const store = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
   reducer: {
@@ -15,5 +17,6 @@ export const store = configureStore({
     singleEvent: singleEventReducer,
     coment: comentReducer,
     allUsers: allUsersReducer,
+    ownerPastEvents: ownerEventsReducer,
   },
 });

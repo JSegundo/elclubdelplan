@@ -7,6 +7,8 @@ const checkJWT = require("../middlewares/jwt")
 router.get("/", EventsControllers.getAllEvents)
 //RUTA PARA BUSCAR EVENTOS PRIVADOS DE UN USUARIO
 router.get("/me", checkJWT, EventsControllers.getMyEvents)
+//RUTA PARA BUSCAR EVENTOS PASADOS DEL OWNER Y MOSTRAR EN SCREEN CARD
+router.get("/done/:ownerid", EventsControllers.getOwnerPastEvents)
 //RUTA PARA BUSCAR EVENTOS PASADOS DE UN USUARIO
 router.get("/done", checkJWT, EventsControllers.getMyPastEvents)
 //RUTA PARA BUSCAR EVENTOS PASADOS DE UN USUARIO

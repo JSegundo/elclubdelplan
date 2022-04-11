@@ -375,9 +375,7 @@ const NewPlanScreen = () => {
               <Text style={{color: 'white', textAlign: 'center'}}>
                 Ver plan
               </Text>
-              <Ionicons
-                style={styles.btnIcon}
-                name="checkmark-outline"></Ionicons>
+              <Ionicons style={styles.btnIcon} name="eye"></Ionicons>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnCrearPlan} onPress={refreshPage}>
               <Text style={{color: 'white', textAlign: 'center'}}>
