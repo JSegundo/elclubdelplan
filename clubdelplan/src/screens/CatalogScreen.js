@@ -6,16 +6,15 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
-import {useNavigate} from 'react-router-dom';
 import {useNavigation} from '@react-navigation/native';
 
 const CatalogScreen = () => {
   const eventos = useSelector(state => state.event);
+  const categories = useSelector(state => state.categories);
   let dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -24,17 +23,7 @@ const CatalogScreen = () => {
   }, []);
 
   const renderItem = item => {
-    const {
-      name,
-      _id,
-      category,
-      startDate,
-      time,
-      image,
-      location,
-      isPrivate,
-      pricePerPerson,
-    } = item;
+    const {name, category, image, location, pricePerPerson} = item;
 
     return item.isPrivate === false ? (
       <TouchableOpacity
@@ -54,7 +43,6 @@ const CatalogScreen = () => {
             </Text>
             <Text style={{color: 'black'}}>{category}</Text>
             <Text style={{fontSize: 10, color: 'black'}}>{location}</Text>
-            {/* <Text>{startDate.split('T')[0]}</Text> */}
             {pricePerPerson ? <Text>${pricePerPerson}</Text> : null}
           </View>
         </View>
@@ -62,12 +50,28 @@ const CatalogScreen = () => {
     ) : null;
   };
 
-  const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
-
-  const handleSearch = () => {
-    const filterEvents = eventos.filter(e => e.category === searchTerm);
+  const handleSearch = e => {
+    const filterEvents = eventos
+      ? eventos.filter(
+          ev =>
+            ev.category.toLowerCase().includes(e.toLowerCase()) ||
+            ev.name.toLowerCase().includes(e.toLowerCase()),
+        )
+      : '';
     setResults(filterEvents);
+  };
+
+  const [filtros, setFiltros] = useState('');
+
+  const barraMultiFiltro = () => {
+    return (
+      <View>
+        <Text>CAtegorias</Text>
+        <Text>Precio</Text>
+        <Text>Fecha</Text>
+      </View>
+    );
   };
 
   return (
@@ -75,24 +79,22 @@ const CatalogScreen = () => {
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Busca por categoría"
+          placeholder="Busca por categoría o título"
           placeholderTextColor={'black'}
-          onChangeText={value => setSearchTerm(value)}
+          onChangeText={handleSearch}
         />
-        <TouchableOpacity
-          style={styles.buttonSearch}
-          title="Search"
-          onPress={handleSearch}>
-          <Text style={{color: '#111'}}>Buscar</Text>
-        </TouchableOpacity>
       </View>
 
       <View style={styles.contentWrapper}>
-        <Text style={styles.title}>Catalogo de eventos públicos</Text>
         {results[0] ? (
           <Text style={{padding: 5}}>{results.length} Resultados</Text>
         ) : null}
 
+        <FlatList
+          horizontal={true}
+          // data={}
+          // renderItem={}
+        />
         <FlatList
           data={results[0] ? results : eventos}
           renderItem={({item}) => renderItem(item)}
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 130,
+    marginBottom: 100,
   },
   infoWrapper: {
     padding: 5,
@@ -153,23 +155,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: '#111',
   },
-  buttonSearch: {
-    borderWidth: 2,
-    borderColor: '#900',
-    marginLeft: 10,
-    borderRadius: 6,
-    marginTop: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    color: '#111',
-  },
   searchInput: {
     borderBottomWidth: 3,
     borderBottomColor: '#900',
     paddingHorizontal: 4,
     color: '#111',
     borderRadius: 3,
-    maxWidth: 200,
+    width: 250,
   },
 });
 

@@ -13,13 +13,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
 import NewPlanScreen from '../screens/NewPlanScreen';
-import LogInScreen from '../screens/LogInScreen';
-import UserProfileScreen from '../screens/UserProfileScreen';
 import middleScreen from '../screens/MiddleScreen';
+
+import {useSelector} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
-const Tabs = ({user}) => {
+const Tabs = () => {
+  const user = useSelector(state => state.user);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -38,7 +40,7 @@ const Tabs = ({user}) => {
         },
       }}>
       <Tab.Screen
-        name="Home"
+        name={`Hola, ${user.name}`}
         component={HomeScreen}
         options={{
           headerShown: true,
