@@ -22,6 +22,7 @@ const Register = () => {
   const [preferences, setPreferences] = React.useState([]);
   // const [categories, setCategories] = React.useState(null)
   const navigation = useNavigation();
+  const [error, setError] = React.useState('');
 
   // useEffect(()=> {
   //  async function getCategories() {
@@ -32,19 +33,24 @@ const Register = () => {
   // }, [])
 
   const onRegister = async () => {
-    // let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(
-    //   email,
-    // );
+    let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(
+      email,
+    );
 
-    // if (!validEMail) {
-    //   return alert('Inalid email');
-    // }
+    if (!validEMail) {
+      setError('Email invalido!');
+      return;
+    }
 
+    let password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(psw);
     // let password = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$/.test(psw);
 
-    // if (!password) {
-    //   return alert('Ivalid password');
-    // }
+    if (!password) {
+      setError(
+        'Contraseña invalida! debe tener minimo 8 caracteres y 1 mayuscula.',
+      );
+      return;
+    }
 
     const newUser = {
       name,
@@ -120,6 +126,7 @@ const Register = () => {
           placeholder="password"
           placeholderTextColor="#808080"
         />
+        {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
 
         <Text style={styles.tittle}>Elije tus categorias preferidas</Text>
         {/* <FlatList

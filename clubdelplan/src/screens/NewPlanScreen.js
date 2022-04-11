@@ -27,7 +27,7 @@ const NewPlanScreen = () => {
 
   const [text, onChangeText] = useState('');
   const [description, onChangeDescription] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('Evento social');
   const [location, onChangeLocation] = useState('');
   const [guests, setGuests] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
@@ -35,9 +35,10 @@ const NewPlanScreen = () => {
   const [paymentLimitDate, setPaymentLimitDate] = useState(new Date());
   const [image, setImage] = useState('https://via.placeholder.com/300x150');
   const [pricePerPerson, setPricePerPerson] = useState(null);
-  const [privadoCheck, setPrivadoCheck] = useState(true);
+  const [privadoCheck, setPrivadoCheck] = useState(false);
   const [submited, setSubmited] = useState(false);
   const [Plan, setPlan] = useState(null);
+  console.log(privadoCheck);
 
   // state categories for dropdown input
   const [allCategories, setAllCategories] = useState(null);
@@ -99,7 +100,7 @@ const NewPlanScreen = () => {
     startDate,
     endDate,
     paymentLimitDate,
-    privado: privadoCheck,
+    isPrivate: privadoCheck,
     category,
     image,
     pricePerPerson,
@@ -178,16 +179,11 @@ const NewPlanScreen = () => {
   };
 
   const addGuest = user => {
-    // console.log(user);
     if (guests?.includes(user)) {
-      // let spliceado = guests.splice(guests.indexOf(user), 1);
-      // console.log('spliceado', spliceado);
-
       setGuests(prevState => {
-        let spliceado = guests.splice(guests.indexOf(user), 1);
+        guests.splice(guests.indexOf(user), 1);
         return [...prevState];
       });
-      console.log('guest desp del splice', guests);
       return;
     } else {
       if (guests[0]) {
@@ -196,19 +192,14 @@ const NewPlanScreen = () => {
         setGuests([user]);
       }
     }
-    console.log('GUESTS EN ADD', guests);
   };
 
   const showGuests = guest => {
-    // console.log(guests);
-    // if (guests?.includes(guest)) {
     return (
       <View style={{marginEnd: 10}}>
         <Text>{guest.name}</Text>
       </View>
     );
-    // }
-    return;
   };
 
   return (
@@ -357,8 +348,10 @@ const NewPlanScreen = () => {
           title="Mi evento es privado"
           checked={privadoCheck}
           onPress={() => {
-            setPrivadoCheck(!privadoCheck);
-            console.log(privadoCheck);
+            setPrivadoCheck(() => {
+              return privadoCheck === true ? false : true;
+            });
+            // console.log(privadoCheck);
           }}
         />
         {!privadoCheck && (

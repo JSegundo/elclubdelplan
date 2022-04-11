@@ -34,6 +34,7 @@ const CardEvent = () => {
   const {
     time,
     image,
+    category,
     name,
     location,
     startDate,
@@ -130,6 +131,7 @@ const CardEvent = () => {
             <Image style={styles.image} source={{uri: image}} />
           </View>
           <Text style={styles.title}>{name}</Text>
+          <Text style={{paddingBottom: 10}}>{category}</Text>
           {isPrivate ? (
             <Ionicons
               name="lock-closed-outline"
