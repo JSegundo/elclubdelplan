@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  ScrollView,
 } from 'react-native';
 import React, { useEffect } from 'react';
 
@@ -19,7 +20,9 @@ const UserWillAttendPlans = () => {
   const dispatch = useDispatch();
 
   const attendPlans = useSelector(store => store.userEvents);
-  const confirmPlans = useSelector(store => store.confirmPlans);
+  const confirmPlans = useSelector(store => store.confirmEvents);
+
+  console.log("CONFIRMADOS->", confirmPlans);
 
   useEffect(() => {
     dispatch(userAttendPlans());
@@ -86,7 +89,7 @@ const UserWillAttendPlans = () => {
             </View>
           </View>
         </TouchableOpacity>
-        <Text style={styles.itemTitle}>Que lo disfrutes!</Text>
+        <Text style={styles.itemText}>Que lo disfrutes!</Text>
       </View>
     ) : null;
   };
@@ -95,11 +98,11 @@ const UserWillAttendPlans = () => {
     <View style={styles.screenWrapper}>
       <ScrollView>
         <View style={styles.planWrapper}>
-          <Text style={styles.itemTitle}>Eventos Confirmados</Text>
+          <Text style={styles.itemTitle}>Confirmados</Text>
           <FlatList
             data={confirmPlans}
             renderItem={({ item }) => renderConfirmItem(item)}
-            style={styles.flatlist}
+            horizontal={true}
             contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
           />
         </View>
@@ -108,7 +111,7 @@ const UserWillAttendPlans = () => {
           <FlatList
             data={attendPlans}
             renderItem={({ item }) => renderItem(item)}
-            style={styles.flatlist}
+            horizontal={true}
             contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
           />
         </View>
@@ -118,24 +121,25 @@ const UserWillAttendPlans = () => {
 };
 
 const styles = StyleSheet.create({
-  // pageWrapper: {
-  //   marginBottom: 120,
-  // },
   screenWrapper: {
-    marginBottom: 80,
+    marginBottom: 60,
   },
   planWrapper: {
     margin: 0,
     width: '100%',
   },
   itemTitle: {
-    color: '#000000',
+    color: '#208383',
     marginTop: 40,
-    marginBottom: -20,
     marginLeft: 18,
     fontSize: 22,
     padding: 1,
     fontWeight: 'bold',
+  },
+  itemText: {
+    color: '#208383',
+    fontSize: 16,
+    marginTop: 10,
   },
   viewWrapper: {
     backgroundColor: 'white',
@@ -169,7 +173,6 @@ const styles = StyleSheet.create({
   },
   infoWrapper: {
     justifyContent: 'space-between',
-    // alignItems: 'center',
     padding: 8,
     width: 160,
   },
@@ -191,7 +194,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     overflow: 'hidden',
   },
-  // input
   searchSection: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -218,17 +220,14 @@ const styles = StyleSheet.create({
   confirmButtonWrap: {
     flexDirection: 'row',
     justifyContent: 'center',
-    //marginTop: 10,
+    marginTop: 3,
     marginBottom: 20,
     alignItems: 'center',
     paddingVertical: 15,
     paddingHorizontal: 25,
-    width: 290,
+    width: 150,
     height: 50,
     backgroundColor: '#208383',
-    //marginVertical: 10,
-    //paddingVertical: 10,
-    // paddingHorizontal: 20,
     borderRadius: 6,
   },
   textButton: {
@@ -236,9 +235,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
   },
-  // flatlist: {
-  //   justifyContent: 'center',
-  // },
 });
 
 export default UserWillAttendPlans;

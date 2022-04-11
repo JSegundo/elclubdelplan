@@ -7,7 +7,9 @@ export const userConfirmPlans = createAsyncThunk(
         try {
             const { user } = thunkAPI.getState();
             const token = user.token;
-            const res = await axios.get(`http://localhost:3001/api/events/confirm`, {
+            const res = await axios.get(
+                `http://localhost:3001/api/events/confirm`, 
+                {
                 headers: { authorization: `Bearer ${token}` },
             });
             return res.data;
