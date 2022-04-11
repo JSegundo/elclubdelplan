@@ -37,7 +37,7 @@ const EventSchema = new Schema({
     type: Number,
   },
   category: { type: String }, 
-  guests: [{ type: Schema.ObjectId, ref: "User" }], //invitados hardcodeado
+  guests: [{ type: Schema.ObjectId, ref: "User" }], //invitados con el input q hace Segu
   willAttend: [{ type: Schema.ObjectId, ref: "User" }], //ya funciona sin hardcodeo
   eventOwner: { type: Schema.ObjectId, ref: "User" }, 
   coments: [{ type: Schema.ObjectId, ref: "Coments" }]

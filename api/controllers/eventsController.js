@@ -20,8 +20,18 @@ class EventsController {
     return events ? res.status(200).json(events) : res.sendStatus(404)
   }
 
-  static async getMyAttendEvents(req, res, next) {
-    const events = await EventsService.serviceGetAllMyAttendEvents(req, next)
+  static async getMyEventsInvitations(req, res, next) {
+    const events = await EventsService.serviceGetMyEventsInvitations(req, next)
+    return events ? res.status(200).json(events) : res.sendStatus(404)
+  }
+
+  static async getMyEventsWillAttend(req, res, next) {
+    const events = await EventsService.serviceGetMyEventsWillAttend(req, next)
+    return events ? res.status(200).json(events) : res.sendStatus(404)
+  }
+
+  static async getMyUpdateEventWillAttend(req, res, next) {
+    const events = await EventsService.serviceUpdateEventWillAttend(req, next)
     return events ? res.status(200).json(events) : res.sendStatus(404)
   }
 
