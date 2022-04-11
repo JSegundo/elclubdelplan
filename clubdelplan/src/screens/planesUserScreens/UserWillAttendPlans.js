@@ -6,41 +6,37 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-import {useSelector, useDispatch} from 'react-redux';
-import {userAttendPlans} from '../../store/user/userEvents';
-import {useNavigation} from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import { userAttendPlans } from '../../store/user/userEvents';
+import { useNavigation } from '@react-navigation/native';
+import { addGuest } from '../../store/singleEvent';
 
 const UserWillAttendPlans = () => {
   const navigation = useNavigation();
-
   const dispatch = useDispatch();
+
   const attendPlans = useSelector(store => store.userEvents);
+  const user = useSelector(store => store.user);
 
   useEffect(() => {
     dispatch(userAttendPlans());
   }, []);
 
+  //FILTRO DE ARREGLOS
+  const confirmEvents = attendPlans[0]
+    ? attendPlans.filter(ev => ev.willAttend.includes(user))
+    : '';
+
   //render items
   const renderItem = item => {
-    const {
-      name,
-      _id,
-      category,
-      startDate,
-      time,
-      image,
-      location,
-      isPrivate,
-      totalPrice,
-    } = item;
-
+    const { name, startDate, image } = item;
     return item.isPrivate === true ? (
       <View style={styles.viewWrapper}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Plan', {item: item});
+            navigation.navigate('Plan', { item: item });
           }}>
           <View style={styles.itemWrapper}>
             <Image
@@ -50,17 +46,19 @@ const UserWillAttendPlans = () => {
               style={styles.image}
             />
             <View style={styles.infoWrapper}>
-              <Text style={{fontSize: 16, fontWeight: 'bold', color: '#900'}}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#900' }}>
                 {name}
               </Text>
-              <Text style={{fontSize: 12}}>{startDate?.split('T')[0]}</Text>
+              <Text style={{ fontSize: 12 }}>{startDate?.split('T')[0]}</Text>
             </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.confirmButtonWrap}
           onPress={() => {
-            alert('Que lo disfrutes!');
+            dispatch(addGuest(item.id));
+            alert("Que lo disfrutes!");
+            navigation.navigate('Fuiste invitado');
           }}>
           <Text style={styles.textButton}>Confirmar</Text>
         </TouchableOpacity>
@@ -68,14 +66,56 @@ const UserWillAttendPlans = () => {
     ) : null;
   };
 
+  const renderConfirmItem = item => {
+    const { name, startDate, image } = item;
+    return item.isPrivate === true ? (
+      <View style={styles.viewWrapper}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Plan', { item: item });
+          }}>
+          <View style={styles.itemWrapper}>
+            <Image
+              source={{
+                uri: image,
+              }}
+              style={styles.image}
+            />
+            <View style={styles.infoWrapper}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#900' }}>
+                {name}
+              </Text>
+              <Text style={{ fontSize: 12 }}>{startDate?.split('T')[0]}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <Text style={styles.itemTitle}>Que lo disfrutes!</Text>
+      </View>
+    ) : null;
+  };
+
   return (
-    <View>
-      <FlatList
-        data={attendPlans}
-        renderItem={({item}) => renderItem(item)}
-        style={styles.flatlist}
-        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
-      />
+    <View style={styles.screenWrapper}>
+      <ScrollView>
+        <View style={styles.itemWrapper}>
+          <Text style={styles.itemTitle}>Eventos Confirmados</Text>
+          <FlatList
+            data={confirmEvents}
+            renderItem={({ item }) => renderConfirmItem(item)}
+            style={styles.flatlist}
+            contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+          />
+        </View>
+        <View style={styles.itemWrapper}>
+          <Text style={styles.itemTitle}>Invitaciones</Text>
+          <FlatList
+            data={attendPlans}
+            renderItem={({ item }) => renderItem(item)}
+            style={styles.flatlist}
+            contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -84,6 +124,22 @@ const styles = StyleSheet.create({
   // pageWrapper: {
   //   marginBottom: 120,
   // },
+  screenWrapper: {
+    marginBottom: 80,
+  },
+  itemWrapper: {
+    margin: 0,
+    width: '100%',
+  },
+  itemTitle: {
+    color: '#000000',
+    marginTop: 40,
+    marginBottom: -20,
+    marginLeft: 18,
+    fontSize: 22,
+    padding: 1,
+    fontWeight: 'bold',
+  },
   viewWrapper: {
     backgroundColor: 'white',
     borderWidth: 2,
