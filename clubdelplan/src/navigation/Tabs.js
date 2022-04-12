@@ -38,6 +38,10 @@ const Tabs = () => {
           height: 60,
           ...styles.shadow,
         },
+        tabBarOptions: {
+          activeTintColor: '#900',
+          inactiveTintColor: 'grey'
+        },
       }}>
       <Tab.Screen
         name={`Hola, ${user.name}`}
@@ -48,7 +52,7 @@ const Tabs = () => {
           headerShadowVisible: false,
           // headerTitleStyle: {color: '#900'},
           tabBarIcon: ({color}) => (
-            <Ionicons name="home-outline" size={22} color="#900" />
+            <Ionicons name="home-outline" size={22} color={color}/>
           ),
         }}
       />
@@ -58,7 +62,7 @@ const Tabs = () => {
         options={{
           headerShown: true,
           headerShadowVisible: false,
-          tabBarIcon: () => <Ionicons name="search" size={24} color="#900" />,
+          tabBarIcon: ({color}) => <Ionicons name="search" size={24} color={color} />,
         }}
       />
       <Tab.Screen
@@ -67,7 +71,7 @@ const Tabs = () => {
         options={{
           headerShown: true,
           headerShadowVisible: false,
-          tabBarIcon: () => <Ionicons name="add" size={30} color="#900" />,
+          tabBarIcon: ({color}) => <Ionicons name="add" size={30} color={color} />,
         }}
       />
       <Tab.Screen
@@ -83,7 +87,7 @@ const Tabs = () => {
           //     color="#111"
           //   />),
           tabBarIcon: ({color}) => (
-            <Ionicons name="person-outline" size={22} color="#900" />
+            <Ionicons name="person-outline" size={22} color={color} />
           ),
         }}
       />
