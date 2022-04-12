@@ -34,9 +34,10 @@ const OwnPlans = () => {
       location,
       isPrivate,
       totalPrice,
+      eventOwner,
     } = item;
 
-    return item.isPrivate === true ? (
+    return (
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('Plan', {item: item});
@@ -56,7 +57,7 @@ const OwnPlans = () => {
           </View>
         </View>
       </TouchableOpacity>
-    ) : null;
+    );
   };
 
   return (

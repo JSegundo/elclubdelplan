@@ -30,9 +30,9 @@ const NewPlanScreen = () => {
   const [category, setCategory] = useState('Evento social');
   const [location, onChangeLocation] = useState('');
   const [guests, setGuests] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [paymentLimitDate, setPaymentLimitDate] = useState(new Date());
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [paymentLimitDate, setPaymentLimitDate] = useState('');
   const [image, setImage] = useState('https://via.placeholder.com/300x150');
   const [pricePerPerson, setPricePerPerson] = useState(null);
   const [privadoCheck, setPrivadoCheck] = useState(false);
@@ -112,9 +112,9 @@ const NewPlanScreen = () => {
     onChangeDescription('');
     setCategory('');
     onChangeLocation('');
-    setStartDate(new Date());
-    setEndDate(new Date());
-    setPaymentLimitDate(new Date());
+    setStartDate('');
+    setEndDate('');
+    setPaymentLimitDate('');
     setImage('https://via.placeholder.com/300x150');
     setPricePerPerson('');
     setPrivadoCheck(true);
@@ -214,7 +214,6 @@ const NewPlanScreen = () => {
         {/* DESCRIPTION  */}
         <Input
           multiline
-          // numberOfLines={2}
           label={'Descripcion'}
           onChangeText={onChangeDescription}
           placeholder="Los detalles que quieras aclarar sobre tu plan.."
@@ -263,17 +262,19 @@ const NewPlanScreen = () => {
         <View style={styles.datePickerWrapper}>
           <DateField
             style={{justifyContent: 'center'}}
-            defaultValue={new Date()}
+            // defaultValue={}
             styleInput={{fontSize: 15}}
             onSubmit={value => setStartDate(value)}
           />
         </View>
 
+        <Text style={styles.dateTitle}>A que hora empieza?</Text>
+
         <Text style={styles.dateTitle}>Cuando termina?</Text>
         <View style={styles.datePickerWrapper}>
           <DateField
             style={{justifyContent: 'center'}}
-            defaultValue={new Date()}
+            // defaultValue={new Date()}
             styleInput={{fontSize: 15}}
             onSubmit={value => setEndDate(value)}
           />
@@ -282,7 +283,7 @@ const NewPlanScreen = () => {
         <View style={styles.datePickerWrapper}>
           <DateField
             style={{justifyContent: 'center'}}
-            defaultValue={new Date()}
+            // defaultValue={new Date()}
             styleInput={{fontSize: 15}}
             onSubmit={value => setPaymentLimitDate(value)}
           />

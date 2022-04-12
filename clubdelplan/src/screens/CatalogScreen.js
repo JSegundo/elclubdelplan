@@ -6,15 +6,17 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
 import {useNavigation} from '@react-navigation/native';
+import {DropdownCategories} from '../components/DropdownCategories';
+import axios from 'axios';
 
 const CatalogScreen = () => {
   const eventos = useSelector(state => state.event);
-  const categories = useSelector(state => state.categories);
   let dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -50,6 +52,45 @@ const CatalogScreen = () => {
     ) : null;
   };
 
+  // busqueda multifiltro
+  const [showBusquedaAvanzada, setShowBusquedaAvanzada] = useState(false);
+
+  // GET list of categories available
+  const [allCategories, setAllCategories] = useState(null);
+  useEffect(() => {
+    async function getAllCategories() {
+      try {
+        const responseCat = await axios.get(
+          'http://localhost:3001/api/categories',
+        );
+        setAllCategories(responseCat.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getAllCategories();
+  }, []);
+  const dataCategories = allCategories?.map(cat => ({
+    label: cat.categoryName,
+    value: cat.categoryName,
+  }));
+  const [categorySelected, setCategorySelected] = useState('');
+  const [fechaSelected, setFechaSelected] = useState('');
+  const [precioSelected, setPrecioSelected] = useState('');
+  const dataFechas = [
+    {label: 'Hoy', value: 'hoy'},
+    {label: 'Mañana', value: 'mañana'},
+    {label: 'Esta semana', value: 'esta semana'},
+    {label: 'Este mes', value: 'este mes'},
+  ];
+  const dataPrices = [
+    {label: 'Gratis', value: 'gratis'},
+    {label: 'Pago', value: 'pago'},
+    // {label: 'Esta semana', value: 'esta semana'},
+    // {label: 'Este mes', value: 'este mes'},
+  ];
+
+  // busqueda input text
   const [results, setResults] = useState([]);
   const handleSearch = e => {
     const filterEvents = eventos
@@ -60,18 +101,6 @@ const CatalogScreen = () => {
         )
       : '';
     setResults(filterEvents);
-  };
-
-  const [filtros, setFiltros] = useState('');
-
-  const barraMultiFiltro = () => {
-    return (
-      <View>
-        <Text>CAtegorias</Text>
-        <Text>Precio</Text>
-        <Text>Fecha</Text>
-      </View>
-    );
   };
 
   return (
@@ -85,16 +114,40 @@ const CatalogScreen = () => {
         />
       </View>
 
+      <View style={{paddingHorizontal: 4}}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <DropdownCategories
+            placeholder="Categorias"
+            data={dataCategories}
+            value={categorySelected}
+            onChange={item => {
+              setCategorySelected(item.value);
+            }}
+          />
+          <DropdownCategories
+            placeholder="Fecha"
+            data={dataFechas}
+            value={fechaSelected}
+            onChange={item => {
+              setFechaSelected(item.value);
+            }}
+          />
+          <DropdownCategories
+            placeholder="Precio"
+            data={dataPrices}
+            value={precioSelected}
+            onChange={item => {
+              setPrecioSelected(item.value);
+            }}
+          />
+        </ScrollView>
+      </View>
+
       <View style={styles.contentWrapper}>
         {results[0] ? (
           <Text style={{padding: 5}}>{results.length} Resultados</Text>
         ) : null}
 
-        <FlatList
-          horizontal={true}
-          // data={}
-          // renderItem={}
-        />
         <FlatList
           data={results[0] ? results : eventos}
           renderItem={({item}) => renderItem(item)}
@@ -106,7 +159,7 @@ const CatalogScreen = () => {
 
 const styles = StyleSheet.create({
   pageWrapper: {
-    marginBottom: 120,
+    marginBottom: 166,
   },
   itemWrapper: {
     backgroundColor: 'white',
@@ -161,8 +214,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     color: '#111',
     borderRadius: 3,
-    width: 250,
+    width: 230,
   },
+
+  // filters
 });
 
 export default CatalogScreen;
