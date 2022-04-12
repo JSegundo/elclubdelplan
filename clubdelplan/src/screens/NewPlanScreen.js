@@ -18,6 +18,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DateField from 'react-native-datefield';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NewPlanScreen = () => {
   const navigation = useNavigation();
@@ -30,17 +31,31 @@ const NewPlanScreen = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [paymentLimitDate, setPaymentLimitDate] = useState(new Date());
-  const [image, setImage] = useState('https://via.placeholder.com/300x150');
+  const [image, setImage] = useState('http://via.placeholder.com/640x360');
   const [pricePerPerson, setPricePerPerson] = useState(null);
   const [privadoCheck, setPrivadoCheck] = useState(true);
   const [submited, setSubmited] = useState(false);
-
+  const [token , setToken] = useState(null)
   const [Plan, setPlan] = useState(null);
+
 
   // state categories for dropdown input
   const [allCategories, setAllCategories] = useState(null);
   // GET list of categories available
   useEffect(() => {
+    async function getToken () {
+      try{
+        const tokenAsync = await AsyncStorage.getItem('@userData')
+        console.log('TOKEN EN NEW',tokenAsync)
+        let tokenParsed = JSON.parse(tokenAsync)
+        setToken(tokenParsed)
+      }
+      catch (err) {
+        console.log(err)
+      }
+    }
+    getToken()
+
     async function getAllCategories() {
       try {
         const responseCat = await axios.get(
@@ -53,6 +68,8 @@ const NewPlanScreen = () => {
     }
     getAllCategories();
   }, []);
+  console.log(token)
+ 
   // DATA for render in dropdown
   const data = allCategories?.map(cat => ({
     label: cat.categoryName,
@@ -125,8 +142,11 @@ const NewPlanScreen = () => {
   };
 
   return (
+ 
     <ScrollView>
-      <View style={styles.pageWrapper}>
+    {token?._id ?  (
+    
+    <View style={styles.pageWrapper}>
         <Input
           label={'Nombre'}
           placeholder={'Dale un nombre a tu plan..'}
@@ -286,7 +306,10 @@ const NewPlanScreen = () => {
               name="checkmark-outline"></Ionicons>
           </TouchableOpacity>
         )}
-      </View>
+      </View>) : 
+      navigation.navigate('MiddleScreen')
+      }
+     
     </ScrollView>
   );
 };

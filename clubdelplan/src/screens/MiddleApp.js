@@ -14,6 +14,7 @@ import UserHistoryPlans from '../screens/planesUserScreens/UserHistoryPlans';
 import editPref from './planesUserScreens/EditPreferences';
 import ComentScreen from './ComentScreen'
 import CardEventScreen from './CardEventScreen'
+import LogInScreen from './LogInScreen'
 // import middleScreen from './src/screens/MiddleScreen.js';
 
 // Configuracion de Store redux
@@ -43,6 +44,11 @@ function MiddleApp() {
             <Stack.Screen
                 name="Register"
                 component={Register}
+
+            />
+            <Stack.Screen
+                name="LogIn"
+                component={LogInScreen}
 
             />
             <Stack.Screen

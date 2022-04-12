@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
@@ -10,34 +10,90 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import categories from '../../utils/categories';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 
-const user_storage = '@userData';
+
 const EditPref = () => {
-  const [user, setUser] = React.useState(null);
-  useEffect(() => {
-    async function getUserPref() {
-      let responseUser = await AsyncStorage.getItem(user_storage);
-      let tokenParsed = JSON.parse(responseUser);
-      setUser(tokenParsed);
-    }
-    getUserPref();
-  }, []);
+  const [arrCategories, setCategories] = React.useState(categories)
+  const user = useSelector(state => state.user);
+  const [preferences , setPreferences] = React.useState(user.preferences)
+  console.log("edit userr => :", user)
 
-  const handlePress = () => {};
+  useEffect(() => {
+    let arr = categories.map((item, index) => {
+      if(user.preferences.includes(item.categoryName)){
+        item.isSelected = true
+      }
+      else{
+        item.isSelected = false
+      }
+      return {...item}
+    })
+    console.log(arr)
+    setCategories(arr)
+  }, [])
+
+
+  const handlePress = (item,ind) => {
+
+    let arrPreferences = [...preferences]
+    let arr = arrCategories.map((item,index)=> {
+      if(ind == index){
+        if(item.isSelected) {
+          item.isSelected = false
+        }
+        else{
+          item.isSelected = true
+        }
+      }
+      return {...item}
+    })
+
+    if(item.isSelected) {
+      arrPreferences.push(item)
+      setPreferences(arrPreferences)
+    }
+
+    setCategories(arr)
+  };
+
+  handleEdit = () =>{
+    const newPreferences = {
+      preferences
+    }
+    console.log(newPreferences)
+    // try {
+    //   const response = await axios.put(
+    //     'http://localhost:3001/api/users/register',
+    //     newPreferences,
+    //   );
+    //   console.log(response);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+  }
 
   return (
     <View>
-      <FlatList
-        scrollEnabled={true}
-        contentContainerStyle={styles.flatListAlign}
-        numColumns={2}
-        data={categories}
-        renderItem={({item}) => (
-          <Pressable style={styles.pressable} onPress={() => handlePress(item)}>
-            <Text>{item.categoryName}</Text>
-          </Pressable>
-        )}
-      />
+      <View>
+        { 
+          arrCategories?.map((item, index) => {
+          return <TouchableOpacity
+            onPress={() => handlePress(item, index)}
+            style={styles.pressable}
+          >
+            <Text style={{ color: 'white' }}>{item.categoryName}</Text>
+            <Text style={{ color: "white" }}>{item.isSelected ? 'Seleccionado' : 'Seleccionar'}</Text>
+          </TouchableOpacity>
+        })}
+
+      </View>
+      <TouchableOpacity  onPress={() => handleEdit()} style={styles.buttonRegister}>
+        <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>
+          Confirmar Preferencias
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -83,16 +139,20 @@ const styles = {
     alignItems: 'center',
   },
   pressable: {
+
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 2,
     borderRadius: 15,
     borderStyle: 'solid',
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    flexDirection: "row",
     borderWidth: 1,
     backgroundColor: '#208383',
     margin: 8,
     elevation: 5,
-    width: 90,
+    width: 250,
     height: 40,
   },
 };

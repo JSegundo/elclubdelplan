@@ -34,6 +34,7 @@ const CatalogScreen = () => {
       location,
       isPrivate,
       pricePerPerson,
+      totalPrice
     } = item;
 
     return item.isPrivate === false ? (
