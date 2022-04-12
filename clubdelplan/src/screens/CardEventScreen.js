@@ -46,6 +46,7 @@ const CardEvent = () => {
     eventOwner,
   } = item;
   useEffect(() => {
+    if (!eventOwner._id) return;
     dispatch(getOwnerPastEvents(eventOwner._id));
   }, []);
   console.log('event Onwer', eventOwner);
