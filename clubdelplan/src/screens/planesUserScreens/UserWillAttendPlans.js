@@ -22,8 +22,6 @@ const UserWillAttendPlans = () => {
   const attendPlans = useSelector(store => store.userEvents);
   const confirmPlans = useSelector(store => store.confirmEvents);
 
-  console.log("CONFIRMADOS->", confirmPlans);
-
   useEffect(() => {
     dispatch(userAttendPlans());
     dispatch(userConfirmPlans());
@@ -56,9 +54,9 @@ const UserWillAttendPlans = () => {
         <TouchableOpacity
           style={styles.confirmButtonWrap}
           onPress={() => {
-            dispatch(addGuest(item.id));
+            dispatch(addGuest(item._id));
             alert("Que lo disfrutes!");
-            navigation.navigate('Fuiste invitado');
+            navigation.navigate('MiddleScreen');
           }}>
           <Text style={styles.textButton}>Confirmar</Text>
         </TouchableOpacity>

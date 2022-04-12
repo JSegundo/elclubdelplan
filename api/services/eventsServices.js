@@ -93,13 +93,12 @@ class EventsServices {
     }
   }
 
-  //MÉTODO PARA HACER EL CONFIRM AL EVENTO --> falta testear en postman
+  //MÉTODO PARA HACER EL CONFIRM AL EVENTO
   static async serviceUpdateEventWillAttend(req, next) {
     try {
       const event = await Events.findByIdAndUpdate(
         req.params.id, 
-        { $push: { willAttend: req.body.user} }, //pushea al nuevo array
-        { $pull: { guests: req.body.user} }, //elimina al user del array guests
+        { $push: { willAttend: req.body}, $pull: { guests: req.body._id} },
         { new: true }
       ); 
       return event;

@@ -34,12 +34,12 @@ export const userDonePlans = createAsyncThunk(
 );
 
 export const userAttendPlans = createAsyncThunk(
-  'ATTEND_PLANS',
+  'INVITATION_PLANS',
   async (_, thunkAPI) => {
     try {
       const {user} = thunkAPI.getState();
       const token = user.token;
-      const res = await axios.get(`http://localhost:3001/api/events/attend`, {
+      const res = await axios.get(`http://localhost:3001/api/events/invitation`, {
         headers: {authorization: `Bearer ${token}`},
       });
       return res.data;

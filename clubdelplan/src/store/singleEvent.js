@@ -14,7 +14,7 @@ export const getEvent = createAsyncThunk('EVENT', async (eventId) => {
       const {user} = thunkAPI.getState();
       const token = user.token;
       try {
-        const res = await axios.put(`http://localhost:3001/api/events/addGuest/${eventId}`, //REVISAR RUTA
+        const res = await axios.put(`http://localhost:3001/api/events/confirm/${eventId}`, 
           user,
           {
             headers: {authorization: `Bearer ${token}`},
