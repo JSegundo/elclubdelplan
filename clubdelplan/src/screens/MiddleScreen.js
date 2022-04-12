@@ -16,7 +16,7 @@ const MiddleScreen = () => {
       try {
         let responseToken = await AsyncStorage.getItem(token_storage);
         let responseUser = await AsyncStorage.getItem(user_storage);
-        console.log(responseToken);
+        console.log(">>", responseToken);
         setToken(JSON.parse(responseToken));
         setUser(JSON.parse(responseUser));
       } catch ({err}) {

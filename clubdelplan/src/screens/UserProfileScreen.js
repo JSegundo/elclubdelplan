@@ -14,6 +14,7 @@ import axios from 'axios';
 import {Button} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {launchImageLibrary} from 'react-native-image-picker';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const user_storage = '@userData';
 
@@ -45,6 +46,8 @@ const UserProfileScreen = () => {
     try {
       await AsyncStorage.removeItem('@Token');
       await AsyncStorage.removeItem('@userData');
+      await GoogleSignin.signOut();
+      console.log('Cierre de session de Google');
       // await AsyncStorage.removeItem('@ImageUser');
       setToken(null);
       navigation.replace('MiddleApp');
@@ -79,15 +82,19 @@ const UserProfileScreen = () => {
   //   });
   // };
 
+
   return (
     <ScrollView
       contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
       {userInfo?._id ? (
         <>
           <Image
-            source={{
-              uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
-            }}
+            // source={{
+            //   uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
+            // }}
+            // style={styles.imagen}
+            source={userInfo.photo
+            }
             style={styles.imagen}
           />
           <View>
@@ -145,7 +152,7 @@ const UserProfileScreen = () => {
             <Text style={{color: 'white', fontSize: 16}}>Cerrar sesión</Text>
           </TouchableOpacity>
         </>
-      ) : null}
+      ) :  null}
     </ScrollView>
   );
 };
