@@ -22,6 +22,34 @@ const OwnPlans = () => {
     dispatch(userOwnPlans());
   }, []);
 
+  const userCategories = [];
+
+  ownPlans[0]
+    ? userCategories.push(ownPlans.filter(ev => ev.category === 'Cine'))
+    : '';
+  ownPlans[0]
+    ? userCategories.push(ownPlans.filter(ev => ev.category === 'Fiesta'))
+    : '';
+  ownPlans[0]
+    ? userCategories.push(ownPlans.filter(ev => ev.category === 'Bar'))
+    : '';
+  ownPlans[0]
+    ? userCategories.push(
+        ownPlans.filter(ev => ev.category === 'Evento social'),
+      )
+    : '';
+  ownPlans[0]
+    ? userCategories.push(ownPlans.filter(ev => ev.category === 'Deportes'))
+    : '';
+  ownPlans[0]
+    ? userCategories.push(ownPlans.filter(ev => ev.category === 'Gastronomía'))
+    : '';
+  ownPlans[0]
+    ? userCategories.push(ownPlans.filter(ev => ev.category === 'Concierto'))
+    : '';
+
+  console.log('USERCATEGORIES --> ', userCategories);
+
   //render items
   const renderItem = item => {
     const {
@@ -36,12 +64,12 @@ const OwnPlans = () => {
       totalPrice,
     } = item;
 
-    return item.isPrivate === true ? (
+    return (
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('Plan', {item: item});
         }}>
-        <View style={styles.itemWrapper}>
+        <View style={styles.itemWrapper} key={item.id}>
           <Image
             source={{
               uri: image,
@@ -52,11 +80,13 @@ const OwnPlans = () => {
             <Text style={{fontSize: 16, fontWeight: 'bold', color: '#900'}}>
               {name}
             </Text>
-            <Text style={{fontSize: 12}}>{startDate?.split('T')[0]}</Text>
+            <Text style={({fontSize: 12}, {color: 'black'})}>
+              {startDate?.split('T')[0]}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
-    ) : null;
+    );
   };
 
   return (
@@ -67,15 +97,27 @@ const OwnPlans = () => {
           padding: 10,
           fontSize: 16,
           fontWeight: 'bold',
+          color: 'black',
         }}>
         Planes que creaste
       </Text>
-      <FlatList
-        data={ownPlans}
-        renderItem={({item}) => renderItem(item)}
-        style={styles.flatlist}
-        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
-      />
+      {/**[ [{},{}], [{},{}], [""] ] */}
+      {userCategories.map(category =>
+        category[0] ? (
+          <View>
+            <Text style={{color: 'black'}}>{category[0].category}</Text>
+            <FlatList
+              data={category}
+              renderItem={({item}) => renderItem(item)}
+              style={styles.flatlist}
+              contentContainerStyle={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            />
+          </View>
+        ) : null,
+      )}
     </View>
   );
 };
