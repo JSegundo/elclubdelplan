@@ -21,6 +21,7 @@ import { store } from './src/store/index.js';
 import { Provider } from 'react-redux';
 import HomeScreen from '../screens/HomeScreen';
 import MiddleScreen from './MiddleScreen';
+import CreatePassRedSocial from './CreatePassRedSocial';
 //--------------------------------------
 
 const user_storage = '@userData';
@@ -31,7 +32,6 @@ const Stack = createNativeStackNavigator();
 function MiddleApp() {
 
     return (
-
 
         <Stack.Navigator>
             <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
@@ -73,6 +73,8 @@ function MiddleApp() {
             />
             <Stack.Screen name="Comentarios" component={ComentScreen} />
             <Stack.Screen name="Plan" component={CardEventScreen} />
+            <Stack.Screen name="Crea tu contraseña" component={CreatePassRedSocial} />
+
         </Stack.Navigator>
 
     );

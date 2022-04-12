@@ -1,121 +1,101 @@
-import React, {useEffect} from 'react';
 import {
+  StyleSheet,
   Text,
   View,
+  ScrollView,
   TextInput,
-  Button,
-  Image,
   TouchableOpacity,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useState} from 'react';
 import axios from 'axios';
-import UserProfileScreen from './UserProfileScreen';
 import {useNavigation} from '@react-navigation/native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const token_storage = '@Token';
-const user_storage = '@userData';
 
-import {userData} from '../store/user';
-import {useDispatch} from 'react-redux';
-import {ScrollView} from 'react-native-gesture-handler';
-import RedSocialButton from '../components/RedSocialButton';
-
-
-const Log = () => {
-  const [email, onChangeText] = React.useState(null);
-  const [psw, onChangeNumber] = React.useState(null);
+const CreatePassRedSocial = ({route}) => {
+  const {email, name, familyName, givenName, id, photo} = route.params.user;
+  const [psw, setPsw] = useState(null);
+  const navigation = useNavigation();
   const [user, setUser] = React.useState(null);
   const [token, setToken] = React.useState(null);
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    async function getTokenAndUser() {
-      let responseToken = await AsyncStorage.getItem(token_storage);
-      let responseUser = await AsyncStorage.getItem(user_storage);
-      // console.log('aqui estoy esperando el store de user' , responseUser)
-      let tokenParsed = JSON.parse(responseToken);
-
-      setToken(tokenParsed);
-      setUser(responseUser);
-    }
-    getTokenAndUser();
-  }, []);
 
   const onSubmit = async () => {
-    const valid = {
+    const newUser = {
+      name,
       email,
+      city: '',
       password: psw,
+      preferences: [],
     };
     try {
-      const response = await axios.post(
-        'http://localhost:3001/api/users/login',
-        valid,
+      const responseRegister = await axios.post(
+        'http://localhost:3001/api/users/register',
+        newUser,
       );
-      setUser(response.data.user);
-      const tokenPrev = JSON.stringify(response.data.token);
-      // console.log(tokenPrev)
+
+      const responseLogin = await axios.post(
+        'http://localhost:3001/api/users/login',
+        {
+          email,
+          password: psw,
+        },
+      );
+
+      console.log("RESPONSE_LOGIN --->>>" ,responseLogin);
+
+      setUser(responseLogin.data.user);
+      const tokenPrev = JSON.stringify(responseLogin.data.token);
+
       setToken(tokenPrev);
       await AsyncStorage.setItem('@Token', tokenPrev);
 
-      // console.log('este este es el user onSubit', response.data.user);
-      const userJson = JSON.stringify(response.data.user);
+      const userJson = JSON.stringify(responseLogin.data.user);
       await AsyncStorage.setItem('@userData', userJson);
       navigation.replace('MiddleApp');
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.log("ERROR EN CREAR CONTRASEÑA REDSOCIAL",error);
     }
+
+    console.log('Se presiono iniciar session en crea tu contraseña');
   };
-  // console.log(user)
-  // console.log(token)
+
   return (
     <ScrollView
       contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
       <View style={styles.view}>
-        <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
+        <Text style={styles.tittlePrincipal}>El club del plan</Text>
         <Text style={styles.tittle}>
-          Por favor ingresa tu cuenta para seguir!
+          Por favor crea tu contraseña para seguir!
         </Text>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeText}
-          placeholder="email"
-          placeholderTextColor="#808080"
+          color={'#808080'}
+          editable={false}
           value={email}
         />
         <TextInput
           style={styles.input}
-          onChangeText={onChangeNumber}
+          onChangeText={setPsw}
           value={psw}
           secureTextEntry={true}
-          placeholder="password"
+          placeholder="crear contraseña"
           placeholderTextColor="#808080"
         />
-        <TouchableOpacity
-          style={styles.buttonLogin}
-          onPress={() => {
-            navigation.navigate('Register');
-          }}>
-          <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
-            Registrarse
-          </Text>
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.buttonLogin} onPress={onSubmit}>
           <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
             Iniciar sesion
           </Text>
         </TouchableOpacity>
-
-        <View style={styles.marginB}>
-          <RedSocialButton />
-        </View> 
-        
       </View>
     </ScrollView>
   );
 };
 
-const styles = {
+export default CreatePassRedSocial;
+
+const styles = StyleSheet.create({
   tittle: {
     textAlign: 'center',
     fontWeight: 'bold',
@@ -173,8 +153,4 @@ const styles = {
     // paddingHorizontal: 20,
     borderRadius: 6,
   },
-  marginB:{
-    marginBottom: 100,
-  }
-};
-export default Log;
+});
