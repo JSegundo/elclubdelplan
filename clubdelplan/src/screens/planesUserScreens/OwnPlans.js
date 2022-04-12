@@ -62,6 +62,7 @@ const OwnPlans = () => {
       location,
       isPrivate,
       totalPrice,
+      eventOwner,
     } = item;
 
     return (

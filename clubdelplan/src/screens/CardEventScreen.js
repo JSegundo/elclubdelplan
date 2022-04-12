@@ -16,6 +16,9 @@ import emptyStar from '../assets/star_corner.png';
 import fullStar from '../assets/star_filled.png';
 import {useSelector, useDispatch} from 'react-redux';
 import {getOwnerPastEvents} from '../store/user/ownerPastEvents';
+import axios from 'axios';
+const fakeMapImage =
+  'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
 
 const CardEvent = () => {
   const navigation = useNavigation();
@@ -25,10 +28,6 @@ const CardEvent = () => {
   const dispatch = useDispatch();
   const ownerPastEvents = useSelector(store => store.ownerPastEvents);
   const user = useSelector(state => state.user);
-
-  useEffect(() => {
-    dispatch(getOwnerPastEvents(eventOwner));
-  }, []);
 
   const {item} = route.params;
   const {
@@ -46,10 +45,12 @@ const CardEvent = () => {
     isPrivate,
     eventOwner,
   } = item;
+  useEffect(() => {
+    if (!eventOwner._id) return;
+    dispatch(getOwnerPastEvents(eventOwner._id));
+  }, []);
+  console.log('event Onwer', eventOwner);
 
-  console.log(eventOwner);
-  const fakeMapImage =
-    'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
   const dateNow = new Date();
   const eventDate = new Date(endDate);
 
@@ -243,7 +244,9 @@ const CardEvent = () => {
 
           {ownerPastEvents[0] ? (
             <View>
-              <Text style={styles.subtitle}>Eventos del mismo creador</Text>
+              <Text style={styles.subtitle}>
+                Eventos también creados por {eventOwner.name}
+              </Text>
               <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal={true}
