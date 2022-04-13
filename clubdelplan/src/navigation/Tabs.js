@@ -6,7 +6,7 @@ import {
   Pressable,
   Button,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,14 +14,27 @@ import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
 import NewPlanScreen from '../screens/NewPlanScreen';
 import middleScreen from '../screens/MiddleScreen';
-
-import {useSelector} from 'react-redux';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
+  const [token , setToken] = useState(null)
+  const [iconUserColor , setIconUser] = useState('#777')
   const user = useSelector(state => state.user);
+  
 
+  useEffect(()=> {
+    async function getToken () {
+      const tokenAsync = await AsyncStorage.getItem('@Token')
+      let tokenParsed = JSON.parse(tokenAsync)
+      setToken(tokenParsed)
+      if(tokenAsync) setIconUser('#900')
+
+    }
+    getToken()
+  }, [])
+  
   return (
     <Tab.Navigator
       screenOptions={{
@@ -87,7 +100,11 @@ const Tabs = () => {
           //     color="#111"
           //   />),
           tabBarIcon: ({color}) => (
+<<<<<<< HEAD
             <Ionicons name="person-outline" size={22} color={color} />
+=======
+            <Ionicons name='person-outline' size={22} color={iconUserColor} />
+>>>>>>> estrellita
           ),
         }}
       />

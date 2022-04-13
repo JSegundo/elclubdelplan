@@ -1,24 +1,24 @@
 const categories = [
   {
-    categoryName: "Concert",
+    categoryName: "Concierto",
   },
   {
-    categoryName: "Cinema",
+    categoryName: "Cine",
   },
   {
-    categoryName: "Gastronomy",
+    categoryName: "Gastronomia",
   },
   {
-    categoryName: "Social event",
+    categoryName: "Eventos Sociales",
   },
   {
-    categoryName: "Sports",
+    categoryName: "Deportes",
   },
   {
     categoryName: "Bar",
   },
   {
-    categoryName: "Party",
+    categoryName: "Fiesta",
   },
 ];
 

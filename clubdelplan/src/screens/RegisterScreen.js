@@ -23,6 +23,7 @@ const Register = () => {
   // const [categories, setCategories] = React.useState(null)
   const navigation = useNavigation();
   const [error, setError] = React.useState('');
+  const [arrCategories, setCategories] = React.useState(categories)
 
   // useEffect(()=> {
   //  async function getCategories() {
@@ -31,6 +32,18 @@ const Register = () => {
   // }
   // getCategories()
   // }, [])
+
+  useEffect(() => {
+    let arr = categories.map((item, index) => {
+      item.isSelected = false
+      
+      return {...item}
+    })
+    setCategories(arr)
+
+    console.log("arr data => " , arr)
+  }, [])
+
 
   const onRegister = async () => {
     let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(
@@ -76,9 +89,26 @@ const Register = () => {
       console.log(err);
     }
   };
-  const handlePress = item => {
-    preferences.push(item.categoryName);
-  };
+  const handlePress = (item, ind) => {
+
+    let arr = arrCategories.map((item,index)=> {
+      if(ind == index){
+        if(item.isSelected) {
+          item.isSelected = false
+        }
+        else{
+          item.isSelected = true
+        }
+       
+      }
+      return {...item}
+    })
+    
+    setCategories(arr)
+    preferences.push(item.categoryName)
+    
+  }
+
 
   return (
     <ScrollView
@@ -129,22 +159,23 @@ const Register = () => {
         {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
 
         <Text style={styles.tittle}>Elije tus categorias preferidas</Text>
-        {/* <FlatList
-          scrollEnabled={true}
-          contentContainerStyle={styles.flatListAlign}
-          numColumns={3}
-          // horizontal={true}
-          data={categories}
-          renderItem={({item}) => (
-            <Pressable
-              style={styles.pressable}
-              onPress={() => handlePress(item)}>
-              <Text>{item.categoryName}</Text>
-            </Pressable>
-          )}
-        /> */}
+        <View>
+          {arrCategories.map((item,index) => {
+            return <TouchableOpacity
+            onPress={() => handlePress(item,index)}
+            style = {[
+              item.isSelected ? 
+              styles.pressable :
+              styles.pressableFalse
+            ]}
+            > 
+            <Text style = {{color : 'white'}}>{item.categoryName}</Text>
+            <Text style = {{color : "white"}}>{ item.isSelected ? 'Seleccionado' : 'Seleccionar'}</Text>
+            </TouchableOpacity>
+          })}
+        </View>
         <TouchableOpacity onPress={onRegister} style={styles.buttonRegister}>
-          <Text style={{color: 'white', textAlign: 'center', fontSize: 18}}>
+          <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>
             Register
           </Text>
         </TouchableOpacity>
@@ -180,7 +211,7 @@ const styles = {
     marginVertical: 10,
     paddingVertical: 10,
     paddingHorizontal: 26,
-    color: '#111',
+    color: '#111'
   },
   buttonRegister: {
     width: 300,
@@ -192,19 +223,40 @@ const styles = {
     borderRadius: 6,
   },
   flatListAlign: {
+
     alignItems: 'center',
+
   },
   pressable: {
-    justifyContent: 'center',
+
     alignItems: 'center',
     paddingHorizontal: 2,
     borderRadius: 15,
     borderStyle: 'solid',
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    flexDirection: "row",
     borderWidth: 1,
-    backgroundColor: '#208383',
+    backgroundColor : "#208383",
     margin: 8,
     elevation: 5,
-    width: 90,
+    width: 250,
+    height: 40,
+  },
+  pressableFalse: {
+
+    alignItems: 'center',
+    paddingHorizontal: 2,
+    borderRadius: 15,
+    borderStyle: 'solid',
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    borderWidth: 1,
+    backgroundColor : "#1795CB",
+    margin: 8,
+    elevation: 5,
+    width: 250,
     height: 40,
   },
 };

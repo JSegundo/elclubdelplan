@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
@@ -10,7 +10,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import UserProfileScreen from './UserProfileScreen';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const token_storage = '@Token';
 const user_storage = '@userData';
@@ -29,15 +29,18 @@ const Log = () => {
   const [error, setError] = React.useState('');
   const navigation = useNavigation();
 
+
   useEffect(() => {
     async function getTokenAndUser() {
       let responseToken = await AsyncStorage.getItem(token_storage);
       let responseUser = await AsyncStorage.getItem(user_storage);
+
       // console.log('aqui estoy esperando el store de user' , responseUser)
       let tokenParsed = JSON.parse(responseToken);
 
       setToken(tokenParsed);
       setUser(responseUser);
+
     }
     getTokenAndUser();
   }, []);
@@ -61,7 +64,9 @@ const Log = () => {
       // console.log('este este es el user onSubit', response.data.user);
       const userJson = JSON.stringify(response.data.user);
       await AsyncStorage.setItem('@userData', userJson);
+      
       navigation.replace('MiddleApp');
+
     } catch (e) {
       setError('Email o contraseña incorrecta!');
       console.error(e);
@@ -71,9 +76,9 @@ const Log = () => {
   // console.log(token)
   return (
     <ScrollView
-      contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+      contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}>
       <View style={styles.view}>
-        <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
+        <Text style={styles.tittlePrincipal}>'Bienvenido al club del plan'</Text>
         <Text style={styles.tittle}>
           Por favor ingresa tu cuenta para seguir!
         </Text>
@@ -93,20 +98,20 @@ const Log = () => {
           placeholderTextColor="#808080"
         />
 
-        {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
+        {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
         {/* <View>{error && <Text>{error}</Text>}</View> */}
         <TouchableOpacity
           style={styles.buttonRegister}
           onPress={() => {
             navigation.navigate('Register');
           }}>
-          <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
             Registrarse
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.buttonLogin} onPress={onSubmit}>
-          <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
             Iniciar sesion
           </Text>
         </TouchableOpacity>

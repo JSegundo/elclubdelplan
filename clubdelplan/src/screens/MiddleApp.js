@@ -12,8 +12,10 @@ import OwnPlans from '../screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from '../screens/planesUserScreens/UserWillAttendPlans';
 import UserHistoryPlans from '../screens/planesUserScreens/UserHistoryPlans';
 import editPref from './planesUserScreens/EditPreferences';
-import ComentScreen from './ComentScreen';
-import CardEventScreen from './CardEventScreen';
+import ComentScreen from './ComentScreen'
+import CardEventScreen from './CardEventScreen'
+import LogInScreen from './LogInScreen'
+import NewPlanScreen from './NewPlanScreen';
 // import middleScreen from './src/screens/MiddleScreen.js';
 
 // Configuracion de Store redux
@@ -27,9 +29,14 @@ const Stack = createNativeStackNavigator();
 function MiddleApp() {
 
     return (
+<<<<<<< HEAD
 
         <Stack.Navigator>
             <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
+=======
+        <Stack.Navigator>
+          <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
+>>>>>>> estrellita
             <Stack.Screen
                 name="Home"
                 component={HomeScreen}
@@ -41,11 +48,28 @@ function MiddleApp() {
 
             />
             <Stack.Screen
+<<<<<<< HEAD
+=======
+                name="LogIn"
+                component={LogInScreen}
+
+            />
+            <Stack.Screen
+>>>>>>> estrellita
                 name="MiddleScreen"
                 component={MiddleScreen}
 
             />
+<<<<<<< HEAD
             
+=======
+            <Stack.Screen
+                name= "NewPlanScreen"
+                component={NewPlanScreen}
+            />
+             
+          
+>>>>>>> estrellita
             <Stack.Screen
                 name="Tus planes"
                 component={OwnPlans}
@@ -68,8 +92,11 @@ function MiddleApp() {
             />
             <Stack.Screen name="Comentarios" component={ComentScreen} />
             <Stack.Screen name="Plan" component={CardEventScreen} />
+<<<<<<< HEAD
             <Stack.Screen name="Crea tu contraseña" component={CreatePassRedSocial} />
 
+=======
+>>>>>>> estrellita
         </Stack.Navigator>
 
     );

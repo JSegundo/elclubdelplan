@@ -16,6 +16,7 @@ import emptyStar from '../assets/star_corner.png';
 import fullStar from '../assets/star_filled.png';
 import {useSelector, useDispatch} from 'react-redux';
 import {getOwnerPastEvents} from '../store/user/ownerPastEvents';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 const fakeMapImage =
   'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
@@ -24,7 +25,7 @@ const CardEvent = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
-
+  const [token, setToken] = useState(null)
   const dispatch = useDispatch();
   const ownerPastEvents = useSelector(store => store.ownerPastEvents);
   const user = useSelector(state => state.user);
@@ -70,7 +71,25 @@ const CardEvent = () => {
       </View>
     );
   };
-
+  const verifyUser = () => {
+    async function getToken() {
+      try {
+        const tokenAsync = await AsyncStorage.getItem('@Token')
+        console.log('TOKEN EN NEW', tokenAsync)
+        let tokenParsed = JSON.parse(tokenAsync)
+        setToken(tokenParsed)
+        if(!tokenAsync) navigation.replace('MiddleScreen')
+        else{
+          navigation.navigate('Comentarios', {id: item._id})
+        }
+        
+      }
+      catch (err) {
+        console.log(err)
+      }
+    }
+    getToken()
+  }
   const renderItem = item => {
     const {
       name,
