@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  ScrollView
 } from 'react-native';
 import React, {useEffect} from 'react';
 
@@ -91,22 +92,16 @@ const OwnPlans = () => {
   };
 
   return (
-    <View style={{marginBottom: 50}}>
+    <ScrollView style={{marginBottom: 50}}>
       <Text
-        style={{
-          textAlign: 'center',
-          padding: 10,
-          fontSize: 16,
-          fontWeight: 'bold',
-          color: 'black',
-        }}>
+        style={styles.title}>
         Planes que creaste
       </Text>
       {/**[ [{},{}], [{},{}], [""] ] */}
       {userCategories.map(category =>
         category[0] ? (
           <View>
-            <Text style={{color: 'black'}}>{category[0].category}</Text>
+            <Text style={styles.subtitle}>{category[0].category}</Text>
             <FlatList
               data={category}
               renderItem={({item}) => renderItem(item)}
@@ -119,7 +114,7 @@ const OwnPlans = () => {
           </View>
         ) : null,
       )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -129,14 +124,34 @@ const styles = StyleSheet.create({
   // },
   itemWrapper: {
     backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     borderWidth: 2,
     borderRadius: 12,
     borderColor: 'transparent',
-    flexDirection: 'row',
     width: 300,
     height: 80,
     marginTop: 5,
     marginBottom: 5,
+  },
+  title: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#B90303',
+    marginTop: 10,
+    marginBottom: 0,
+    // marginLeft: 18,
+    fontSize: 30,
+    padding: 1,
+  },
+  subtitle: {
+    color: '#000000',
+    marginTop: 40,
+    marginBottom: -20,
+    marginLeft: 18,
+    fontSize: 22,
+    padding: 1,
+    fontWeight: 'bold',
   },
   contentWrapper: {
     width: '100%',
@@ -150,16 +165,6 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     padding: 8,
     width: 160,
-  },
-  title: {
-    fontSize: 18,
-    textAlign: 'center',
-    color: '#111',
-    padding: 10,
-    fontWeight: 'bold',
-    borderBottomColor: 'lightblue',
-    borderWidth: 2,
-    borderColor: 'transparent',
   },
   image: {
     width: 140,
