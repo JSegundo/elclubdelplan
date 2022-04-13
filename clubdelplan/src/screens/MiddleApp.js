@@ -29,8 +29,9 @@ const Stack = createNativeStackNavigator();
 function MiddleApp() {
 
     return (
+
         <Stack.Navigator>
-          <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen
                 name="Home"
                 component={HomeScreen}
@@ -79,6 +80,8 @@ function MiddleApp() {
             />
             <Stack.Screen name="Comentarios" component={ComentScreen} />
             <Stack.Screen name="Plan" component={CardEventScreen} />
+            <Stack.Screen name="Crea tu contraseña" component={CreatePassRedSocial} />
+
         </Stack.Navigator>
 
     );

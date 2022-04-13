@@ -100,7 +100,7 @@ const Tabs = () => {
           //     color="#111"
           //   />),
           tabBarIcon: ({color}) => (
-            <Ionicons name='person-outline' size={22} color={iconUserColor} />
+            <Ionicons name="person-outline" size={22} color={color} />
           ),
         }}
       />
