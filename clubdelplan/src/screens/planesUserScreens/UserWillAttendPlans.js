@@ -128,7 +128,7 @@ const UserWillAttendPlans = () => {
               }}
             />
           </View>
-        ) : null};
+        ) : null}
         
         {attendPlans[0] ? (
           <View style={styles.planWrapper}>
@@ -143,7 +143,7 @@ const UserWillAttendPlans = () => {
               }}
             />
           </View>
-        ) : null};
+        ) : null}
       </ScrollView>
     </View>
   ) : (
@@ -152,9 +152,7 @@ const UserWillAttendPlans = () => {
       <Text style={styles.itemTitle}>Aún no tenés invitaciones</Text>
       <Text style={styles.emoji}>😪</Text>
     </View>
-  );
-
-  
+  );  
 };
 
 
@@ -236,7 +234,7 @@ const styles = StyleSheet.create({
   emoji: {
     marginTop: 20,
     fontSize: 50,
-    marginLeft: 150,
+    marginLeft: 159,
   }
 });
 

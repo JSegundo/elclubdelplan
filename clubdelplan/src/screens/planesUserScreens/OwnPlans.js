@@ -49,7 +49,6 @@ const OwnPlans = () => {
     ? userCategories.push(ownPlans.filter(ev => ev.category === 'Concierto'))
     : '';
 
-
   //render items
   const renderItem = item => {
     const {
@@ -69,8 +68,7 @@ const OwnPlans = () => {
 
     const invitados = guests.length;
     const confirmados = willAttend.length;
-    console.log("GUESTS", invitados)
-    console.log("CONFIRMADOS", confirmados)
+    console.log("OWN PLANS", ownPlans)
 
     return (
       <TouchableOpacity
@@ -92,7 +90,9 @@ const OwnPlans = () => {
               {startDate?.split('T')[0]}
             </Text>
             {confirmados ? (
-            <Text style={({fontSize: 12}, {color: 'black'})}>{confirmados} asistirán a tu evento</Text>
+              <Text style={({fontSize: 12}, {color: 'black'})}>
+                {confirmados} asistirán a tu evento
+              </Text>
             ) : null}
           </View>
         </View>
@@ -103,6 +103,13 @@ const OwnPlans = () => {
   return (
     <ScrollView style={{marginBottom: 20}}>
       <Text style={styles.title}>Tus planes</Text>
+      {ownPlans.length === 0 ? (
+        <View>
+          <Text style={styles.noEvents}>Aún no tenés ningún evento creado</Text>
+          <Text style={styles.emoji}>😪</Text>
+        </View>
+      ) : null}
+
       {userCategories.map(category =>
         category[0] ? (
           <View>
@@ -143,10 +150,19 @@ const styles = StyleSheet.create({
     padding: 1,
     fontWeight: 'bold',
   },
-  asistiras:{
+  noEvents: {
+    color: 'black',
+    marginTop: 30,
+    textAlign: 'center',
+    marginBottom: 15,
+    fontSize: 22,
+    padding: 1,
+    fontWeight: 'bold',
+  },
+  asistiras: {
     fontSize: 14,
-    fontWeight: 'bold', 
-    color: 'black'
+    fontWeight: 'bold',
+    color: 'black',
   },
   infoWrapper: {
     padding: 10,
@@ -200,6 +216,11 @@ const styles = StyleSheet.create({
     marginEnd: 20,
     // marginTop: 8,
   },
+  emoji: {
+    marginTop: 20,
+    fontSize: 50,
+    marginLeft: 159,
+  }
 });
 
 export default OwnPlans;
