@@ -21,7 +21,6 @@ const CatalogScreen = () => {
   const navigation = useNavigation();
 
   //Inputs
-  const [searchTerm, setSearchTerm] = useState('');
   const [categorySelected, setCategorySelected] = useState('');
   const [fechaSelected, setFechaSelected] = useState('');
   const [precioSelected, setPrecioSelected] = useState('');
@@ -44,6 +43,7 @@ const CatalogScreen = () => {
     { label: 'Mañana', value: 'mañana' },
     { label: 'Esta semana', value: 'esta semana' },
     { label: 'Este mes', value: 'este mes' },
+    { label: 'Más adelante', value: 'mas adelante' }
   ];
   const dataPrices = [
     { label: 'Gratis', value: 'gratis' },
@@ -52,66 +52,14 @@ const CatalogScreen = () => {
 
   //  Search
   const [results, setResults] = useState([]);
-  useEffect(() => {}, [results]);
+  useEffect(() => { }, [results]);
 
   const handleSearch = e => {
     const filterEvents = eventos
       ? eventos.filter(
         ev =>
-          //ev.category.toLowerCase().includes(e.toLowerCase()) ||
           ev.name.toLowerCase().includes(e.toLowerCase()),
       )
-      : '';
-    setResults(filterEvents);
-  };
-
-  const handleCategory = () => {
-    const filterEvents = eventos
-      ? eventos.filter(ev => ev.category === categorySelected) : '';
-    setResults(filterEvents);
-  };
-
-  const handleDate = () => {
-    const filterEvents = eventos
-      ? eventos.filter(ev => {
-        const eventDate = new Date(ev.startDate);
-        eventDate.setHours(0,0,0,0);
-        console.log("FECHA INICIO EVENTO->", eventDate.getDate());
-        const today = new Date();
-        today.setHours(0,0,0,0);
-        switch (fechaSelected) {
-          case 'hoy':
-            console.log("HOY->", today.getTime());
-            return eventDate.getTime() == today.getTime();
-          case 'mañana':
-            const tomorrow = new Date(today);
-            tomorrow.setHours(0,0,0,0);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            console.log("MAÑANA->", tomorrow.getTime());
-            return eventDate.getTime() == tomorrow.getTime();
-          case 'esta semana':
-            const week = new Date(today);
-            week.setDate(week.getDate() + 7);
-            console.log("SEMANA->", week.getTime());
-            return eventDate.getTime() >= today.getTime() && ev.startDate <= week.getTime();
-          case 'este mes':
-            const month = new Date(today);
-            month.setHours(0,0,0,0);
-            month.setDate(month.getDate() + 31);
-            console.log("MES->", month.getTime());
-            return eventDate.getTime() >= today.getTime() && ev.startDate <= month.getTime();
-        }
-      })
-      : '';
-    console.log("EVENTOS A MOSTRAR->", filterEvents);
-    setResults(filterEvents);
-  };
-
-  const handlePrice = () => {
-    const filterEvents = eventos
-      ? eventos.filter(ev => precioSelected === 'pago'
-        ? ev.pricePerPerson > 0
-        : ev.pricePerPerson === 0)
       : '';
     setResults(filterEvents);
   };
@@ -124,7 +72,35 @@ const CatalogScreen = () => {
         ? ev.pricePerPerson > 0
         : ev.pricePerPerson <= 0)
       : filterCategories;
-    setResults(filterPrice);
+    const filterEvents = filterPrice
+      ? filterPrice.filter(ev => {
+        const eventDate = new Date(ev.startDate);
+        eventDate.setHours(0, 0, 0, 0);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        switch (fechaSelected) {
+          case 'hoy':
+            return eventDate.getTime() == today.getTime();
+          case 'mañana':
+            const tomorrow = new Date(today);
+            tomorrow.setHours(0, 0, 0, 0);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            return eventDate.getTime() == tomorrow.getTime();
+          case 'esta semana':
+            const week = new Date(today);
+            week.setDate(week.getDate() + 7);
+            return eventDate >= today && eventDate <= week;
+          case 'este mes':
+            const month = new Date(today);
+            month.setHours(0, 0, 0, 0);
+            month.setDate(month.getDate() + 31);
+            return eventDate >= today && eventDate <= month;
+          case 'mas adelante':
+            return eventDate >= month;
+        }
+      })
+      : filterPrice;
+    setResults(filterEvents);
   };
 
   const renderItem = item => {
@@ -160,12 +136,12 @@ const CatalogScreen = () => {
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Buscar por nombre"
+          placeholder="Nombre del evento"
           placeholderTextColor={'black'}
           onChangeText={handleSearch}
         />
       </View>
-      <View style={{ paddingHorizontal: 4 }}>
+      <View style={styles.viewWrapper}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <DropdownCategories
             placeholder="Categorias"
@@ -189,7 +165,6 @@ const CatalogScreen = () => {
             value={fechaSelected}
             onChange={item => {
               setFechaSelected(item.value);
-              handleDate();
             }}
           />
         </ScrollView>
@@ -205,19 +180,34 @@ const CatalogScreen = () => {
         {results[0] ? (
           <Text style={{ padding: 5 }}>{results.length} Resultados</Text>
         ) : null}
-
-        <FlatList
-          data={results[0] ? results : eventos}
-          renderItem={({ item }) => renderItem(item)}
-        />
+        <ScrollView>
+          <FlatList
+            data={results[0] ? results : eventos}
+            renderItem={({ item }) => renderItem(item)}
+          />
+        </ScrollView>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  viewWrapper: {
+    paddingHorizontal: 4,
+    borderWidth: 2,
+    borderRadius: 12,
+    borderColor: 'transparent',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: 320,
+    height: 100,
+    marginTop: 5,
+    marginBottom: 5,
+  },
   pageWrapper: {
     marginBottom: 166,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   itemWrapper: {
     backgroundColor: 'white',
@@ -283,6 +273,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 5,
     color: '#111',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: 100,
+    height: 40,
   },
 
   // filters
