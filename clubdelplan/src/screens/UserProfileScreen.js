@@ -89,12 +89,9 @@ const UserProfileScreen = () => {
       {userInfo?._id ? (
         <>
           <Image
-            // source={{
-            //   uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
-            // }}
-            // style={styles.imagen}
-            source={userInfo.photo
-            }
+            source={{
+              uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
+            }}
             style={styles.imagen}
           />
           <View>

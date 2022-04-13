@@ -5,10 +5,12 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
+
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -22,43 +24,81 @@ const CreatePassRedSocial = ({route}) => {
   const [token, setToken] = React.useState(null);
 
   const onSubmit = async () => {
-    const newUser = {
-      name,
-      email,
-      city: '',
-      password: psw,
-      preferences: [],
-    };
-    try {
-      const responseRegister = await axios.post(
-        'http://localhost:3001/api/users/register',
-        newUser,
-      );
+    const existUser = await axios.post(
+      'http://localhost:3001/api/users/google',
+      {
+        email,
+      },
+    );
 
-      const responseLogin = await axios.post(
-        'http://localhost:3001/api/users/login',
-        {
-          email,
-          password: psw,
-        },
-      );
+    console.log("EXIST USER --------------->>>>>>", existUser.data.email);
+    if (existUser.data.email) {
+      try {
+        const responseLogin = await axios.post(
+          'http://localhost:3001/api/users/login',
+          {
+            email,
+            password: psw,
+          },
+        );
 
-      console.log("RESPONSE_LOGIN --->>>" ,responseLogin);
+        console.log('RESPONSE_LOGIN 1 --->>>', responseLogin.data.email);
 
-      setUser(responseLogin.data.user);
-      const tokenPrev = JSON.stringify(responseLogin.data.token);
+        setUser(responseLogin.data.user);
+        const tokenPrev = JSON.stringify(responseLogin.data.token);
 
-      setToken(tokenPrev);
-      await AsyncStorage.setItem('@Token', tokenPrev);
+        setToken(tokenPrev);
+        await AsyncStorage.setItem('@Token', tokenPrev);
 
-      const userJson = JSON.stringify(responseLogin.data.user);
-      await AsyncStorage.setItem('@userData', userJson);
-      navigation.replace('MiddleApp');
-    } catch (error) {
-      console.log("ERROR EN CREAR CONTRASEÑA REDSOCIAL",error);
+        const userJson = JSON.stringify(responseLogin.data.user);
+        await AsyncStorage.setItem('@userData', userJson);
+        navigation.replace('MiddleApp');
+        
+      } catch (error) {
+        Alert.alert( "OPS!" ,"Las contraseñas no coinciden.. Volver a intentar.." )
+        console.log('ERROR EN CREAR CONTRASEÑA REDSOCIAL', error);
+      }
+      
+    } else {
+      const newUser = {
+        name,
+        email,
+        city: '',
+        password: psw,
+        preferences: [],
+      };
+
+      try {
+
+        const responseRegister = await axios.post(
+              'http://localhost:3001/api/users/register',
+              newUser,
+            );
+
+        const responseLogin = await axios.post(
+          'http://localhost:3001/api/users/login',
+          {
+            email,
+            password: psw,
+          },
+        );
+
+        setUser(responseLogin.data.user);
+        const tokenPrev = JSON.stringify(responseLogin.data.token);
+
+        setToken(tokenPrev);
+        await AsyncStorage.setItem('@Token', tokenPrev);
+
+        const userJson = JSON.stringify(responseLogin.data.user);
+        await AsyncStorage.setItem('@userData', userJson);
+        navigation.replace('MiddleApp');
+      } catch (error) {
+        console.log('ERROR EN CREAR CONTRASEÑA REDSOCIAL', error);
+      }
+
+      console.log('no existe');
     }
 
-    console.log('Se presiono iniciar session en crea tu contraseña');
   };
 
   return (
@@ -80,7 +120,7 @@ const CreatePassRedSocial = ({route}) => {
           onChangeText={setPsw}
           value={psw}
           secureTextEntry={true}
-          placeholder="crear contraseña"
+          placeholder="contraseña"
           placeholderTextColor="#808080"
         />
         <TouchableOpacity style={styles.buttonLogin} onPress={onSubmit}>

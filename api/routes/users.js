@@ -16,5 +16,7 @@ router.get("/me", checkJWT, UsersController.getMe)
 router.put("/:id", checkJWT, UsersController.editUsers)
 //RUTA PARA VER UN USUARIO PARTICULAR
 router.get("/:id", checkJWT, UsersController.getOneUsers)
+//RUTA PARA CHEQUEAR CON GOOGLE
+router.post("/google", UsersController.getUserGoogle)
 
 module.exports = router

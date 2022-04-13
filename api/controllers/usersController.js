@@ -30,5 +30,10 @@ class UsersController {
     const user = await UsersService.serviceGetOneUser(req, next)
     return res.send(user)
   }
+
+  static async getUserGoogle(req, res) {
+    const user = await UsersService.serviceGetUserGoogle(req)
+    return user ? res.send(user) : res.send("error 401").status(401)
+  }
 }
 module.exports = UsersController
