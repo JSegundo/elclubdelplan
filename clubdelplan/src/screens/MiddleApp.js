@@ -1,13 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import 'react-native-gesture-handler';
-import {NavigationContainer, StackActions} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StyleSheet} from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Tabs from '../navigation/Tabs';
 import Register from '../screens/RegisterScreen';
-// import LogInScreen from './src/screens/LogInScreen';
-// import UserProfileScreen from './src/screens/UserProfileScreen.js';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 import OwnPlans from '../screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from '../screens/planesUserScreens/UserWillAttendPlans';
 import UserHistoryPlans from '../screens/planesUserScreens/UserHistoryPlans';

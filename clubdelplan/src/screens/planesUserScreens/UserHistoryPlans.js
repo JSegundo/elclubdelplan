@@ -6,8 +6,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import React, {Children, useEffect, useState} from 'react';
-
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {userDonePlans} from '../../store/user/userEvents';
 import {useNavigation} from '@react-navigation/native';
@@ -27,14 +26,8 @@ const UserHistoryPlans = () => {
   const renderItem = item => {
     const {
       name,
-      _id,
-      category,
       startDate,
-      time,
       image,
-      location,
-      isPrivate,
-      totalPrice,
     } = item;
 
     // return item.isPrivate === true ? (

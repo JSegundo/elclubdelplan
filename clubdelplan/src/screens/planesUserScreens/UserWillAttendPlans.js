@@ -7,13 +7,13 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
-import {useSelector, useDispatch} from 'react-redux';
-import {userAttendPlans} from '../../store/user/userEvents';
-import {useNavigation} from '@react-navigation/native';
-import {addGuest} from '../../store/singleEvent';
-import {userConfirmPlans} from '../../store/user/userConfirmEvents';
+import { useSelector, useDispatch } from 'react-redux';
+import { userAttendPlans } from '../../store/user/userEvents';
+import { useNavigation } from '@react-navigation/native';
+import { addGuest } from '../../store/singleEvent';
+import { userConfirmPlans } from '../../store/user/userConfirmEvents';
 
 const UserWillAttendPlans = () => {
   const navigation = useNavigation();
@@ -27,22 +27,15 @@ const UserWillAttendPlans = () => {
     dispatch(userConfirmPlans());
   }, [render]);
 
-  console.log('ATTENDPLANS', attendPlans);
-  console.log('CONFIRM PLANS', confirmPlans);
-
-  // const handleSubmit = () => {
-
-  // }
-
   //render items
   const renderItem = item => {
-    const {name, startDate, image, eventOwner} = item;
+    const { name, startDate, image, eventOwner } = item;
 
     return (
       <View style={styles.viewWrapper}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Plan', {item: item});
+            navigation.navigate('Plan', { item: item });
           }}>
           <View style={styles.itemWrapper}>
             <Image
@@ -83,7 +76,7 @@ const UserWillAttendPlans = () => {
       <View style={styles.viewWrapper}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Plan', {item: item});
+            navigation.navigate('Plan', { item: item });
           }}>
           <View style={styles.itemWrapper}>
             <Image
