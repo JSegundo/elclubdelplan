@@ -28,6 +28,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
     "react-native": "^0.67.4",
+    "sweetalert": "^2.1.2",
     "volleyball": "^1.5.1"
   }
 }
