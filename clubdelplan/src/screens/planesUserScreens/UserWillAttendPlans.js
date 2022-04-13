@@ -115,7 +115,7 @@ const UserWillAttendPlans = () => {
     <View style={styles.pageWrapper}>
       <ScrollView>
         <Text style={styles.title}>Mis invitaciones</Text>
-
+    
         <View style={styles.planWrapper}>
           <Text style={styles.itemTitle}>Confirmados</Text>
           <FlatList
