@@ -19,45 +19,60 @@ import CardEventScreen from './CardEventScreen';
 // Configuracion de Store redux
 import HomeScreen from '../screens/HomeScreen';
 import MiddleScreen from './MiddleScreen';
+import CreatePassRedSocial from './CreatePassRedSocial';
 //--------------------------------------
 
 const Stack = createNativeStackNavigator();
 
 function MiddleApp() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Tabs"
-        component={Tabs}
-        options={{headerShown: false}}></Stack.Screen>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="MiddleScreen" component={MiddleScreen} />
 
-      <Stack.Screen
-        name="Tus planes"
-        component={OwnPlans}
-        options={{headerShadowVisible: false}}
-      />
-      <Stack.Screen
-        name="Editar preferencias"
-        component={editPref}
-        options={{headerShadowVisible: false}}
-      />
-      <Stack.Screen
-        name="Fuiste invitado"
-        component={UserWillAttendPlans}
-        options={{headerShadowVisible: false}}
-      />
-      <Stack.Screen
-        name="Historial"
-        component={UserHistoryPlans}
-        options={{headerShadowVisible: false}}
-      />
-      <Stack.Screen name="Comentarios" component={ComentScreen} />
-      <Stack.Screen name="Plan" component={CardEventScreen} />
-    </Stack.Navigator>
-  );
+    return (
+
+        <Stack.Navigator>
+            <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+
+            />
+            <Stack.Screen
+                name="Register"
+                component={Register}
+
+            />
+            <Stack.Screen
+                name="MiddleScreen"
+                component={MiddleScreen}
+
+            />
+            
+            <Stack.Screen
+                name="Tus planes"
+                component={OwnPlans}
+                options={{ headerShadowVisible: false }}
+            />
+            <Stack.Screen
+                name="Editar preferencias"
+                component={editPref}
+                options={{ headerShadowVisible: false }}
+            />
+            <Stack.Screen
+                name="Fuiste invitado"
+                component={UserWillAttendPlans}
+                options={{ headerShadowVisible: false }}
+            />
+            <Stack.Screen
+                name="Historial"
+                component={UserHistoryPlans}
+                options={{ headerShadowVisible: false }}
+            />
+            <Stack.Screen name="Comentarios" component={ComentScreen} />
+            <Stack.Screen name="Plan" component={CardEventScreen} />
+            <Stack.Screen name="Crea tu contraseña" component={CreatePassRedSocial} />
+
+        </Stack.Navigator>
+
+    );
 }
 
 export default MiddleApp;

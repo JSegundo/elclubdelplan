@@ -86,8 +86,6 @@ const CatalogScreen = () => {
   const dataPrices = [
     {label: 'Gratis', value: 'gratis'},
     {label: 'Pago', value: 'pago'},
-    // {label: 'Esta semana', value: 'esta semana'},
-    // {label: 'Este mes', value: 'este mes'},
   ];
 
   // busqueda input text
@@ -108,7 +106,7 @@ const CatalogScreen = () => {
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Busca por categoría o título"
+          placeholder="Busca por categoría o nombre"
           placeholderTextColor={'black'}
           onChangeText={handleSearch}
         />

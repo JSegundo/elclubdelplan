@@ -18,6 +18,8 @@ const user_storage = '@userData';
 import {userData} from '../store/user';
 import {useDispatch} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
+import RedSocialButton from '../components/RedSocialButton';
+
 
 const Log = () => {
   const [email, onChangeText] = React.useState(null);
@@ -102,11 +104,17 @@ const Log = () => {
             Registrarse
           </Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.buttonLogin} onPress={onSubmit}>
           <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
             Iniciar sesion
           </Text>
         </TouchableOpacity>
+
+        <View style={styles.marginB}>
+          <RedSocialButton />
+        </View> 
+        
       </View>
     </ScrollView>
   );
@@ -179,5 +187,8 @@ const styles = {
     borderRadius: 6,
     marginBottom: 80,
   },
+  marginB:{
+    marginBottom: 100,
+  }
 };
 export default Log;
