@@ -29,14 +29,8 @@ const Stack = createNativeStackNavigator();
 function MiddleApp() {
 
     return (
-<<<<<<< HEAD
-
-        <Stack.Navigator>
-            <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
-=======
         <Stack.Navigator>
           <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
->>>>>>> estrellita
             <Stack.Screen
                 name="Home"
                 component={HomeScreen}
@@ -48,28 +42,21 @@ function MiddleApp() {
 
             />
             <Stack.Screen
-<<<<<<< HEAD
-=======
                 name="LogIn"
                 component={LogInScreen}
 
             />
             <Stack.Screen
->>>>>>> estrellita
                 name="MiddleScreen"
                 component={MiddleScreen}
 
             />
-<<<<<<< HEAD
-            
-=======
             <Stack.Screen
                 name= "NewPlanScreen"
                 component={NewPlanScreen}
             />
              
           
->>>>>>> estrellita
             <Stack.Screen
                 name="Tus planes"
                 component={OwnPlans}
@@ -92,11 +79,6 @@ function MiddleApp() {
             />
             <Stack.Screen name="Comentarios" component={ComentScreen} />
             <Stack.Screen name="Plan" component={CardEventScreen} />
-<<<<<<< HEAD
-            <Stack.Screen name="Crea tu contraseña" component={CreatePassRedSocial} />
-
-=======
->>>>>>> estrellita
         </Stack.Navigator>
 
     );
