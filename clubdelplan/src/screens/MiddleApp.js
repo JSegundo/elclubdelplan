@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import 'react-native-gesture-handler';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet } from 'react-native';
+import {NavigationContainer, StackActions} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {StyleSheet} from 'react-native';
 import Tabs from '../navigation/Tabs';
 import Register from '../screens/RegisterScreen';
 // import LogInScreen from './src/screens/LogInScreen';
@@ -15,27 +15,21 @@ import editPref from './planesUserScreens/EditPreferences';
 import ComentScreen from './ComentScreen'
 import CardEventScreen from './CardEventScreen'
 import LogInScreen from './LogInScreen'
+import NewPlanScreen from './NewPlanScreen';
 // import middleScreen from './src/screens/MiddleScreen.js';
 
 // Configuracion de Store redux
-import { store } from './src/store/index.js';
-import { Provider } from 'react-redux';
 import HomeScreen from '../screens/HomeScreen';
 import MiddleScreen from './MiddleScreen';
 //--------------------------------------
 
-const user_storage = '@userData';
-
 const Stack = createNativeStackNavigator();
-
 
 function MiddleApp() {
 
     return (
-
-
         <Stack.Navigator>
-            <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
+          <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen
                 name="Home"
                 component={HomeScreen}
@@ -56,7 +50,12 @@ function MiddleApp() {
                 component={MiddleScreen}
 
             />
-            
+            <Stack.Screen
+                name= "NewPlanScreen"
+                component={NewPlanScreen}
+            />
+             
+          
             <Stack.Screen
                 name="Tus planes"
                 component={OwnPlans}

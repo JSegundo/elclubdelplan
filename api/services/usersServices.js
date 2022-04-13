@@ -6,6 +6,16 @@ require("dotenv").config()
 const { verifyHash } = require("../config/passwordHash")
 
 class UsersService {
+  static async serviceGetAllUsers(req) {
+    console.log(req.user)
+    try {
+      const allUsers = await User.find({ _id: { $ne: req.user.id } })
+      return allUsers
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   static async serviceResgisterUser(req) {
     try {
       const newUser = await User.create(req.body)

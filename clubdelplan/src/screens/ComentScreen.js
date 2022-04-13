@@ -123,7 +123,7 @@ const styles = {
   },
   comentInput: {
     width: 300,
-    height: 15,
+    height: 150,
     margin: 10,
     borderWidth: 4,
     padding: 10,

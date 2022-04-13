@@ -129,9 +129,7 @@ const UserProfileScreen = () => {
 
             <TouchableOpacity
               style={styles.BtnNavigateToPlans}
-              onPress={() => navigation.navigate('Fuiste invitado', {
-                arrCategories : arrCategories
-              })}>
+              onPress={() => navigation.navigate('Fuiste invitado')}>
               <View style={styles.textAndIconWrapper}>
                 <Text style={{color: 'white', fontSize: 16}}>
                   Planes que me invitaron

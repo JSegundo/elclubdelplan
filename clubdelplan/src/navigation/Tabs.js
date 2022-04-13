@@ -13,15 +13,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
 import NewPlanScreen from '../screens/NewPlanScreen';
-import LogInScreen from '../screens/LogInScreen';
-import UserProfileScreen from '../screens/UserProfileScreen';
 import middleScreen from '../screens/MiddleScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 const Tab = createBottomTabNavigator();
 
-const Tabs = ({user}) => {
+const Tabs = () => {
   const [token , setToken] = useState(null)
   const [iconUserColor , setIconUser] = useState('#777')
+  const user = useSelector(state => state.user);
   
 
   useEffect(()=> {
@@ -53,7 +53,7 @@ const Tabs = ({user}) => {
         },
       }}>
       <Tab.Screen
-        name="Home"
+        name={`Hola, ${user.name}`}
         component={HomeScreen}
         options={{
           headerShown: true,

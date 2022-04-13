@@ -1,9 +1,14 @@
 const UsersService = require("../services/usersServices")
 
 class UsersController {
+  static async getAllUsers(req, res) {
+    const users = await UsersService.serviceGetAllUsers(req)
+    return users ? res.status(201).send(users) : res.sendStatus(401)
+  }
+
   static async registerUsers(req, res) {
     const user = await UsersService.serviceResgisterUser(req)
-    return user ? res.sendStatus(201) : res.sendStatus(500)
+    return user ? res.sendStatus(201) : res.sendStatus(401)
   }
 
   static async loginUsers(req, res) {

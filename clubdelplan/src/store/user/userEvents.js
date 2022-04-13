@@ -7,7 +7,6 @@ export const userOwnPlans = createAsyncThunk(
     try {
       const {user} = thunkAPI.getState();
       const token = user.token;
-      console.log('TOKENNNNNNNNNN', token);
       const res = await axios.get(`http://localhost:3001/api/events/me`, {
         headers: {authorization: `Bearer ${token}`},
       });
@@ -34,11 +33,28 @@ export const userDonePlans = createAsyncThunk(
   },
 );
 
+export const userAttendPlans = createAsyncThunk(
+  'INVITATION_PLANS',
+  async (_, thunkAPI) => {
+    try {
+      const {user} = thunkAPI.getState();
+      const token = user.token;
+      const res = await axios.get(`http://localhost:3001/api/events/invitation`, {
+        headers: {authorization: `Bearer ${token}`},
+      });
+      return res.data;
+    } catch (err) {
+      console.error(err);
+    }
+  },
+);
+
 const userEventsReducer = createReducer(
   {},
   {
     [userOwnPlans.fulfilled]: (state, action) => action.payload,
     [userDonePlans.fulfilled]: (state, action) => action.payload,
+    [userAttendPlans.fulfilled]: (state, action) => action.payload,
   },
 );
 

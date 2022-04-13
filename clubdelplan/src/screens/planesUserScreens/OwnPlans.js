@@ -9,7 +9,7 @@ import {
 import React, {useEffect} from 'react';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {userOwnPlans} from '../../store/userEvents';
+import {userOwnPlans} from '../../store/user/userEvents';
 import {useNavigation} from '@react-navigation/native';
 
 const OwnPlans = () => {
@@ -34,9 +34,10 @@ const OwnPlans = () => {
       location,
       isPrivate,
       totalPrice,
+      eventOwner,
     } = item;
 
-    return item.isPrivate === true ? (
+    return (
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('Plan', {item: item});
@@ -56,11 +57,20 @@ const OwnPlans = () => {
           </View>
         </View>
       </TouchableOpacity>
-    ) : null;
+    );
   };
 
   return (
-    <View>
+    <View style={{marginBottom: 50}}>
+      <Text
+        style={{
+          textAlign: 'center',
+          padding: 10,
+          fontSize: 16,
+          fontWeight: 'bold',
+        }}>
+        Planes que creaste
+      </Text>
       <FlatList
         data={ownPlans}
         renderItem={({item}) => renderItem(item)}

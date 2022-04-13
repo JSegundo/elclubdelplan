@@ -6,13 +6,14 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Button,
+  ScrollView,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
-import {useNavigate} from 'react-router-dom';
 import {useNavigation} from '@react-navigation/native';
+import {DropdownCategories} from '../components/DropdownCategories';
+import axios from 'axios';
 
 const CatalogScreen = () => {
   const eventos = useSelector(state => state.event);
@@ -24,18 +25,7 @@ const CatalogScreen = () => {
   }, []);
 
   const renderItem = item => {
-    const {
-      name,
-      _id,
-      category,
-      startDate,
-      time,
-      image,
-      location,
-      isPrivate,
-      pricePerPerson,
-      totalPrice
-    } = item;
+    const {name, category, image, location, pricePerPerson} = item;
 
     return item.isPrivate === false ? (
       <TouchableOpacity
@@ -55,19 +45,61 @@ const CatalogScreen = () => {
             </Text>
             <Text style={{color: 'black'}}>{category}</Text>
             <Text style={{fontSize: 10, color: 'black'}}>{location}</Text>
-            {/* <Text>{startDate.split('T')[0]}</Text> */}
-            {pricePerPerson ? <Text>${totalPrice}</Text> : null}
+            {pricePerPerson ? <Text>${pricePerPerson}</Text> : null}
           </View>
         </View>
       </TouchableOpacity>
     ) : null;
   };
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState([]);
+  // busqueda multifiltro
+  const [showBusquedaAvanzada, setShowBusquedaAvanzada] = useState(false);
 
-  const handleSearch = () => {
-    const filterEvents = eventos.filter(e => e.category === searchTerm);
+  // GET list of categories available
+  const [allCategories, setAllCategories] = useState(null);
+  useEffect(() => {
+    async function getAllCategories() {
+      try {
+        const responseCat = await axios.get(
+          'http://localhost:3001/api/categories',
+        );
+        setAllCategories(responseCat.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getAllCategories();
+  }, []);
+  const dataCategories = allCategories?.map(cat => ({
+    label: cat.categoryName,
+    value: cat.categoryName,
+  }));
+  const [categorySelected, setCategorySelected] = useState('');
+  const [fechaSelected, setFechaSelected] = useState('');
+  const [precioSelected, setPrecioSelected] = useState('');
+  const dataFechas = [
+    {label: 'Hoy', value: 'hoy'},
+    {label: 'Mañana', value: 'mañana'},
+    {label: 'Esta semana', value: 'esta semana'},
+    {label: 'Este mes', value: 'este mes'},
+  ];
+  const dataPrices = [
+    {label: 'Gratis', value: 'gratis'},
+    {label: 'Pago', value: 'pago'},
+    // {label: 'Esta semana', value: 'esta semana'},
+    // {label: 'Este mes', value: 'este mes'},
+  ];
+
+  // busqueda input text
+  const [results, setResults] = useState([]);
+  const handleSearch = e => {
+    const filterEvents = eventos
+      ? eventos.filter(
+          ev =>
+            ev.category.toLowerCase().includes(e.toLowerCase()) ||
+            ev.name.toLowerCase().includes(e.toLowerCase()),
+        )
+      : '';
     setResults(filterEvents);
   };
 
@@ -76,20 +108,42 @@ const CatalogScreen = () => {
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Busca por categoría"
+          placeholder="Busca por categoría o título"
           placeholderTextColor={'black'}
-          onChangeText={value => setSearchTerm(value)}
+          onChangeText={handleSearch}
         />
-        <TouchableOpacity
-          style={styles.buttonSearch}
-          title="Search"
-          onPress={handleSearch}>
-          <Text style={{color: '#111'}}>Buscar</Text>
-        </TouchableOpacity>
+      </View>
+
+      <View style={{paddingHorizontal: 4}}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <DropdownCategories
+            placeholder="Categorias"
+            data={dataCategories}
+            value={categorySelected}
+            onChange={item => {
+              setCategorySelected(item.value);
+            }}
+          />
+          <DropdownCategories
+            placeholder="Fecha"
+            data={dataFechas}
+            value={fechaSelected}
+            onChange={item => {
+              setFechaSelected(item.value);
+            }}
+          />
+          <DropdownCategories
+            placeholder="Precio"
+            data={dataPrices}
+            value={precioSelected}
+            onChange={item => {
+              setPrecioSelected(item.value);
+            }}
+          />
+        </ScrollView>
       </View>
 
       <View style={styles.contentWrapper}>
-        <Text style={styles.title}>Catalogo de eventos públicos</Text>
         {results[0] ? (
           <Text style={{padding: 5}}>{results.length} Resultados</Text>
         ) : null}
@@ -105,7 +159,7 @@ const CatalogScreen = () => {
 
 const styles = StyleSheet.create({
   pageWrapper: {
-    marginBottom: 120,
+    marginBottom: 166,
   },
   itemWrapper: {
     backgroundColor: 'white',
@@ -123,7 +177,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 130,
+    marginBottom: 100,
   },
   infoWrapper: {
     padding: 5,
@@ -154,24 +208,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: '#111',
   },
-  buttonSearch: {
-    borderWidth: 2,
-    borderColor: '#900',
-    marginLeft: 10,
-    borderRadius: 6,
-    marginTop: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    color: '#111',
-  },
   searchInput: {
     borderBottomWidth: 3,
     borderBottomColor: '#900',
     paddingHorizontal: 4,
     color: '#111',
     borderRadius: 3,
-    maxWidth: 200,
+    width: 230,
   },
+
+  // filters
 });
 
 export default CatalogScreen;

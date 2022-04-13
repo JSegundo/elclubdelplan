@@ -1,13 +1,34 @@
 const Events = require("../models/Events")
+const User = require("../models/User")
 
 class EventsServices {
+  static async serviceGetOwnerPastEvents(req, next) {
+    try {
+      const date = new Date()
+      const owner = await User.findById(req.params.ownerid)
+      const events = await Events.find({
+        endDate: { $lt: date },
+      })
+        .where("eventOwner")
+        .equals(owner)
+        .populate("coments")
+        .populate("eventOwner")
+      console.log(events)
+      return events
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async serviceGetAllEvents(req, next) {
     try {
       const date = new Date()
       const events = await Events.find({
         isPrivate: false,
         startDate: { $gt: date },
-      }).populate("coments")
+      })
+        .populate("coments")
+        .populate("eventOwner")
       return events
     } catch (err) {
       next(err)
@@ -17,10 +38,16 @@ class EventsServices {
   static async serviceGetAllMyEvents(req, next) {
     console.log(req.user.id)
     try {
+      const date = new Date()
+
       const events = await Events.find({
         eventOwner: req.user.id,
-        isPrivate: true,
-      }).populate("coments")
+        // isPrivate: true,
+        startDate: { $gt: date },
+      })
+        .populate("coments")
+        .populate("eventOwner")
+
       return events
     } catch (err) {
       next(err)
@@ -35,8 +62,58 @@ class EventsServices {
         eventOwner: req.user.id,
         isPrivate: true,
         endDate: { $lt: date },
-      }).populate("coments")
+      })
+        .populate("coments")
+        .populate("eventOwner")
       return events
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  //MÉTODO PARA MOSTRAR LOS EVENTOS A LOS QUE FUE INVITADO EL USER
+  static async serviceGetMyEventsInvitations(req, next) {
+    try {
+      const date = new Date()
+      const events = await Events.where("startDate")
+        .gt(date)
+        // .where("isPrivate")
+        // .equals("true")
+        .where("guests")
+        .equals(req.user.id) // --> funca cuando hardcodeo el id y uso postman
+        .populate("eventOwner")
+      return events
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  //MÉTODO PARA MOSTRAR LOS EVENTOS A LOS QUE ASISTIRÁ EL USER
+  static async serviceGetMyEventsWillAttend(req, next) {
+    try {
+      const date = new Date()
+      const events = await Events.where("startDate")
+        .gt(date)
+        // .where("isPrivate")
+        // .equals("true")
+        .where("willAttend")
+        .equals(req.user.id)
+        .populate("eventOwner")
+      return events
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  //MÉTODO PARA HACER EL CONFIRM AL EVENTO
+  static async serviceUpdateEventWillAttend(req, next) {
+    try {
+      const event = await Events.findByIdAndUpdate(
+        req.params.id,
+        { $push: { willAttend: req.body }, $pull: { guests: req.body._id } },
+        { new: true }
+      )
+      return event
     } catch (err) {
       next(err)
     }
@@ -44,7 +121,9 @@ class EventsServices {
 
   static async serviceGetEvent(req, next) {
     try {
-      const event = await Events.findById(req.params.id).populate("coments")
+      const event = await Events.findById(req.params.id)
+        .populate("coments")
+        .populate("eventOwner")
       return event
     } catch (err) {
       console.log(err)
@@ -58,6 +137,8 @@ class EventsServices {
         category: req.params.name,
         isPrivate: false,
       })
+        .populate("coments")
+        .populate("eventOwner")
       return events
     } catch (err) {
       next(err)
@@ -76,11 +157,9 @@ class EventsServices {
   }
 
   static async serviceAddEvent(req, next) {
-    console.log("req.body de serviceAddEvent: ---->", req.body)
     try {
       const newEvent = new Events(req.body)
-      newEvent.eventOwner = req.params.userid
-      console.log("evento: ", newEvent)
+      newEvent.eventOwner = req.user.id
       await newEvent.save()
       return newEvent
     } catch (err) {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,48 +7,55 @@ import {
   Text,
   ScrollView,
   Image,
+  FlatList,
 } from 'react-native';
+import { getAllUsers } from '../store/user/allUsers';
 
-import {Button, CheckBox, Icon, Input} from 'react-native-elements';
-import {Dropdown} from 'react-native-element-dropdown';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {createEvent} from '../store/event';
-import {launchImageLibrary} from 'react-native-image-picker';
+import { Button, CheckBox, Icon, Input } from 'react-native-elements';
+import { Dropdown } from 'react-native-element-dropdown';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { createEvent } from '../store/event';
+import { launchImageLibrary } from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DateField from 'react-native-datefield';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NewPlanScreen = () => {
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const [text, onChangeText] = React.useState('');
-  const [description, onChangeDescription] = React.useState('');
-  const [category, setCategory] = React.useState('');
-  const [location, onChangeLocation] = React.useState('');
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [paymentLimitDate, setPaymentLimitDate] = useState(new Date());
-  const [image, setImage] = useState('http://via.placeholder.com/640x360');
+  const [text, onChangeText] = useState('');
+  const [description, onChangeDescription] = useState('');
+  const [category, setCategory] = useState('Evento social');
+  const [location, onChangeLocation] = useState('');
+  const [guests, setGuests] = useState([]);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [paymentLimitDate, setPaymentLimitDate] = useState('');
+  const [image, setImage] = useState('https://via.placeholder.com/300x150');
   const [pricePerPerson, setPricePerPerson] = useState(null);
-  const [privadoCheck, setPrivadoCheck] = useState(true);
+  const [privadoCheck, setPrivadoCheck] = useState(false);
   const [submited, setSubmited] = useState(false);
-  const [token , setToken] = useState(null)
+  const [token, setToken] = useState(null)
   const [Plan, setPlan] = useState(null);
+  console.log(privadoCheck);
 
 
   // state categories for dropdown input
   const [allCategories, setAllCategories] = useState(null);
   // GET list of categories available
   useEffect(() => {
-    async function getToken () {
-      try{
-        const tokenAsync = await AsyncStorage.getItem('@userData')
-        console.log('TOKEN EN NEW',tokenAsync)
+    async function getToken() {
+      try {
+        const tokenAsync = await AsyncStorage.getItem('@Token')
+        console.log('TOKEN EN NEW', tokenAsync)
         let tokenParsed = JSON.parse(tokenAsync)
         setToken(tokenParsed)
+        if(!tokenAsync) navigation.replace('MiddleScreen');
+        
       }
       catch (err) {
         console.log(err)
@@ -68,8 +75,8 @@ const NewPlanScreen = () => {
     }
     getAllCategories();
   }, []);
-  console.log(token)
- 
+
+
   // DATA for render in dropdown
   const data = allCategories?.map(cat => ({
     label: cat.categoryName,
@@ -114,10 +121,11 @@ const NewPlanScreen = () => {
     startDate,
     endDate,
     paymentLimitDate,
-    privado: privadoCheck,
+    isPrivate: privadoCheck,
     category,
     image,
     pricePerPerson,
+    guests,
   };
 
   const refreshPage = () => {
@@ -125,28 +133,105 @@ const NewPlanScreen = () => {
     onChangeDescription('');
     setCategory('');
     onChangeLocation('');
-    setStartDate(new Date());
-    setEndDate(new Date());
-    setPaymentLimitDate(new Date());
+    setStartDate('');
+    setEndDate('');
+    setPaymentLimitDate('');
     setImage('https://via.placeholder.com/300x150');
     setPricePerPerson('');
     setPrivadoCheck(true);
     setSubmited(false);
+    setGuests([]);
   };
 
   const onSubmit = e => {
     e.preventDefault();
-    setSubmited(true);
-    console.log(' nuevo plan on submit', newPlan);
-    dispatch(createEvent(newPlan)).then(res => setPlan(res.payload));
+    if (token) {
+      setSubmited(true);
+      console.log(' nuevo plan on submit', newPlan);
+      dispatch(createEvent(newPlan)).then(res => setPlan(res.payload));
+    }
+
+
+  };
+
+  // buscar usuarios para agregar al evento
+  const allUsers = useSelector(state => state.allUsers);
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, []);
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const searchUsers = e => {
+    const results = allUsers
+      ? allUsers.filter(user =>
+        user.name.toLowerCase().includes(e.toLowerCase()),
+      )
+      : '';
+    setSearchQuery(results);
+  };
+
+  const renderSearchResults = item => {
+    return (
+      <TouchableOpacity onPress={() => addGuest(item)}>
+        <Text
+          style={{
+            fontSize: 20,
+            marginRight: 30,
+            textAlign: 'center',
+          }}>
+          {item.name}
+        </Text>
+        {guests.includes(item) ? (
+          <Ionicons
+            name="remove-circle"
+            style={{ fontSize: 18, textAlign: 'center', color: '#900' }}
+          />
+        ) : (
+          <Ionicons
+            name="person-add"
+            style={{
+              fontSize: 18,
+              textAlign: 'center',
+              color: '#208383',
+              marginTop: 6,
+            }}
+          />
+        )}
+      </TouchableOpacity>
+    );
+  };
+
+  const addGuest = user => {
+    if (guests?.includes(user)) {
+      setGuests(prevState => {
+        guests.splice(guests.indexOf(user), 1);
+        return [...prevState];
+      });
+      return;
+    } else {
+      if (guests[0]) {
+        setGuests([...guests, user]);
+      } else {
+        setGuests([user]);
+      }
+    }
+  };
+
+  const showGuests = guest => {
+    return (
+      <View style={{ marginEnd: 10 }}>
+        <Text>{guest.name}</Text>
+      </View>
+    );
   };
 
   return (
- 
+
     <ScrollView>
-    {token?._id ?  (
-    
-    <View style={styles.pageWrapper}>
+
+      <View style={styles.pageWrapper}>
         <Input
           label={'Nombre'}
           placeholder={'Dale un nombre a tu plan..'}
@@ -156,7 +241,6 @@ const NewPlanScreen = () => {
         {/* DESCRIPTION  */}
         <Input
           multiline
-          // numberOfLines={2}
           label={'Descripcion'}
           onChangeText={onChangeDescription}
           placeholder="Los detalles que quieras aclarar sobre tu plan.."
@@ -197,40 +281,42 @@ const NewPlanScreen = () => {
 
         <Ionicons
           name="calendar"
-          style={{textAlign: 'center', color: 'green', fontSize: 20}}
+          style={{ textAlign: 'center', color: 'green', fontSize: 20 }}
         />
 
         <Text style={styles.dateTitle}>Cuando inicia el evento?</Text>
 
         <View style={styles.datePickerWrapper}>
           <DateField
-            style={{justifyContent: 'center'}}
-            defaultValue={new Date()}
-            styleInput={{fontSize: 15}}
+            style={{ justifyContent: 'center' }}
+            // defaultValue={}
+            styleInput={{ fontSize: 15 }}
             onSubmit={value => setStartDate(value)}
           />
         </View>
 
+        <Text style={styles.dateTitle}>A que hora empieza?</Text>
+
         <Text style={styles.dateTitle}>Cuando termina?</Text>
         <View style={styles.datePickerWrapper}>
           <DateField
-            style={{justifyContent: 'center'}}
-            defaultValue={new Date()}
-            styleInput={{fontSize: 15}}
+            style={{ justifyContent: 'center' }}
+            // defaultValue={new Date()}
+            styleInput={{ fontSize: 15 }}
             onSubmit={value => setEndDate(value)}
           />
         </View>
         <Text style={styles.dateTitle}>Fecha limite de confirmación:</Text>
         <View style={styles.datePickerWrapper}>
           <DateField
-            style={{justifyContent: 'center'}}
-            defaultValue={new Date()}
-            styleInput={{fontSize: 15}}
+            style={{ justifyContent: 'center' }}
+            // defaultValue={new Date()}
+            styleInput={{ fontSize: 15 }}
             onSubmit={value => setPaymentLimitDate(value)}
           />
         </View>
         {/* SELECT PRICE */}
-        <View style={{marginVertical: 20}}>
+        <View style={{ marginVertical: 20 }}>
           <Ionicons
             name="card"
             style={{
@@ -249,10 +335,35 @@ const NewPlanScreen = () => {
             maxLength={10} //setting limit of input
           />
         </View>
+
+        {/* INVITADOS */}
+        <View style={{ width: '100%', height: 200 }}>
+          <Input
+            label={'Elegí a los invitados'}
+            placeholder={'Busca por nombre de usuario'}
+            onChangeText={searchUsers}
+          />
+          {/* <View style={{width: '100%'}}> */}
+          <FlatList
+            data={searchQuery}
+            renderItem={({ item }) => renderSearchResults(item)}
+            horizontal={true}
+            style={{ width: '100%', paddingHorizontal: 10 }}
+          />
+          <FlatList
+            extraData={guests}
+            data={guests}
+            renderItem={({ item }) => showGuests(item)}
+            horizontal={true}
+            style={{ width: '100%', paddingHorizontal: 10 }}
+          />
+          {/* </View> */}
+        </View>
+
         {/* SELECT IMAGE */}
         <View>
           <Button title={'Seleccionar imagen'} onPress={selectImage} />
-          <Image style={{width: 300, height: 150}} source={{uri: image}} />
+          <Image style={{ width: 300, height: 150 }} source={{ uri: image }} />
         </View>
         {/* SET PRIVATE OR PUBLIC */}
         <CheckBox
@@ -265,12 +376,14 @@ const NewPlanScreen = () => {
           title="Mi evento es privado"
           checked={privadoCheck}
           onPress={() => {
-            setPrivadoCheck(!privadoCheck);
-            console.log(privadoCheck);
+            setPrivadoCheck(() => {
+              return privadoCheck === true ? false : true;
+            });
+            // console.log(privadoCheck);
           }}
         />
         {!privadoCheck && (
-          <Text style={{fontSize: 10, padding: 5}}>
+          <Text style={{ fontSize: 10, padding: 5 }}>
             (Si tu evento es publico, todo el mundo podrá ver tu evento)
           </Text>
         )}
@@ -279,16 +392,14 @@ const NewPlanScreen = () => {
           <View>
             <TouchableOpacity
               style={styles.btnVerPlan}
-              onPress={() => navigation.navigate('Plan', {item: Plan})}>
-              <Text style={{color: 'white', textAlign: 'center'}}>
+              onPress={() => navigation.navigate('Plan', { item: Plan })}>
+              <Text style={{ color: 'white', textAlign: 'center' }}>
                 Ver plan
               </Text>
-              <Ionicons
-                style={styles.btnIcon}
-                name="checkmark-outline"></Ionicons>
+              <Ionicons style={styles.btnIcon} name="eye"></Ionicons>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnCrearPlan} onPress={refreshPage}>
-              <Text style={{color: 'white', textAlign: 'center'}}>
+              <Text style={{ color: 'white', textAlign: 'center' }}>
                 Crear otro plan
               </Text>
               <Ionicons
@@ -298,7 +409,7 @@ const NewPlanScreen = () => {
           </View>
         ) : (
           <TouchableOpacity style={styles.btnCrearPlan} onPress={onSubmit}>
-            <Text style={{color: 'white', textAlign: 'center'}}>
+            <Text style={{ color: 'white', textAlign: 'center' }}>
               Crear Plan
             </Text>
             <Ionicons
@@ -306,10 +417,7 @@ const NewPlanScreen = () => {
               name="checkmark-outline"></Ionicons>
           </TouchableOpacity>
         )}
-      </View>) : 
-      navigation.navigate('MiddleScreen')
-      }
-     
+      </View>
     </ScrollView>
   );
 };
@@ -339,7 +447,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#900',
     width: 300,
-    // width: '100%',
     paddingVertical: 15,
     paddingHorizontal: 25,
     borderRadius: 8,
@@ -347,12 +454,12 @@ const styles = StyleSheet.create({
   btnVerPlan: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: 'green',
+    backgroundColor: '#208383',
     width: 300,
-    // width: '100%',
     paddingVertical: 15,
     paddingHorizontal: 25,
     borderRadius: 8,
+    marginBottom: 15,
   },
   btnIcon: {
     color: 'white',
@@ -366,10 +473,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     shadowColor: '#000',
-
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-
     elevation: 2,
   },
   icon: {

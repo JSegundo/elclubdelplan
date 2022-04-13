@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
@@ -10,31 +10,35 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import UserProfileScreen from './UserProfileScreen';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const token_storage = '@Token';
 const user_storage = '@userData';
 
-import {userData} from '../store/user';
-import {useDispatch} from 'react-redux';
-import {ScrollView} from 'react-native-gesture-handler';
+import { userData } from '../store/user';
+import { useDispatch } from 'react-redux';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Log = () => {
   const [email, onChangeText] = React.useState(null);
   const [psw, onChangeNumber] = React.useState(null);
   const [user, setUser] = React.useState(null);
   const [token, setToken] = React.useState(null);
+  const [error, setError] = React.useState('');
   const navigation = useNavigation();
+
 
   useEffect(() => {
     async function getTokenAndUser() {
       let responseToken = await AsyncStorage.getItem(token_storage);
       let responseUser = await AsyncStorage.getItem(user_storage);
+
       // console.log('aqui estoy esperando el store de user' , responseUser)
       let tokenParsed = JSON.parse(responseToken);
 
       setToken(tokenParsed);
       setUser(responseUser);
+
     }
     getTokenAndUser();
   }, []);
@@ -58,8 +62,11 @@ const Log = () => {
       // console.log('este este es el user onSubit', response.data.user);
       const userJson = JSON.stringify(response.data.user);
       await AsyncStorage.setItem('@userData', userJson);
+      
       navigation.replace('MiddleApp');
+
     } catch (e) {
+      setError('Email o contraseña incorrecta!');
       console.error(e);
     }
   };
@@ -67,9 +74,9 @@ const Log = () => {
   // console.log(token)
   return (
     <ScrollView
-      contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+      contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}>
       <View style={styles.view}>
-        <Text style={styles.tittlePrincipal}>Bienvenido al club del plan</Text>
+        <Text style={styles.tittlePrincipal}>'Bienvenido al club del plan'</Text>
         <Text style={styles.tittle}>
           Por favor ingresa tu cuenta para seguir!
         </Text>
@@ -88,17 +95,20 @@ const Log = () => {
           placeholder="password"
           placeholderTextColor="#808080"
         />
+
+        {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
+        {/* <View>{error && <Text>{error}</Text>}</View> */}
         <TouchableOpacity
-          style={styles.buttonLogin}
+          style={styles.buttonRegister}
           onPress={() => {
             navigation.navigate('Register');
           }}>
-          <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
             Registrarse
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonLogin} onPress={onSubmit}>
-          <Text style={{color: 'white', fontSize: 16, textAlign: 'center'}}>
+          <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
             Iniciar sesion
           </Text>
         </TouchableOpacity>
@@ -157,6 +167,14 @@ const styles = {
     height: 60,
     marginBottom: 20,
   },
+  buttonRegister: {
+    width: 300,
+    backgroundColor: '#208383',
+    marginVertical: 10,
+    paddingVertical: 10,
+    // paddingHorizontal: 20,
+    borderRadius: 6,
+  },
   buttonLogin: {
     width: 300,
     backgroundColor: '#208383',
@@ -164,6 +182,7 @@ const styles = {
     paddingVertical: 10,
     // paddingHorizontal: 20,
     borderRadius: 6,
+    marginBottom: 80,
   },
 };
 export default Log;

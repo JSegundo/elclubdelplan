@@ -15,25 +15,26 @@ import ButtonShare from '../components/ButtonShare';
 import emptyStar from '../assets/star_corner.png';
 import fullStar from '../assets/star_filled.png';
 import {useSelector, useDispatch} from 'react-redux';
-import {userDonePlans} from '../store/userEvents';
+import {getOwnerPastEvents} from '../store/user/ownerPastEvents';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+const fakeMapImage =
+  'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
 
 const CardEvent = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
-
+  const [token, setToken] = useState(null)
   const dispatch = useDispatch();
-  const donePlans = useSelector(store => store.userEvents);
+  const ownerPastEvents = useSelector(store => store.ownerPastEvents);
   const user = useSelector(state => state.user);
-
-  useEffect(() => {
-    dispatch(userDonePlans());
-  }, []);
 
   const {item} = route.params;
   const {
     time,
     image,
+    category,
     name,
     location,
     startDate,
@@ -42,9 +43,15 @@ const CardEvent = () => {
     description,
     pricePerPerson,
     coments,
+    isPrivate,
+    eventOwner,
   } = item;
-  const fakeMapImage =
-    'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
+  useEffect(() => {
+    if (!eventOwner._id) return;
+    dispatch(getOwnerPastEvents(eventOwner._id));
+  }, []);
+  console.log('event Onwer', eventOwner);
+
   const dateNow = new Date();
   const eventDate = new Date(endDate);
 
@@ -64,7 +71,25 @@ const CardEvent = () => {
       </View>
     );
   };
-
+  const verifyUser = () => {
+    async function getToken() {
+      try {
+        const tokenAsync = await AsyncStorage.getItem('@Token')
+        console.log('TOKEN EN NEW', tokenAsync)
+        let tokenParsed = JSON.parse(tokenAsync)
+        setToken(tokenParsed)
+        if(!tokenAsync) navigation.replace('MiddleScreen')
+        else{
+          navigation.navigate('Comentarios', {id: item._id})
+        }
+        
+      }
+      catch (err) {
+        console.log(err)
+      }
+    }
+    getToken()
+  }
   const renderItem = item => {
     const {
       name,
@@ -126,28 +151,71 @@ const CardEvent = () => {
             <Image style={styles.image} source={{uri: image}} />
           </View>
           <Text style={styles.title}>{name}</Text>
-          <Text style={styles.text}> Empieza: {startDate?.split('T')[0]}</Text>
-          <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
-          {paymentLimitDate ? (
-            <Text style={styles.text}>
-              Limite de confirmación: {paymentLimitDate?.split('T')[0]}
-            </Text>
-          ) : null}
-          {/* DATES */}
-          <Text>{user.name}</Text>
-          {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
-          <Text style={styles.text}>Hora de inicio: {time} hs</Text>
-          {/* <Ionicons name="phone" size={18} color="#900" style={styles.text} /> */}
-          <Text style={styles.text}>
-            Precio: ARS ${pricePerPerson ? pricePerPerson : 0}
-          </Text>
-          <View>
-            <Text style={styles.subtitle}>Descripción</Text>
-            <Text style={styles.text}>{description}</Text>
+          <Text style={{paddingBottom: 10}}>{category}</Text>
+          {isPrivate ? (
+            <Ionicons
+              name="lock-closed-outline"
+              style={{
+                color: '#900',
+                fontSize: 30,
+              }}
+            />
+          ) : (
+            <Ionicons
+              name="lock-open-outline"
+              style={{
+                color: '#208383',
+                fontSize: 30,
+              }}
+            />
+          )}
+          {/* SECCION DE FECHAS  */}
+          <View style={styles.sectionWrapper}>
+            <View style={styles.sectionIconWrapper}>
+              <Ionicons
+                name="calendar"
+                style={{
+                  color: '#208383',
+                  fontSize: 20,
+                }}
+              />
+            </View>
+            <View style={styles.sectionInfoWrapper}>
+              <Text>Fecha y hora</Text>
+              <Text style={styles.text}>
+                Empieza: {startDate?.split('T')[0]}
+              </Text>
+              <Text style={styles.text}>Termina: {endDate?.split('T')[0]}</Text>
+              {paymentLimitDate ? (
+                <Text style={styles.text}>
+                  Limite de confirmación: {paymentLimitDate?.split('T')[0]}
+                </Text>
+              ) : null}
+              <Text style={styles.text}>Hora de inicio: {time} hs</Text>
+            </View>
           </View>
-          <View>
-            <Text style={styles.subtitle}>Ubicación</Text>
-            <Text style={styles.text}>
+          {/* SECCION DE FECHAS  */}
+
+          {/* DESCRIPTION  */}
+          <View style={styles.sectionWrapper}>
+            <View style={styles.sectionIconWrapper}>
+              <Ionicons
+                name="book"
+                style={{
+                  color: '#208383',
+                  fontSize: 20,
+                }}
+              />
+            </View>
+            <View style={styles.sectionInfoWrapper}>
+              <Text>Descripción</Text>
+              <Text style={styles.text}>{description}</Text>
+            </View>
+          </View>
+
+          {/* SECCION DE UBICACIÓN */}
+          <View style={styles.sectionWrapper}>
+            <View style={styles.sectionIconWrapper}>
               <Ionicons
                 name="pin"
                 style={{
@@ -155,10 +223,18 @@ const CardEvent = () => {
                   fontSize: 20,
                 }}
               />
-              {location}
-            </Text>
-            <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
+            </View>
+            <View style={styles.sectionInfoWrapper}>
+              <Text>Ubicación</Text>
+              <Text style={styles.text}>{location}</Text>
+              <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
+            </View>
           </View>
+
+          <Text style={styles.text}>
+            Precio: ARS ${pricePerPerson ? pricePerPerson : 0}
+          </Text>
+
           {/* CARROUSEL */}
 
           {eventDate.getTime() < dateNow.getTime() ? (
@@ -185,13 +261,15 @@ const CardEvent = () => {
             </TouchableOpacity>
           ) : null}
 
-          {donePlans[0] ? (
+          {ownerPastEvents[0] ? (
             <View>
-              <Text style={styles.subtitle}>Eventos del mismo creador</Text>
+              <Text style={styles.subtitle}>
+                Eventos también creados por {eventOwner.name}
+              </Text>
               <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal={true}
-                data={donePlans}
+                data={ownerPastEvents}
                 renderItem={({item}) => renderItem(item)}
               />
             </View>
@@ -212,12 +290,14 @@ const styles = StyleSheet.create({
   subtitle: {
     marginTop: 10,
     fontSize: 18,
+    paddingLeft: 15,
     fontWeight: 'bold',
     color: 'black',
   },
   cardWrap: {
     justifyContent: 'space-between',
     alignItems: 'center',
+    padding: 10,
   },
   text: {
     color: 'black',
@@ -236,14 +316,13 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   mapImage: {
-    marginTop: 30,
-    width: 380,
+    width: 250,
     height: 250,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   buttonWrap: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginTop: 20,
     marginBottom: 20,
     alignItems: 'center',
@@ -297,12 +376,32 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
 
+  // SECCIONES DE INFORMACIÓN
+
+  sectionWrapper: {
+    width: '100%',
+    flexDirection: 'row',
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#900',
+    borderBottomColor: 'grey',
+  },
+  sectionIconWrapper: {
+    width: '20%',
+  },
+  sectionInfoWrapper: {
+    width: '80%',
+  },
+
   // planes del owner del plan
 
   itemWrapper: {
     width: 203,
     height: 250,
     marginHorizontal: 10,
+    marginVertical: 20,
     borderRadius: 20,
     backgroundColor: '#FFFFFF',
   },

@@ -1,9 +1,17 @@
-import React, { useEffect } from 'react';
-import { Text, View, TextInput, Button, TouchableOpacity, FlatList, Pressable , Card} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  Text,
+  View,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  FlatList,
+  Pressable,
+} from 'react-native';
 import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
-import categories from '../utils/categories'
-import { ScrollView } from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
+import categories from '../utils/categories';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Register = () => {
   const [name, onChangeName] = React.useState(null);
@@ -11,11 +19,19 @@ const Register = () => {
   const [psw, onChangePsw] = React.useState(null);
   const [number, onChangePhone] = React.useState(null);
   const [city, onChangeCity] = React.useState(null);
-  const [preferences, setPreferences] = React.useState([])
+  const [preferences, setPreferences] = React.useState([]);
   // const [categories, setCategories] = React.useState(null)
   const navigation = useNavigation();
- const [arrCategories, setCategories] = React.useState(categories)
+  const [error, setError] = React.useState('');
+  const [arrCategories, setCategories] = React.useState(categories)
 
+  // useEffect(()=> {
+  //  async function getCategories() {
+  //   const categories = await axios.get("http://localhost:3001/api/categories")
+  //   setCategories(categories)
+  // }
+  // getCategories()
+  // }, [])
 
   useEffect(() => {
     let arr = categories.map((item, index) => {
@@ -28,27 +44,35 @@ const Register = () => {
     console.log("arr data => " , arr)
   }, [])
 
-  const onRegister = async () => {  
-    // let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(email);
 
-    // if(!validEMail) {
-    //   return alert('Inalid email')
-    // }
+  const onRegister = async () => {
+    let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(
+      email,
+    );
 
+    if (!validEMail) {
+      setError('Email invalido!');
+      return;
+    }
+
+    let password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(psw);
     // let password = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$/.test(psw);
 
-    // if(!password){
-    //   return alert("Ivalid password")
-    // }
+    if (!password) {
+      setError(
+        'Contraseña invalida! debe tener minimo 8 caracteres y 1 mayuscula.',
+      );
+      return;
+    }
 
     const newUser = {
       name,
       email,
       city,
       password: psw,
-      preferences
+      preferences,
     };
-    console.log(preferences)
+    console.log(preferences);
     console.log(newUser);
     try {
       const response = await axios.post(
@@ -58,7 +82,7 @@ const Register = () => {
 
       navigation.reset({
         index: 0,
-        routes: [{ name: 'MiddleScreen' }],
+        routes: [{name: 'MiddleScreen'}],
       });
       console.log(response);
     } catch (err) {
@@ -132,13 +156,18 @@ const Register = () => {
           placeholder="password"
           placeholderTextColor="#808080"
         />
+        {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
 
         <Text style={styles.tittle}>Elije tus categorias preferidas</Text>
         <View>
           {arrCategories.map((item,index) => {
             return <TouchableOpacity
             onPress={() => handlePress(item,index)}
-            style = {styles.pressable}
+            style = {[
+              item.isSelected ? 
+              styles.pressable :
+              styles.pressableFalse
+            ]}
             > 
             <Text style = {{color : 'white'}}>{item.categoryName}</Text>
             <Text style = {{color : "white"}}>{ item.isSelected ? 'Seleccionado' : 'Seleccionar'}</Text>
@@ -199,17 +228,32 @@ const styles = {
 
   },
   pressable: {
-    
-    justifyContent: 'center',
+
     alignItems: 'center',
     paddingHorizontal: 2,
     borderRadius: 15,
     borderStyle: 'solid',
-    justifyContent : "space-between",
-    paddingHorizontal : 10,
-    flexDirection : "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    flexDirection: "row",
     borderWidth: 1,
-    backgroundColor: '#208383',
+    backgroundColor : "#208383",
+    margin: 8,
+    elevation: 5,
+    width: 250,
+    height: 40,
+  },
+  pressableFalse: {
+
+    alignItems: 'center',
+    paddingHorizontal: 2,
+    borderRadius: 15,
+    borderStyle: 'solid',
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    borderWidth: 1,
+    backgroundColor : "#1795CB",
     margin: 8,
     elevation: 5,
     width: 250,

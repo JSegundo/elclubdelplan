@@ -2,11 +2,15 @@ import {createReducer, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const userRegister = createAsyncThunk('register', user => {
-  return axios.post('/api/users/register', user).then(res => res.data);
+  return axios
+    .post('http://localhost:3001/api/users/register', user)
+    .then(res => res.data);
 });
 
 export const userLogin = createAsyncThunk('login', user => {
-  return axios.post('/api/users/login', user).then(res => res.data);
+  return axios
+    .post('http://localhost:3001/api/users/login', user)
+    .then(res => res.data);
 });
 
 export const userData = createAsyncThunk('user', token => {

@@ -10,7 +10,7 @@ export const getAllEvents = createAsyncThunk('events', async () => {
   }
 });
 
-export const getEvent = createAsyncThunk('EVENT', async (eventId) => {
+export const getEvent = createAsyncThunk('EVENT', async eventId => {
   try {
     const res = await axios.get(`http://localhost:3001/api/events/${eventId}`);
     return res.data;
@@ -27,7 +27,8 @@ export const createEvent = createAsyncThunk(
     const token = user.token;
     try {
       const res = await axios.post(
-        `http://localhost:3001/api/events/add/${userid}`,
+        `http://localhost:3001/api/events/add`,
+        // `http://localhost:3001/api/events/add/${userid}`,
         newEvent,
         {
           headers: {authorization: `Bearer ${token}`},

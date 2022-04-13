@@ -9,7 +9,7 @@ import {
 import React, {Children, useEffect, useState} from 'react';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {userDonePlans} from '../../store/userEvents';
+import {userDonePlans} from '../../store/user/userEvents';
 import {useNavigation} from '@react-navigation/native';
 
 const UserHistoryPlans = () => {
@@ -37,7 +37,8 @@ const UserHistoryPlans = () => {
       totalPrice,
     } = item;
 
-    return item.isPrivate === true ? (
+    // return item.isPrivate === true ? (
+    return (
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('Plan', {item: item});
@@ -58,12 +59,21 @@ const UserHistoryPlans = () => {
           </View>
         </View>
       </TouchableOpacity>
-    ) : null;
+    );
   };
 
   return (
     <View>
       {/* <Text>Historial de planes</Text> */}
+      <Text
+        style={{
+          textAlign: 'center',
+          padding: 10,
+          fontSize: 16,
+          fontWeight: 'bold',
+        }}>
+        Planes realizados
+      </Text>
       <FlatList
         data={donePlans}
         renderItem={({item}) => renderItem(item)}
