@@ -21,6 +21,7 @@ const CatalogScreen = () => {
   const navigation = useNavigation();
 
   //Inputs
+  const [searchTerm, setSearchTerm] = useState('');
   const [categorySelected, setCategorySelected] = useState('');
   const [fechaSelected, setFechaSelected] = useState('');
   const [precioSelected, setPrecioSelected] = useState('');
@@ -51,14 +52,13 @@ const CatalogScreen = () => {
 
   //  Search
   const [results, setResults] = useState([]);
-  useEffect(() => {
-  }, [results]);
+  useEffect(() => {}, [results]);
 
   const handleSearch = e => {
     const filterEvents = eventos
       ? eventos.filter(
         ev =>
-          ev.category.toLowerCase().includes(e.toLowerCase()) ||
+          //ev.category.toLowerCase().includes(e.toLowerCase()) ||
           ev.name.toLowerCase().includes(e.toLowerCase()),
       )
       : '';
@@ -70,39 +70,40 @@ const CatalogScreen = () => {
       ? eventos.filter(ev => ev.category === categorySelected) : '';
     setResults(filterEvents);
   };
-  
+
   const handleDate = () => {
     const filterEvents = eventos
       ? eventos.filter(ev => {
-        console.log("FECHA INICIO EVENTO->", ev.startDate.getDate());
+        const eventDate = new Date(ev.startDate);
+        eventDate.setHours(0,0,0,0);
+        console.log("FECHA INICIO EVENTO->", eventDate.getDate());
         const today = new Date();
-        console.log("TODAY->", today.getDate());
+        today.setHours(0,0,0,0);
         switch (fechaSelected) {
           case 'hoy':
-            ev.startDate = today;
-            break;
+            console.log("HOY->", today.getTime());
+            return eventDate.getTime() == today.getTime();
           case 'mañana':
             const tomorrow = new Date(today);
+            tomorrow.setHours(0,0,0,0);
             tomorrow.setDate(tomorrow.getDate() + 1);
-            console.log("MAÑANA->", tomorrow);
-            ev.startDate = tomorrow;
-            break;
+            console.log("MAÑANA->", tomorrow.getTime());
+            return eventDate.getTime() == tomorrow.getTime();
           case 'esta semana':
             const week = new Date(today);
             week.setDate(week.getDate() + 7);
-            console.log("SEMANA->", week);
-            ev.startDate >= today && ev.startDate <= week;
-            break;
+            console.log("SEMANA->", week.getTime());
+            return eventDate.getTime() >= today.getTime() && ev.startDate <= week.getTime();
           case 'este mes':
             const month = new Date(today);
+            month.setHours(0,0,0,0);
             month.setDate(month.getDate() + 31);
-            console.log("MES->", month);
-            ev.startDate < month;
-            break;
+            console.log("MES->", month.getTime());
+            return eventDate.getTime() >= today.getTime() && ev.startDate <= month.getTime();
         }
       })
       : '';
-      console.log("EVENTOS POR FECHA->", filterEvents);
+    console.log("EVENTOS A MOSTRAR->", filterEvents);
     setResults(filterEvents);
   };
 
@@ -113,6 +114,17 @@ const CatalogScreen = () => {
         : ev.pricePerPerson === 0)
       : '';
     setResults(filterEvents);
+  };
+
+  const onSubmit = () => {
+    const filterCategories = eventos
+      ? eventos.filter(ev => ev.category === categorySelected) : eventos;
+    const filterPrice = filterCategories
+      ? filterCategories.filter(ev => precioSelected === 'pago'
+        ? ev.pricePerPerson > 0
+        : ev.pricePerPerson <= 0)
+      : filterCategories;
+    setResults(filterPrice);
   };
 
   const renderItem = item => {
@@ -148,12 +160,11 @@ const CatalogScreen = () => {
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Buscar"
+          placeholder="Buscar por nombre"
           placeholderTextColor={'black'}
           onChangeText={handleSearch}
         />
       </View>
-
       <View style={{ paddingHorizontal: 4 }}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <DropdownCategories
@@ -162,7 +173,14 @@ const CatalogScreen = () => {
             value={categorySelected}
             onChange={item => {
               setCategorySelected(item.value);
-              handleCategory();
+            }}
+          />
+          <DropdownCategories
+            placeholder="Precio"
+            data={dataPrices}
+            value={precioSelected}
+            onChange={item => {
+              setPrecioSelected(item.value);
             }}
           />
           <DropdownCategories
@@ -174,16 +192,13 @@ const CatalogScreen = () => {
               handleDate();
             }}
           />
-          <DropdownCategories
-            placeholder="Precio"
-            data={dataPrices}
-            value={precioSelected}
-            onChange={item => {
-              setPrecioSelected(item.value);
-              handlePrice();
-            }}
-          />
         </ScrollView>
+        <TouchableOpacity
+          style={styles.buttonSearch}
+          title="Search"
+          onPress={onSubmit}>
+          <Text style={{ color: '#111' }}>Filtrar</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.contentWrapper}>
@@ -258,6 +273,16 @@ const styles = StyleSheet.create({
     color: '#111',
     borderRadius: 3,
     width: 230,
+  },
+  buttonSearch: {
+    borderWidth: 2,
+    borderColor: '#900',
+    marginLeft: 10,
+    borderRadius: 6,
+    marginTop: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    color: '#111',
   },
 
   // filters
