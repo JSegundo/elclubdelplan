@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import React, {useEffect} from 'react';
 
@@ -49,7 +49,6 @@ const OwnPlans = () => {
     ? userCategories.push(ownPlans.filter(ev => ev.category === 'Concierto'))
     : '';
 
-  console.log('USERCATEGORIES --> ', userCategories);
 
   //render items
   const renderItem = item => {
@@ -63,8 +62,15 @@ const OwnPlans = () => {
       location,
       isPrivate,
       totalPrice,
+      willAttend,
       eventOwner,
+      guests,
     } = item;
+
+    const invitados = guests.length;
+    const confirmados = willAttend.length;
+    console.log("GUESTS", invitados)
+    console.log("CONFIRMADOS", confirmados)
 
     return (
       <TouchableOpacity
@@ -79,12 +85,15 @@ const OwnPlans = () => {
             style={styles.image}
           />
           <View style={styles.infoWrapper}>
-            <Text style={{fontSize: 16, fontWeight: 'bold', color: '#900'}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', color: '#B90303'}}>
               {name}
             </Text>
             <Text style={({fontSize: 12}, {color: 'black'})}>
               {startDate?.split('T')[0]}
             </Text>
+            {confirmados ? (
+            <Text style={({fontSize: 12}, {color: 'black'})}>{confirmados} asistirán a tu evento</Text>
+            ) : null}
           </View>
         </View>
       </TouchableOpacity>
@@ -92,17 +101,15 @@ const OwnPlans = () => {
   };
 
   return (
-    <ScrollView style={{marginBottom: 50}}>
-      <Text
-        style={styles.title}>
-        Planes que creaste
-      </Text>
-      {/**[ [{},{}], [{},{}], [""] ] */}
+    <ScrollView style={{marginBottom: 20}}>
+      <Text style={styles.title}>Tus planes</Text>
       {userCategories.map(category =>
         category[0] ? (
           <View>
-            <Text style={styles.subtitle}>{category[0].category}</Text>
+            <Text style={styles.itemTitle}>{category[0].category}</Text>
             <FlatList
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
               data={category}
               renderItem={({item}) => renderItem(item)}
               style={styles.flatlist}
@@ -119,88 +126,80 @@ const OwnPlans = () => {
 };
 
 const styles = StyleSheet.create({
-  // pageWrapper: {
-  //   marginBottom: 120,
-  // },
-  itemWrapper: {
-    backgroundColor: 'white',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderWidth: 2,
-    borderRadius: 12,
-    borderColor: 'transparent',
-    width: 300,
-    height: 80,
-    marginTop: 5,
-    marginBottom: 5,
-  },
   title: {
     textAlign: 'center',
     fontWeight: 'bold',
     color: '#B90303',
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 0,
-    // marginLeft: 18,
     fontSize: 30,
-    padding: 1,
   },
-  subtitle: {
-    color: '#000000',
-    marginTop: 40,
-    marginBottom: -20,
+  itemTitle: {
+    color: 'black',
+    marginTop: 30,
     marginLeft: 18,
+    marginBottom: 15,
     fontSize: 22,
     padding: 1,
     fontWeight: 'bold',
   },
-  contentWrapper: {
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 100,
+  asistiras:{
+    fontSize: 14,
+    fontWeight: 'bold', 
+    color: 'black'
   },
   infoWrapper: {
-    justifyContent: 'space-between',
-    // alignItems: 'center',
-    padding: 8,
-    width: 160,
+    padding: 10,
+  },
+  confirmButtonWrap: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 15,
+    marginBottom: 20,
+    marginLeft: 15,
+    alignItems: 'center',
+    width: 195,
+    height: 50,
+    backgroundColor: '#B90303',
+    borderRadius: 8,
+  },
+  textButton: {
+    color: 'white',
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  pageWrapper: {
+    marginBottom: 20,
+  },
+  itemWrapper: {
+    width: 200,
+    height: 250,
+    marginHorizontal: 12,
+    borderRadius: 15,
+    backgroundColor: '#FFFFFF',
+  },
+  contentWrapper: {
+    margin: 0,
+    width: '100%',
+  },
+  nombreEvento: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#B90303',
+    marginTop: 5,
+    marginLeft: 5,
   },
   image: {
-    width: 140,
-    height: '100%',
-    borderBottomLeftRadius: 10,
-    borderTopLeftRadius: 10,
-    resizeMode: 'cover',
-    overflow: 'hidden',
+    width: 200,
+    height: '58%',
+    borderRadius: 16,
+    // borderTopLeftRadius: 16,
+    // borderTopRightRadius: 16,
   },
-  // input
-  searchSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#111',
+  startDate: {
+    marginEnd: 20,
+    // marginTop: 8,
   },
-  buttonSearch: {
-    borderWidth: 2,
-    borderColor: '#900',
-    marginLeft: 10,
-    borderRadius: 6,
-    marginTop: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    color: '#111',
-  },
-  searchInput: {
-    borderBottomWidth: 3,
-    borderBottomColor: '#900',
-    paddingHorizontal: 4,
-    color: '#111',
-    borderRadius: 3,
-  },
-  // flatlist: {
-  //   justifyContent: 'center',
-  // },
 });
 
 export default OwnPlans;

@@ -27,6 +27,9 @@ const UserWillAttendPlans = () => {
     dispatch(userConfirmPlans());
   }, [render]);
 
+  console.log('ATTENDPLANS', attendPlans);
+  console.log('CONFIRM PLANS', confirmPlans);
+
   // const handleSubmit = () => {
 
   // }
@@ -34,8 +37,6 @@ const UserWillAttendPlans = () => {
   //render items
   const renderItem = item => {
     const {name, startDate, image, eventOwner} = item;
-    console.log(eventOwner);
-    // return item.isPrivate === true ? (
 
     return (
       <View style={styles.viewWrapper}>
@@ -51,11 +52,16 @@ const UserWillAttendPlans = () => {
               style={styles.image}
             />
             <View style={styles.infoWrapper}>
-              <Text style={{fontSize: 16, fontWeight: 'bold', color: '#900'}}>
+              <Text
+                style={{fontSize: 16, fontWeight: 'bold', color: '#B90303'}}>
                 {name}
               </Text>
-              <Text style={{fontSize: 12}}>Te invitó {eventOwner.name}</Text>
-              <Text style={{fontSize: 12}}>{startDate?.split('T')[0]}</Text>
+              <Text style={({fontSize: 12}, {color: 'black'})}>
+                Creador: {eventOwner.name}
+              </Text>
+              <Text style={({fontSize: 12}, {color: 'black'})}>
+                Fecha: {startDate?.split('T')[0]}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -68,11 +74,10 @@ const UserWillAttendPlans = () => {
         </TouchableOpacity>
       </View>
     );
-    // ) : null;
   };
 
   const renderConfirmItem = item => {
-    const {name, startDate, image} = item;
+    const {name, startDate, image, eventOwner} = item;
 
     return (
       <View style={styles.viewWrapper}>
@@ -88,21 +93,29 @@ const UserWillAttendPlans = () => {
               style={styles.image}
             />
             <View style={styles.infoWrapper}>
-              <Text style={{fontSize: 16, fontWeight: 'bold', color: '#900'}}>
+              <Text
+                style={{fontSize: 16, fontWeight: 'bold', color: '#B90303'}}>
                 {name}
               </Text>
-              <Text style={{fontSize: 12}}>{startDate?.split('T')[0]}</Text>
+              <Text style={({fontSize: 12}, {color: 'black'})}>
+                Creador: {eventOwner.name}
+              </Text>
+              <Text style={({fontSize: 12}, {color: 'black'})}>
+                Fecha: {startDate?.split('T')[0]}
+              </Text>
+              <Text style={styles.asistiras}>Asistirás ✔️</Text>
             </View>
           </View>
         </TouchableOpacity>
-        <Text style={styles.itemText}>Que lo disfrutes!</Text>
       </View>
     );
   };
 
-  return (
-    <View style={styles.screenWrapper}>
+  return confirmPlans[0] || attendPlans[0] ? (
+    <View style={styles.pageWrapper}>
       <ScrollView>
+        <Text style={styles.title}>Mis invitaciones</Text>
+
         <View style={styles.planWrapper}>
           <Text style={styles.itemTitle}>Confirmados</Text>
           <FlatList
@@ -116,7 +129,7 @@ const UserWillAttendPlans = () => {
           />
         </View>
         <View style={styles.planWrapper}>
-          <Text style={styles.itemTitle}>Invitaciones</Text>
+          <Text style={styles.itemTitle}>Sin confirmar</Text>
           <FlatList
             data={attendPlans}
             renderItem={({item}) => renderItem(item)}
@@ -129,124 +142,95 @@ const UserWillAttendPlans = () => {
         </View>
       </ScrollView>
     </View>
+  ) : (
+    <View>
+      <Text style={styles.title}>Mis invitaciones</Text>
+      <Text style={styles.itemTitle}>Aún no tenés invitaciones</Text>
+      <Text style={styles.emoji}>😪</Text>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  screenWrapper: {
-    marginBottom: 60,
-  },
-  planWrapper: {
-    margin: 0,
-    width: '100%',
+  title: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#B90303',
+    marginTop: 40,
+    marginBottom: 0,
+    fontSize: 30,
   },
   itemTitle: {
-    color: '#208383',
-    marginTop: 40,
-    marginLeft: 18,
+    color: 'black',
+    marginTop: 30,
+    textAlign: 'center',
+    marginBottom: 15,
     fontSize: 22,
     padding: 1,
     fontWeight: 'bold',
   },
-  itemText: {
-    color: '#208383',
-    fontSize: 16,
-    marginTop: 10,
-  },
-  viewWrapper: {
-    backgroundColor: 'white',
-    borderWidth: 2,
-    borderRadius: 12,
-    borderColor: 'transparent',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: 300,
-    height: 150,
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  itemWrapper: {
-    backgroundColor: 'white',
-    borderWidth: 2,
-    borderRadius: 12,
-    borderColor: 'transparent',
-    flexDirection: 'row',
-    width: 300,
-    height: 80,
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  contentWrapper: {
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 100,
+  asistiras: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'black',
   },
   infoWrapper: {
-    justifyContent: 'space-between',
-    padding: 8,
-    width: 160,
-  },
-  title: {
-    fontSize: 18,
-    textAlign: 'center',
-    color: '#111',
     padding: 10,
-    fontWeight: 'bold',
-    borderBottomColor: 'lightblue',
-    borderWidth: 2,
-    borderColor: 'transparent',
-  },
-  image: {
-    width: 140,
-    height: '100%',
-    borderBottomLeftRadius: 10,
-    borderTopLeftRadius: 10,
-    resizeMode: 'cover',
-    overflow: 'hidden',
-  },
-  searchSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#111',
-  },
-  buttonSearch: {
-    borderWidth: 2,
-    borderColor: '#900',
-    marginLeft: 10,
-    borderRadius: 6,
-    marginTop: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    color: '#111',
-  },
-  searchInput: {
-    borderBottomWidth: 3,
-    borderBottomColor: '#900',
-    paddingHorizontal: 4,
-    color: '#111',
-    borderRadius: 3,
   },
   confirmButtonWrap: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 3,
+    marginTop: 15,
     marginBottom: 20,
+    marginLeft: 15,
     alignItems: 'center',
-    paddingVertical: 15,
-    paddingHorizontal: 25,
-    width: 150,
+    width: 195,
     height: 50,
-    backgroundColor: '#208383',
-    borderRadius: 6,
+    backgroundColor: '#B90303',
+    borderRadius: 8,
   },
   textButton: {
     color: 'white',
     fontSize: 12,
     textAlign: 'center',
   },
+  pageWrapper: {
+    marginBottom: 20,
+  },
+  itemWrapper: {
+    width: 200,
+    height: 250,
+    marginHorizontal: 12,
+    borderRadius: 15,
+    backgroundColor: '#FFFFFF',
+  },
+  contentWrapper: {
+    margin: 0,
+    width: '100%',
+  },
+  nombreEvento: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#B90303',
+    marginTop: 5,
+    marginLeft: 5,
+  },
+  image: {
+    width: 200,
+    height: '58%',
+    borderRadius: 16,
+    // borderTopLeftRadius: 16,
+    // borderTopRightRadius: 16,
+  },
+  startDate: {
+    marginEnd: 20,
+    // marginTop: 8,
+  },
+  emoji: {
+    marginTop: 20,
+    fontSize: 50,
+    marginLeft: 150,
+  }
 });
 
 export default UserWillAttendPlans;
