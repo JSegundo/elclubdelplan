@@ -74,9 +74,9 @@ const CatalogScreen = () => {
   const handleDate = () => {
     const filterEvents = eventos
       ? eventos.filter(ev => {
-        console.log("FECHA INICIO EVENTO->", ev.startDate);
+        console.log("FECHA INICIO EVENTO->", ev.startDate.getDate());
         const today = new Date();
-        console.log("TODAY->", today);
+        console.log("TODAY->", today.getDate());
         switch (fechaSelected) {
           case 'hoy':
             ev.startDate = today;
