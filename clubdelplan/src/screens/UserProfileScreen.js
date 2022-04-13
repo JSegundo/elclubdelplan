@@ -9,11 +9,8 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import LogInScreen from './LogInScreen';
-import axios from 'axios';
 import {Button} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {launchImageLibrary} from 'react-native-image-picker';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const user_storage = '@userData';

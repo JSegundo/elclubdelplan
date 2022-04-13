@@ -2,9 +2,6 @@ import React, {useEffect} from 'react';
 import {
   Text,
   View,
-  TextInput,
-  Button,
-  TouchableOpacity,
   FlatList,
   Pressable,
 } from 'react-native';

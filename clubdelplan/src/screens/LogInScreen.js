@@ -3,20 +3,13 @@ import {
   Text,
   View,
   TextInput,
-  Button,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import UserProfileScreen from './UserProfileScreen';
 import {useNavigation} from '@react-navigation/native';
-
 const token_storage = '@Token';
 const user_storage = '@userData';
-
-import {userData} from '../store/user';
-import {useDispatch} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import RedSocialButton from '../components/RedSocialButton';
 

@@ -4,7 +4,6 @@ import axios from 'axios';
 export const getOwnerPastEvents = createAsyncThunk(
   'OWNER_EVENTS',
   async (ownerid, thunkAPI) => {
-    console.log(ownerid);
     try {
       const res = await axios.get(
         `http://localhost:3001/api/events/done/${ownerid}`,

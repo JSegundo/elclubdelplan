@@ -43,7 +43,7 @@ const CreatePassRedSocial = ({route}) => {
         },
       );
 
-      console.log("RESPONSE_LOGIN --->>>" ,responseLogin);
+      //console.log("RESPONSE_LOGIN --->>>" ,responseLogin);
 
       setUser(responseLogin.data.user);
       const tokenPrev = JSON.stringify(responseLogin.data.token);

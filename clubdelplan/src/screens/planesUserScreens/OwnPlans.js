@@ -26,15 +26,8 @@ const OwnPlans = () => {
   const renderItem = item => {
     const {
       name,
-      _id,
-      category,
       startDate,
-      time,
       image,
-      location,
-      isPrivate,
-      totalPrice,
-      eventOwner,
     } = item;
 
     return (
@@ -82,9 +75,6 @@ const OwnPlans = () => {
 };
 
 const styles = StyleSheet.create({
-  // pageWrapper: {
-  //   marginBottom: 120,
-  // },
   itemWrapper: {
     backgroundColor: 'white',
     borderWidth: 2,
@@ -105,7 +95,6 @@ const styles = StyleSheet.create({
   },
   infoWrapper: {
     justifyContent: 'space-between',
-    // alignItems: 'center',
     padding: 8,
     width: 160,
   },
@@ -151,9 +140,6 @@ const styles = StyleSheet.create({
     color: '#111',
     borderRadius: 3,
   },
-  // flatlist: {
-  //   justifyContent: 'center',
-  // },
 });
 
 export default OwnPlans;

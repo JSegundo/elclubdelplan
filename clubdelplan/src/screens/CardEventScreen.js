@@ -74,14 +74,10 @@ const CardEvent = () => {
   const renderItem = item => {
     const {
       name,
-      _id,
       category,
       startDate,
-      time,
       image,
       location,
-      isPrivate,
-      totalPrice,
     } = item;
 
     return (

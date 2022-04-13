@@ -1,20 +1,11 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Pressable,
-  Button,
-} from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
-
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import CatalogScreen from '../screens/CatalogScreen';
 import NewPlanScreen from '../screens/NewPlanScreen';
 import middleScreen from '../screens/MiddleScreen';
-
 import {useSelector} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
