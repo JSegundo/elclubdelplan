@@ -115,31 +115,35 @@ const UserWillAttendPlans = () => {
     <View style={styles.pageWrapper}>
       <ScrollView>
         <Text style={styles.title}>Mis invitaciones</Text>
-    
-        <View style={styles.planWrapper}>
-          <Text style={styles.itemTitle}>Confirmados</Text>
-          <FlatList
-            data={confirmPlans}
-            renderItem={({item}) => renderConfirmItem(item)}
-            horizontal={true}
-            contentContainerStyle={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          />
-        </View>
-        <View style={styles.planWrapper}>
-          <Text style={styles.itemTitle}>Sin confirmar</Text>
-          <FlatList
-            data={attendPlans}
-            renderItem={({item}) => renderItem(item)}
-            horizontal={true}
-            contentContainerStyle={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          />
-        </View>
+        {confirmPlans[0] ? (
+          <View style={styles.planWrapper}>
+            <Text style={styles.itemTitle}>Confirmados</Text>
+            <FlatList
+              data={confirmPlans}
+              renderItem={({item}) => renderConfirmItem(item)}
+              horizontal={true}
+              contentContainerStyle={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            />
+          </View>
+        ) : null};
+        
+        {attendPlans[0] ? (
+          <View style={styles.planWrapper}>
+            <Text style={styles.itemTitle}>Sin confirmar</Text>
+            <FlatList
+              data={attendPlans}
+              renderItem={({item}) => renderItem(item)}
+              horizontal={true}
+              contentContainerStyle={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            />
+          </View>
+        ) : null};
       </ScrollView>
     </View>
   ) : (
@@ -149,7 +153,10 @@ const UserWillAttendPlans = () => {
       <Text style={styles.emoji}>😪</Text>
     </View>
   );
+
+  
 };
+
 
 const styles = StyleSheet.create({
   title: {
