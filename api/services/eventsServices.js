@@ -13,7 +13,6 @@ class EventsServices {
         .equals(owner)
         .populate("coments")
         .populate("eventOwner")
-      console.log(events)
       return events
     } catch (err) {
       next(err)
@@ -36,7 +35,6 @@ class EventsServices {
   }
 
   static async serviceGetAllMyEvents(req, next) {
-    console.log(req.user.id)
     try {
       const date = new Date()
 
@@ -47,7 +45,6 @@ class EventsServices {
       })
         .populate("coments")
         .populate("eventOwner")
-
       return events
     } catch (err) {
       next(err)
@@ -57,7 +54,6 @@ class EventsServices {
   static async serviceGetAllMyPastEvents(req, next) {
     try {
       const date = new Date()
-
       const events = await Events.find({
         eventOwner: req.user.id,
         isPrivate: true,
@@ -77,10 +73,8 @@ class EventsServices {
       const date = new Date()
       const events = await Events.where("startDate")
         .gt(date)
-        // .where("isPrivate")
-        // .equals("true")
         .where("guests")
-        .equals(req.user.id) // --> funca cuando hardcodeo el id y uso postman
+        .equals(req.user.id)
         .populate("eventOwner")
       return events
     } catch (err) {
@@ -94,8 +88,6 @@ class EventsServices {
       const date = new Date()
       const events = await Events.where("startDate")
         .gt(date)
-        // .where("isPrivate")
-        // .equals("true")
         .where("willAttend")
         .equals(req.user.id)
         .populate("eventOwner")

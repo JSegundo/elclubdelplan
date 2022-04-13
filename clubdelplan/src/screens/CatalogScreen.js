@@ -28,7 +28,6 @@ const CatalogScreen = () => {
   //Stores
   const eventos = useSelector(state => state.event);
   const allCategories = useSelector(state => state.categories);
-  console.log("CATEGORIAS->", allCategories);
   useEffect(() => {
     dispatch(getAllEvents());
     dispatch(getAllCategories());
@@ -52,6 +51,9 @@ const CatalogScreen = () => {
 
   //  Search
   const [results, setResults] = useState([]);
+  useEffect(() => {
+  }, [results]);
+
   const handleSearch = e => {
     const filterEvents = eventos
       ? eventos.filter(
@@ -59,6 +61,56 @@ const CatalogScreen = () => {
           ev.category.toLowerCase().includes(e.toLowerCase()) ||
           ev.name.toLowerCase().includes(e.toLowerCase()),
       )
+      : '';
+    setResults(filterEvents);
+  };
+
+  const handleCategory = () => {
+    const filterEvents = eventos
+      ? eventos.filter(ev => ev.category === categorySelected) : '';
+    setResults(filterEvents);
+  };
+  
+  const handleDate = () => {
+    const filterEvents = eventos
+      ? eventos.filter(ev => {
+        console.log("FECHA INICIO EVENTO->", ev.startDate);
+        const today = new Date();
+        console.log("TODAY->", today);
+        switch (fechaSelected) {
+          case 'hoy':
+            ev.startDate = today;
+            break;
+          case 'mañana':
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            console.log("MAÑANA->", tomorrow);
+            ev.startDate = tomorrow;
+            break;
+          case 'esta semana':
+            const week = new Date(today);
+            week.setDate(week.getDate() + 7);
+            console.log("SEMANA->", week);
+            ev.startDate >= today && ev.startDate <= week;
+            break;
+          case 'este mes':
+            const month = new Date(today);
+            month.setDate(month.getDate() + 31);
+            console.log("MES->", month);
+            ev.startDate < month;
+            break;
+        }
+      })
+      : '';
+      console.log("EVENTOS POR FECHA->", filterEvents);
+    setResults(filterEvents);
+  };
+
+  const handlePrice = () => {
+    const filterEvents = eventos
+      ? eventos.filter(ev => precioSelected === 'pago'
+        ? ev.pricePerPerson > 0
+        : ev.pricePerPerson === 0)
       : '';
     setResults(filterEvents);
   };
@@ -110,6 +162,7 @@ const CatalogScreen = () => {
             value={categorySelected}
             onChange={item => {
               setCategorySelected(item.value);
+              handleCategory();
             }}
           />
           <DropdownCategories
@@ -118,6 +171,7 @@ const CatalogScreen = () => {
             value={fechaSelected}
             onChange={item => {
               setFechaSelected(item.value);
+              handleDate();
             }}
           />
           <DropdownCategories
@@ -126,6 +180,7 @@ const CatalogScreen = () => {
             value={precioSelected}
             onChange={item => {
               setPrecioSelected(item.value);
+              handlePrice();
             }}
           />
         </ScrollView>
