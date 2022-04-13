@@ -10,7 +10,6 @@ export const getAllUsers = createAsyncThunk(
       let res = await axios.get('http://localhost:3001/api/users', {
         headers: {authorization: `Bearer ${token}`},
       });
-      console.log(res.data);
       return res.data;
     } catch (err) {
       console.error(err);

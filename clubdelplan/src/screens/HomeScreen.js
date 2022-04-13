@@ -39,7 +39,6 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (!token) return;
-    console.log('SE RENDERIZO APP');
     dispatch(userData(token));
   }, [token]);
 

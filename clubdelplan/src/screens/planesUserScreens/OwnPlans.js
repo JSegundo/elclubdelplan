@@ -53,10 +53,7 @@ const OwnPlans = () => {
   const renderItem = item => {
     const {
       name,
-      _id,
-      category,
       startDate,
-      time,
       image,
       location,
       isPrivate,
