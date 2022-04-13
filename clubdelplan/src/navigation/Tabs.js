@@ -100,11 +100,7 @@ const Tabs = () => {
           //     color="#111"
           //   />),
           tabBarIcon: ({color}) => (
-<<<<<<< HEAD
             <Ionicons name="person-outline" size={22} color={color} />
-=======
-            <Ionicons name='person-outline' size={22} color={iconUserColor} />
->>>>>>> estrellita
           ),
         }}
       />
