@@ -27,7 +27,7 @@ export const userData = createAsyncThunk('user', token => {
 });
 
 export const userLogout = createAsyncThunk('logout', () => {
-  return axios.post('/api/users/logout').then(res => res.data);
+  return {};
 });
 
 const userReducer = createReducer(

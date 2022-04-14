@@ -3,12 +3,10 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {
   GoogleSignin,
   statusCodes,
-  GoogleSigninButton
+  GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
 import React from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
-
 
 const RedSocialButton = () => {
   const navigation = useNavigation();
@@ -23,37 +21,32 @@ const RedSocialButton = () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      const userRedSocial = userInfo.user
-      console.log('USER_RED_SOCIAL_BUTTON --->>>', userRedSocial);
-      navigation.navigate('Crea tu contraseña', {user : userRedSocial})
-  
+      const userRedSocial = userInfo.user;
+      navigation.navigate('Crea tu contraseña', {user: userRedSocial});
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
+        console.error(err);
+        return;
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
+        console.error(err);
+        return;
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
+        console.error(err);
+        return;
       } else {
-        // some other error happened
+        console.error(err);
+        return;
       }
     }
   };
 
- 
   return (
     <>
       <View>
-        {/* <TouchableOpacity style={styles.buttonRedSocial} onPress={signIn}>
-          <Ionicons name="logo-google" style={styles.logo}>
-            <Text style={styles.textButton}>
-               .  Registrarse con google
-            </Text>
-          </Ionicons>
-        </TouchableOpacity> */}
-        <GoogleSigninButton 
-        onPress={signIn}
-        size={GoogleSigninButton.Size.Wide}/>
+        <GoogleSigninButton
+          onPress={signIn}
+          size={GoogleSigninButton.Size.Wide}
+        />
       </View>
     </>
   );
@@ -74,7 +67,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 25,
     paddingHorizontal: 20,
- },
+  },
   textButton: {
     color: 'white',
     fontSize: 16,

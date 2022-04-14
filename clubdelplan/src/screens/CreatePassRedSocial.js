@@ -11,7 +11,6 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const token_storage = '@Token';
@@ -31,7 +30,6 @@ const CreatePassRedSocial = ({route}) => {
       },
     );
 
-    console.log("EXIST USER --------------->>>>>>", existUser.data.email);
     if (existUser.data.email) {
       try {
         const responseLogin = await axios.post(
@@ -42,8 +40,6 @@ const CreatePassRedSocial = ({route}) => {
           },
         );
 
-        console.log('RESPONSE_LOGIN 1 --->>>', responseLogin.data.email);
-
         setUser(responseLogin.data.user);
         const tokenPrev = JSON.stringify(responseLogin.data.token);
 
@@ -53,12 +49,12 @@ const CreatePassRedSocial = ({route}) => {
         const userJson = JSON.stringify(responseLogin.data.user);
         await AsyncStorage.setItem('@userData', userJson);
         navigation.replace('MiddleApp');
-        
       } catch (error) {
-        Alert.alert( "OPS!" ,"Las contraseñas no coinciden.. Volver a intentar.." )
-        console.log('ERROR EN CREAR CONTRASEÑA REDSOCIAL', error);
+        Alert.alert(
+          'OPS!',
+          'Las contraseñas no coinciden.. Volver a intentar..',
+        );
       }
-      
     } else {
       const newUser = {
         name,
@@ -70,11 +66,10 @@ const CreatePassRedSocial = ({route}) => {
       };
 
       try {
-
         const responseRegister = await axios.post(
-              'http://localhost:3001/api/users/register',
-              newUser,
-            );
+          'http://localhost:3001/api/users/register',
+          newUser,
+        );
 
         const responseLogin = await axios.post(
           'http://localhost:3001/api/users/login',
@@ -94,12 +89,9 @@ const CreatePassRedSocial = ({route}) => {
         await AsyncStorage.setItem('@userData', userJson);
         navigation.replace('MiddleApp');
       } catch (error) {
-        console.log('ERROR EN CREAR CONTRASEÑA REDSOCIAL', error);
+        console.error('ERROR EN CREAR CONTRASEÑA REDSOCIAL', error);
       }
-
-      console.log('no existe');
     }
-
   };
 
   return (
@@ -143,7 +135,6 @@ const styles = StyleSheet.create({
     color: '#208383',
     marginTop: 10,
     marginBottom: 0,
-    // marginLeft: 18,
     fontSize: 20,
     padding: 1,
   },

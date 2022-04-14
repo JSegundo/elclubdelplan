@@ -23,7 +23,7 @@ const Register = () => {
   // const [categories, setCategories] = React.useState(null)
   const navigation = useNavigation();
   const [error, setError] = React.useState('');
-  const [arrCategories, setCategories] = React.useState(categories)
+  const [arrCategories, setCategories] = React.useState(categories);
 
   // useEffect(()=> {
   //  async function getCategories() {
@@ -35,15 +35,12 @@ const Register = () => {
 
   useEffect(() => {
     let arr = categories.map((item, index) => {
-      item.isSelected = false
-      
-      return {...item}
-    })
-    setCategories(arr)
+      item.isSelected = false;
 
-    console.log("arr data => " , arr)
-  }, [])
-
+      return {...item};
+    });
+    setCategories(arr);
+  }, []);
 
   const onRegister = async () => {
     let validEMail = /([a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9_-]+)/gi.test(
@@ -55,8 +52,8 @@ const Register = () => {
       return;
     }
 
-    let password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(psw);
-    // let password = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$/.test(psw);
+    let password = /^^(?=.?[A-Z])(?=.?[a-z]).{8,}$/.test(psw);
+    // let password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(psw);
 
     if (!password) {
       setError(
@@ -72,43 +69,35 @@ const Register = () => {
       password: psw,
       preferences,
     };
-    console.log(preferences);
-    console.log(newUser);
+
     try {
       const response = await axios.post(
         'http://localhost:3001/api/users/register',
         newUser,
       );
-
       navigation.reset({
         index: 0,
         routes: [{name: 'MiddleScreen'}],
       });
-      console.log(response);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
   const handlePress = (item, ind) => {
-
-    let arr = arrCategories.map((item,index)=> {
-      if(ind == index){
-        if(item.isSelected) {
-          item.isSelected = false
+    let arr = arrCategories.map((item, index) => {
+      if (ind == index) {
+        if (item.isSelected) {
+          item.isSelected = false;
+        } else {
+          item.isSelected = true;
         }
-        else{
-          item.isSelected = true
-        }
-       
       }
-      return {...item}
-    })
-    
-    setCategories(arr)
-    preferences.push(item.categoryName)
-    
-  }
+      return {...item};
+    });
 
+    setCategories(arr);
+    preferences.push(item.categoryName);
+  };
 
   return (
     <ScrollView
@@ -160,22 +149,23 @@ const Register = () => {
 
         <Text style={styles.tittle}>Elije tus categorias preferidas</Text>
         <View>
-          {arrCategories.map((item,index) => {
-            return <TouchableOpacity
-            onPress={() => handlePress(item,index)}
-            style = {[
-              item.isSelected ? 
-              styles.pressable :
-              styles.pressableFalse
-            ]}
-            > 
-            <Text style = {{color : 'white'}}>{item.categoryName}</Text>
-            <Text style = {{color : "white"}}>{ item.isSelected ? 'Seleccionado' : 'Seleccionar'}</Text>
-            </TouchableOpacity>
+          {arrCategories.map((item, index) => {
+            return (
+              <TouchableOpacity
+                onPress={() => handlePress(item, index)}
+                style={[
+                  item.isSelected ? styles.pressable : styles.pressableFalse,
+                ]}>
+                <Text style={{color: 'white'}}>{item.categoryName}</Text>
+                <Text style={{color: 'white'}}>
+                  {item.isSelected ? 'Seleccionado' : 'Seleccionar'}
+                </Text>
+              </TouchableOpacity>
+            );
           })}
         </View>
         <TouchableOpacity onPress={onRegister} style={styles.buttonRegister}>
-          <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>
+          <Text style={{color: 'white', textAlign: 'center', fontSize: 18}}>
             Register
           </Text>
         </TouchableOpacity>
@@ -211,7 +201,7 @@ const styles = {
     marginVertical: 10,
     paddingVertical: 10,
     paddingHorizontal: 26,
-    color: '#111'
+    color: '#111',
   },
   buttonRegister: {
     width: 300,
@@ -223,37 +213,33 @@ const styles = {
     borderRadius: 6,
   },
   flatListAlign: {
-
     alignItems: 'center',
-
   },
   pressable: {
-
     alignItems: 'center',
     paddingHorizontal: 2,
     borderRadius: 15,
     borderStyle: 'solid',
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     paddingHorizontal: 10,
-    flexDirection: "row",
+    flexDirection: 'row',
     borderWidth: 1,
-    backgroundColor : "#208383",
+    backgroundColor: '#208383',
     margin: 8,
     elevation: 5,
     width: 250,
     height: 40,
   },
   pressableFalse: {
-
     alignItems: 'center',
     paddingHorizontal: 2,
     borderRadius: 15,
     borderStyle: 'solid',
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     paddingHorizontal: 10,
-    flexDirection: "row",
+    flexDirection: 'row',
     borderWidth: 1,
-    backgroundColor : "#1795CB",
+    backgroundColor: '#1795CB',
     margin: 8,
     elevation: 5,
     width: 250,

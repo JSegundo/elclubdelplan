@@ -47,7 +47,6 @@ const NewPlanScreen = () => {
   const [submited, setSubmited] = useState(false);
   const [token, setToken] = useState(null);
   const [Plan, setPlan] = useState(null);
-  console.log(privadoCheck);
 
   // state categories for dropdown input
   const [allCategories, setAllCategories] = useState(null);
@@ -56,12 +55,11 @@ const NewPlanScreen = () => {
     async function getToken() {
       try {
         const tokenAsync = await AsyncStorage.getItem('@Token');
-        console.log('TOKEN EN NEW', tokenAsync);
         let tokenParsed = JSON.parse(tokenAsync);
         setToken(tokenParsed);
         if (!tokenAsync) navigation.replace('MiddleScreen');
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
     getToken();
@@ -149,7 +147,6 @@ const NewPlanScreen = () => {
     e.preventDefault();
     if (token) {
       setSubmited(true);
-      console.log(' nuevo plan on submit', newPlan);
       dispatch(createEvent(newPlan)).then(res => setPlan(res.payload));
     }
   };
@@ -377,7 +374,6 @@ const NewPlanScreen = () => {
             setPrivadoCheck(() => {
               return privadoCheck === true ? false : true;
             });
-            // console.log(privadoCheck);
           }}
         />
         {!privadoCheck && (

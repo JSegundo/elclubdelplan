@@ -118,7 +118,7 @@ class EventsServices {
         .populate("eventOwner")
       return event
     } catch (err) {
-      console.log(err)
+      console.error(err)
       next(err)
     }
   }

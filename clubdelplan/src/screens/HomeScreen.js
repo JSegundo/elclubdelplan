@@ -16,7 +16,6 @@ import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {userData} from '../store/user/user';
 
-
 const token_storage = '@Token';
 
 const HomeScreen = () => {
@@ -25,7 +24,6 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const user = useSelector(state => state.user);
   const [token, setToken] = React.useState(null);
-
 
   useEffect(() => {
     async function getTokenAndUser() {
@@ -63,23 +61,13 @@ const HomeScreen = () => {
   //   ? eventos.filter(ev => ev.category === 'Concierto')
   //   : '';
 
-  const seleccEspecial = user.preferences !== []  && eventos[0] ? 
-    eventos.filter(ev => user.preferences.includes(ev.category) === true)
-    : '';
+  const seleccEspecial =
+    user?.preferences?.[0] && eventos[0]
+      ? eventos.filter(ev => user.preferences.includes(ev.category))
+      : '';
 
-  
   const renderItem = item => {
-    const {
-      name,
-      _id,
-      category,
-      startDate,
-      time,
-      image,
-      location,
-      isPrivate,
-      totalPrice,
-    } = item;
+    const {name, category, startDate, image, location} = item;
 
     return item.isPrivate === false ? (
       <View style={styles.itemWrapper}>
@@ -113,18 +101,18 @@ const HomeScreen = () => {
         <View style={styles.contentWrapper}>
           <Text style={styles.title}>El Club del Plan</Text>
 
-        {token && user.preferences?.[0] ?
-        <View>    
-        <Text style={styles.subtitle}>Nuestra selección para vos</Text>
-          <FlatList
-            contentContainerStyle={{paddingTop: 40}}
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-            data={seleccEspecial}
-            renderItem={({item}) => renderItem(item)}
-          /> 
-          </View>
-          : null }
+          {token && user.preferences?.[0] && seleccEspecial?.[0] ? (
+            <View>
+              <Text style={styles.subtitle}>Nuestra selección para vos</Text>
+              <FlatList
+                contentContainerStyle={{paddingTop: 40}}
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+                data={seleccEspecial}
+                renderItem={({item}) => renderItem(item)}
+              />
+            </View>
+          ) : null}
         </View>
         <View style={styles.contentWrapper}>
           <Text style={styles.subtitle}>Fiesta</Text>
@@ -168,9 +156,7 @@ const styles = StyleSheet.create({
   itemWrapper: {
     width: 203,
     height: 250,
-    // height: 320,
     marginHorizontal: 12,
-    // padding: 2,
     borderRadius: 20,
     backgroundColor: '#FFFFFF',
   },

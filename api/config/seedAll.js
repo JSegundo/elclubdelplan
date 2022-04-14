@@ -20,31 +20,18 @@ const seedDb = async () => {
       city: "Plataforma 5",
     })
 
-    //console.log("FAKE USER", fakeUser);
     for (const coment of coments) {
       coment.userName = fakeUser.name
     }
     const createdComents = await ComentModel.insertMany(coments)
-    console.log("COMENTARIOS->", createdComents)
 
     const createdCategories = await CategoryModel.insertMany(categories)
-    console.log(createdCategories)
     for (const event of events) {
-      // const category = createdCategories.find((category) => {
-      //   console.log(category)
-      //   return category.categoryName === event.category
-      // })
-      // event.category = category.categoryName
       event.eventOwner = fakeUser._id
-      // for (let i = 0; i < createdComents.length; i++) {
       event.coments = createdComents
-
-      // }
     }
 
     await EventModel.insertMany(events)
-
-    //console.log("EVENTOS", events);
 
     console.log("seed finalizado")
     process.exit(0) // --> p que finalice el proceso

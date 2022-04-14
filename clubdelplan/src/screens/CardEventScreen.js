@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   FlatList,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
@@ -48,7 +49,6 @@ const CardEvent = () => {
     if (!eventOwner._id) return;
     dispatch(getOwnerPastEvents(eventOwner._id));
   }, []);
-  console.log('event Onwer', eventOwner);
 
   const dateNow = new Date();
   const eventDate = new Date(endDate);
@@ -63,7 +63,6 @@ const CardEvent = () => {
                 style={styles.starImgStyle}
                 source={item <= vote ? fullStar : emptyStar}
               />
-              ~
             </View>
           );
         })}
@@ -74,7 +73,6 @@ const CardEvent = () => {
     async function getToken() {
       try {
         const tokenAsync = await AsyncStorage.getItem('@Token');
-        console.log('TOKEN EN NEW', tokenAsync);
         let tokenParsed = JSON.parse(tokenAsync);
         setToken(tokenParsed);
         if (!tokenAsync) navigation.replace('MiddleScreen');
@@ -82,7 +80,7 @@ const CardEvent = () => {
           navigation.navigate('Comentarios', {id: item._id});
         }
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
     getToken();
@@ -234,19 +232,27 @@ const CardEvent = () => {
                 renderItem={({item}) => renderComment(item)}
               />
             </View>
-          ) : (
+          ) : user._id && user._id !== item.eventOwner._id ? (
             <View>
               <TouchableOpacity
                 style={styles.confirmButtonWrap}
                 onPress={() => {
-                  dispatch(addGuest(item._id));
+                  dispatch(addGuest(item._id)).then(() =>
+                    Alert.alert(
+                      `${user.name}`,
+                      `Confirmaste tu asistencia a ${item.name}`,
+                    ),
+                  );
                 }}>
                 <Text style={styles.textButton}>ASISTIR</Text>
               </TouchableOpacity>
-
-              <ButtonShare item={item} />
             </View>
-          )}
+          ) : null}
+
+          {eventDate.getTime() > dateNow.getTime() ? (
+            <ButtonShare item={item} />
+          ) : null}
+
           {user?._id && eventDate.getTime() < dateNow.getTime() ? (
             <TouchableOpacity
               style={styles.buttonWrap}
@@ -385,6 +391,7 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: 'white',
+    fontWeight: 'bold',
   },
 
   // SECCIONES DE INFORMACIÓN

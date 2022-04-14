@@ -65,7 +65,6 @@ const OwnPlans = () => {
 
     const invitados = guests.length;
     const confirmados = willAttend.length;
-    console.log("OWN PLANS", ownPlans)
 
     return (
       <TouchableOpacity
@@ -217,7 +216,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 50,
     marginLeft: 159,
-  }
+  },
 });
 
 export default OwnPlans;
