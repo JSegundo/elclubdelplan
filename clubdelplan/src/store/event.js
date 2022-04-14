@@ -23,12 +23,10 @@ export const createEvent = createAsyncThunk(
   'CREATE_EVENT',
   async (newEvent, thunkAPI) => {
     const {user} = thunkAPI.getState();
-    const userid = user._id;
     const token = user.token;
     try {
       const res = await axios.post(
         `http://localhost:3001/api/events/add`,
-        // `http://localhost:3001/api/events/add/${userid}`,
         newEvent,
         {
           headers: {authorization: `Bearer ${token}`},

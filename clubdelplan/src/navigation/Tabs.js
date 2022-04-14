@@ -6,7 +6,7 @@ import {
   Pressable,
   Button,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -15,26 +15,24 @@ import CatalogScreen from '../screens/CatalogScreen';
 import NewPlanScreen from '../screens/NewPlanScreen';
 import middleScreen from '../screens/MiddleScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
-  const [token , setToken] = useState(null)
-  const [iconUserColor , setIconUser] = useState('#777')
+  const [token, setToken] = useState(null);
+  const [iconUserColor, setIconUser] = useState('#777');
   const user = useSelector(state => state.user);
-  
 
-  useEffect(()=> {
-    async function getToken () {
-      const tokenAsync = await AsyncStorage.getItem('@Token')
-      let tokenParsed = JSON.parse(tokenAsync)
-      setToken(tokenParsed)
-      if(tokenAsync) setIconUser('#900')
-
+  useEffect(() => {
+    async function getToken() {
+      const tokenAsync = await AsyncStorage.getItem('@Token');
+      let tokenParsed = JSON.parse(tokenAsync);
+      setToken(tokenParsed);
+      if (tokenAsync) setIconUser('#900');
     }
-    getToken()
-  }, [])
-  
+    getToken();
+  }, []);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -51,9 +49,13 @@ const Tabs = () => {
           height: 60,
           ...styles.shadow,
         },
+        tabBarOptions: {
+          activeTintColor: '#900',
+          inactiveTintColor: 'grey',
+        },
       }}>
       <Tab.Screen
-        name={`Hola, ${user.name}`}
+        name={user.name ? `Bienvenido, ${user.name}` : 'Bienvenido'}
         component={HomeScreen}
         options={{
           headerShown: true,
@@ -61,7 +63,7 @@ const Tabs = () => {
           headerShadowVisible: false,
           // headerTitleStyle: {color: '#900'},
           tabBarIcon: ({color}) => (
-            <Ionicons name="home-outline" size={22} color="#900" />
+            <Ionicons name="home-outline" size={22} color={color} />
           ),
         }}
       />
@@ -71,7 +73,9 @@ const Tabs = () => {
         options={{
           headerShown: true,
           headerShadowVisible: false,
-          tabBarIcon: () => <Ionicons name="search" size={24} color="#900" />,
+          tabBarIcon: ({color}) => (
+            <Ionicons name="search" size={24} color={color} />
+          ),
         }}
       />
       <Tab.Screen
@@ -80,7 +84,9 @@ const Tabs = () => {
         options={{
           headerShown: true,
           headerShadowVisible: false,
-          tabBarIcon: () => <Ionicons name="add" size={30} color="#900" />,
+          tabBarIcon: ({color}) => (
+            <Ionicons name="add" size={30} color={color} />
+          ),
         }}
       />
       <Tab.Screen
@@ -96,7 +102,7 @@ const Tabs = () => {
           //     color="#111"
           //   />),
           tabBarIcon: ({color}) => (
-            <Ionicons name='person-outline' size={22} color={iconUserColor} />
+            <Ionicons name="person-outline" size={22} color={color} />
           ),
         }}
       />

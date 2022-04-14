@@ -18,21 +18,19 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getOwnerPastEvents} from '../store/user/ownerPastEvents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-const fakeMapImage =
-  'https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=38.11779&lon=13.35869&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*';
+import {addGuest} from '../store/singleEvent';
 
 const CardEvent = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
-  const [token, setToken] = useState(null)
+  const [token, setToken] = useState(null);
   const dispatch = useDispatch();
   const ownerPastEvents = useSelector(store => store.ownerPastEvents);
   const user = useSelector(state => state.user);
 
   const {item} = route.params;
   const {
-    time,
     image,
     category,
     name,
@@ -65,6 +63,7 @@ const CardEvent = () => {
                 style={styles.starImgStyle}
                 source={item <= vote ? fullStar : emptyStar}
               />
+              ~
             </View>
           );
         })}
@@ -74,34 +73,22 @@ const CardEvent = () => {
   const verifyUser = () => {
     async function getToken() {
       try {
-        const tokenAsync = await AsyncStorage.getItem('@Token')
-        console.log('TOKEN EN NEW', tokenAsync)
-        let tokenParsed = JSON.parse(tokenAsync)
-        setToken(tokenParsed)
-        if(!tokenAsync) navigation.replace('MiddleScreen')
-        else{
-          navigation.navigate('Comentarios', {id: item._id})
+        const tokenAsync = await AsyncStorage.getItem('@Token');
+        console.log('TOKEN EN NEW', tokenAsync);
+        let tokenParsed = JSON.parse(tokenAsync);
+        setToken(tokenParsed);
+        if (!tokenAsync) navigation.replace('MiddleScreen');
+        else {
+          navigation.navigate('Comentarios', {id: item._id});
         }
-        
-      }
-      catch (err) {
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
     }
-    getToken()
-  }
+    getToken();
+  };
   const renderItem = item => {
-    const {
-      name,
-      _id,
-      category,
-      startDate,
-      time,
-      image,
-      location,
-      isPrivate,
-      totalPrice,
-    } = item;
+    const {name, category, startDate, image, location} = item;
 
     return (
       <View style={styles.itemWrapper}>
@@ -191,7 +178,7 @@ const CardEvent = () => {
                   Limite de confirmación: {paymentLimitDate?.split('T')[0]}
                 </Text>
               ) : null}
-              <Text style={styles.text}>Hora de inicio: {time} hs</Text>
+              {/* <Text style={styles.text}>Hora de inicio: {time} hs</Text> */}
             </View>
           </View>
           {/* SECCION DE FECHAS  */}
@@ -227,12 +214,11 @@ const CardEvent = () => {
             <View style={styles.sectionInfoWrapper}>
               <Text>Ubicación</Text>
               <Text style={styles.text}>{location}</Text>
-              <Image style={styles.mapImage} source={{uri: fakeMapImage}} />
             </View>
           </View>
 
           <Text style={styles.text}>
-            Precio: ARS ${pricePerPerson ? pricePerPerson : 0}
+            Precio por persona: ARS ${pricePerPerson ? pricePerPerson : 0}
           </Text>
 
           {/* CARROUSEL */}
@@ -249,7 +235,17 @@ const CardEvent = () => {
               />
             </View>
           ) : (
-            <ButtonShare item={item} />
+            <View>
+              <TouchableOpacity
+                style={styles.confirmButtonWrap}
+                onPress={() => {
+                  dispatch(addGuest(item._id));
+                }}>
+                <Text style={styles.textButton}>ASISTIR</Text>
+              </TouchableOpacity>
+
+              <ButtonShare item={item} />
+            </View>
           )}
           {user?._id && eventDate.getTime() < dateNow.getTime() ? (
             <TouchableOpacity
@@ -298,6 +294,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
+  },
+  confirmButtonWrap: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 15,
+    marginBottom: 20,
+    marginLeft: 15,
+    alignItems: 'center',
+    width: 195,
+    height: 50,
+    backgroundColor: '#B90303',
+    borderRadius: 8,
   },
   text: {
     color: 'black',
@@ -374,6 +382,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     marginTop: 30,
+  },
+  textButton: {
+    color: 'white',
   },
 
   // SECCIONES DE INFORMACIÓN

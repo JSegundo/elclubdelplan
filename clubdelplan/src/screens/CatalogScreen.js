@@ -11,18 +11,96 @@ import {
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getAllEvents} from '../store/event';
+import {getAllCategories} from '../store/categories';
 import {useNavigation} from '@react-navigation/native';
 import {DropdownCategories} from '../components/DropdownCategories';
-import axios from 'axios';
 
 const CatalogScreen = () => {
-  const eventos = useSelector(state => state.event);
-  let dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  //Inputs
+  const [categorySelected, setCategorySelected] = useState('');
+  const [fechaSelected, setFechaSelected] = useState('');
+  const [precioSelected, setPrecioSelected] = useState('');
+
+  //Stores
+  const eventos = useSelector(state => state.event);
+  const allCategories = useSelector(state => state.categories);
   useEffect(() => {
     dispatch(getAllEvents());
+    dispatch(getAllCategories());
   }, []);
+
+  // Dropdown Arrays Filters
+  const dataCategories = allCategories?.map(cat => ({
+    label: cat.categoryName,
+    value: cat.categoryName,
+  }));
+  const dataFechas = [
+    {label: 'Hoy', value: 'hoy'},
+    {label: 'Mañana', value: 'mañana'},
+    {label: 'Esta semana', value: 'esta semana'},
+    {label: 'Este mes', value: 'este mes'},
+    {label: 'Más adelante', value: 'mas adelante'},
+  ];
+  const dataPrices = [
+    {label: 'Gratis', value: 'gratis'},
+    {label: 'Pago', value: 'pago'},
+  ];
+
+  //  Search
+  const [results, setResults] = useState([]);
+  useEffect(() => {}, [results]);
+
+  const handleSearch = e => {
+    const filterEvents = eventos
+      ? eventos.filter(ev => ev.name.toLowerCase().includes(e.toLowerCase()))
+      : '';
+    setResults(filterEvents);
+  };
+
+  const onSubmit = () => {
+    const filterCategories = eventos
+      ? eventos.filter(ev => ev.category === categorySelected)
+      : eventos;
+    const filterPrice = filterCategories
+      ? filterCategories.filter(ev =>
+          precioSelected === 'pago'
+            ? ev.pricePerPerson > 0
+            : ev.pricePerPerson <= 0,
+        )
+      : filterCategories;
+    const filterEvents = filterPrice
+      ? filterPrice.filter(ev => {
+          const eventDate = new Date(ev.startDate);
+          eventDate.setHours(0, 0, 0, 0);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          switch (fechaSelected) {
+            case 'hoy':
+              return eventDate.getTime() == today.getTime();
+            case 'mañana':
+              const tomorrow = new Date(today);
+              tomorrow.setHours(0, 0, 0, 0);
+              tomorrow.setDate(tomorrow.getDate() + 1);
+              return eventDate.getTime() == tomorrow.getTime();
+            case 'esta semana':
+              const week = new Date(today);
+              week.setDate(week.getDate() + 7);
+              return eventDate >= today && eventDate <= week;
+            case 'este mes':
+              const month = new Date(today);
+              month.setHours(0, 0, 0, 0);
+              month.setDate(month.getDate() + 31);
+              return eventDate >= today && eventDate <= month;
+            case 'mas adelante':
+              return eventDate >= month;
+          }
+        })
+      : filterPrice;
+    setResults(filterEvents);
+  };
 
   const renderItem = item => {
     const {name, category, image, location, pricePerPerson} = item;
@@ -52,69 +130,24 @@ const CatalogScreen = () => {
     ) : null;
   };
 
-  // busqueda multifiltro
-  const [showBusquedaAvanzada, setShowBusquedaAvanzada] = useState(false);
-
-  // GET list of categories available
-  const [allCategories, setAllCategories] = useState(null);
-  useEffect(() => {
-    async function getAllCategories() {
-      try {
-        const responseCat = await axios.get(
-          'http://localhost:3001/api/categories',
-        );
-        setAllCategories(responseCat.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    getAllCategories();
-  }, []);
-  const dataCategories = allCategories?.map(cat => ({
-    label: cat.categoryName,
-    value: cat.categoryName,
-  }));
-  const [categorySelected, setCategorySelected] = useState('');
-  const [fechaSelected, setFechaSelected] = useState('');
-  const [precioSelected, setPrecioSelected] = useState('');
-  const dataFechas = [
-    {label: 'Hoy', value: 'hoy'},
-    {label: 'Mañana', value: 'mañana'},
-    {label: 'Esta semana', value: 'esta semana'},
-    {label: 'Este mes', value: 'este mes'},
-  ];
-  const dataPrices = [
-    {label: 'Gratis', value: 'gratis'},
-    {label: 'Pago', value: 'pago'},
-    // {label: 'Esta semana', value: 'esta semana'},
-    // {label: 'Este mes', value: 'este mes'},
-  ];
-
-  // busqueda input text
-  const [results, setResults] = useState([]);
-  const handleSearch = e => {
-    const filterEvents = eventos
-      ? eventos.filter(
-          ev =>
-            ev.category.toLowerCase().includes(e.toLowerCase()) ||
-            ev.name.toLowerCase().includes(e.toLowerCase()),
-        )
-      : '';
-    setResults(filterEvents);
-  };
-
   return (
     <View style={styles.pageWrapper}>
       <View style={styles.searchSection}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Busca por categoría o título"
+          placeholder="Nombre del evento"
           placeholderTextColor={'black'}
           onChangeText={handleSearch}
         />
+        <TouchableOpacity
+          style={styles.buttonSearch}
+          title="Search"
+          onPress={onSubmit}>
+          <Text style={{color: '#111'}}>Filtrar</Text>
+        </TouchableOpacity>
       </View>
 
-      <View style={{paddingHorizontal: 4}}>
+      <View style={styles.viewWrapper}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <DropdownCategories
             placeholder="Categorias"
@@ -125,19 +158,19 @@ const CatalogScreen = () => {
             }}
           />
           <DropdownCategories
-            placeholder="Fecha"
-            data={dataFechas}
-            value={fechaSelected}
-            onChange={item => {
-              setFechaSelected(item.value);
-            }}
-          />
-          <DropdownCategories
             placeholder="Precio"
             data={dataPrices}
             value={precioSelected}
             onChange={item => {
               setPrecioSelected(item.value);
+            }}
+          />
+          <DropdownCategories
+            placeholder="Fecha"
+            data={dataFechas}
+            value={fechaSelected}
+            onChange={item => {
+              setFechaSelected(item.value);
             }}
           />
         </ScrollView>
@@ -147,19 +180,34 @@ const CatalogScreen = () => {
         {results[0] ? (
           <Text style={{padding: 5}}>{results.length} Resultados</Text>
         ) : null}
-
-        <FlatList
-          data={results[0] ? results : eventos}
-          renderItem={({item}) => renderItem(item)}
-        />
+        <ScrollView>
+          <FlatList
+            data={results[0] ? results : eventos}
+            renderItem={({item}) => renderItem(item)}
+          />
+        </ScrollView>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  viewWrapper: {
+    paddingHorizontal: 4,
+    borderWidth: 2,
+    borderRadius: 12,
+    borderColor: 'transparent',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: 320,
+    // height: 100,
+    marginTop: 5,
+    // marginBottom: 5,
+  },
   pageWrapper: {
     marginBottom: 166,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   itemWrapper: {
     backgroundColor: 'white',
@@ -177,7 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 100,
+    marginBottom: 120,
   },
   infoWrapper: {
     padding: 5,
@@ -214,7 +262,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     color: '#111',
     borderRadius: 3,
-    width: 230,
+    width: 200,
+  },
+  buttonSearch: {
+    borderWidth: 2,
+    borderColor: '#900',
+    marginLeft: 20,
+    borderRadius: 6,
+    marginTop: 16,
+    // paddingHorizontal: 8,
+    // paddingVertical: 5,
+    padding: 4,
+    color: '#111',
   },
 
   // filters

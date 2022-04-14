@@ -9,18 +9,18 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import LogInScreen from './LogInScreen';
-import axios from 'axios';
 import {Button} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {launchImageLibrary} from 'react-native-image-picker';
-import { Card } from 'react-native-elements';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {Card} from 'react-native-elements';
 import categories from '../utils/categories';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {userLogout} from '../store/user/user';
 
 const user_storage = '@userData';
 
 const UserProfileScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const [userInfo, setUserInfo] = useState(null);
@@ -29,7 +29,6 @@ const UserProfileScreen = () => {
     'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1';
   const [image, setImage] = useState(imgDefault);
   const user = useSelector(state => state.user);
-
 
   useEffect(() => {
     console.log('aca');
@@ -40,18 +39,17 @@ const UserProfileScreen = () => {
       let infoUser = JSON.parse(responseUser);
 
       setUserInfo(infoUser);
-
     }
     getUser();
-
-
-
   }, []);
 
   const logout = async () => {
     try {
       await AsyncStorage.removeItem('@Token');
       await AsyncStorage.removeItem('@userData');
+      await GoogleSignin.signOut();
+      dispatch(userLogout());
+      console.log('Cierre de session de Google');
       // await AsyncStorage.removeItem('@ImageUser');
       setToken(null);
       navigation.replace('MiddleApp');

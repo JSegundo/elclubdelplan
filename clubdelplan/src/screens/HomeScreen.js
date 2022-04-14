@@ -41,7 +41,6 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (!token) return;
-    console.log('SE RENDERIZO APP');
     dispatch(userData(token));
   }, [token]);
 
@@ -170,7 +169,7 @@ const styles = StyleSheet.create({
     width: 203,
     height: 250,
     // height: 320,
-    marginHorizontal: 10,
+    marginHorizontal: 12,
     // padding: 2,
     borderRadius: 20,
     backgroundColor: '#FFFFFF',

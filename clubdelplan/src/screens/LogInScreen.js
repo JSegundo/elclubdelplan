@@ -3,21 +3,16 @@ import {
   Text,
   View,
   TextInput,
-  Button,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import UserProfileScreen from './UserProfileScreen';
-import { useNavigation } from '@react-navigation/native';
-
+import {useNavigation} from '@react-navigation/native';
 const token_storage = '@Token';
 const user_storage = '@userData';
+import {ScrollView} from 'react-native-gesture-handler';
+import RedSocialButton from '../components/RedSocialButton';
 
-import { userData } from '../store/user';
-import { useDispatch } from 'react-redux';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const Log = () => {
   const [email, onChangeText] = React.useState(null);
@@ -92,7 +87,7 @@ const Log = () => {
           onChangeText={onChangeNumber}
           value={psw}
           secureTextEntry={true}
-          placeholder="password"
+          placeholder="contraseña"
           placeholderTextColor="#808080"
         />
 
@@ -107,11 +102,17 @@ const Log = () => {
             Registrarse
           </Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.buttonLogin} onPress={onSubmit}>
           <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>
             Iniciar sesion
           </Text>
         </TouchableOpacity>
+
+        <View style={styles.buttonGoogle}>
+          <RedSocialButton />
+        </View> 
+        
       </View>
     </ScrollView>
   );
@@ -184,5 +185,8 @@ const styles = {
     borderRadius: 6,
     marginBottom: 80,
   },
+  buttonGoogle:{
+    marginBottom: 100,
+  }
 };
 export default Log;

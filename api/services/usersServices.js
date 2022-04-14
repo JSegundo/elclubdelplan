@@ -7,7 +7,6 @@ const { verifyHash } = require("../config/passwordHash")
 
 class UsersService {
   static async serviceGetAllUsers(req) {
-    console.log(req.user)
     try {
       const allUsers = await User.find({ _id: { $ne: req.user.id } })
       return allUsers
@@ -19,7 +18,6 @@ class UsersService {
   static async serviceResgisterUser(req) {
     try {
       const newUser = await User.create(req.body)
-      console.log(newUser)
       return newUser
     } catch (err) {
       console.error(err)
@@ -55,7 +53,6 @@ class UsersService {
   }
 
   static async serviceGetMe(req) {
-    console.log("REQ.USER: ", req.user.id)
     try {
       const user = await User.findById(req.user.id)
       // console.log(user)
@@ -64,6 +61,8 @@ class UsersService {
       console.error(err)
     }
   }
+
+  
 
   static async serviceEditUser(req, next) {
     try {
@@ -82,6 +81,18 @@ class UsersService {
       return user
     } catch (err) {
       next(err)
+    }
+  }
+
+  static async serviceGetUserGoogle(req) {
+    console.log("REQ SERVICE_GET_USER_GOOGLE",req.body);
+    const { email } = req.body
+    try {
+      let user = await User.findOne({ email })
+      // console.log(user)
+      return user
+    } catch (err) {
+      console.error(err)
     }
   }
 }

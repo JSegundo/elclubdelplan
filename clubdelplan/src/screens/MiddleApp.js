@@ -1,13 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import 'react-native-gesture-handler';
-import {NavigationContainer, StackActions} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StyleSheet} from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Tabs from '../navigation/Tabs';
 import Register from '../screens/RegisterScreen';
-// import LogInScreen from './src/screens/LogInScreen';
-// import UserProfileScreen from './src/screens/UserProfileScreen.js';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 import OwnPlans from '../screens/planesUserScreens/OwnPlans';
 import UserWillAttendPlans from '../screens/planesUserScreens/UserWillAttendPlans';
 import UserHistoryPlans from '../screens/planesUserScreens/UserHistoryPlans';
@@ -21,6 +16,7 @@ import NewPlanScreen from './NewPlanScreen';
 // Configuracion de Store redux
 import HomeScreen from '../screens/HomeScreen';
 import MiddleScreen from './MiddleScreen';
+import CreatePassRedSocial from './CreatePassRedSocial';
 //--------------------------------------
 
 const Stack = createNativeStackNavigator();
@@ -28,8 +24,9 @@ const Stack = createNativeStackNavigator();
 function MiddleApp() {
 
     return (
+
         <Stack.Navigator>
-          <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen
                 name="Home"
                 component={HomeScreen}
@@ -78,6 +75,8 @@ function MiddleApp() {
             />
             <Stack.Screen name="Comentarios" component={ComentScreen} />
             <Stack.Screen name="Plan" component={CardEventScreen} />
+            <Stack.Screen name="Crea tu contraseña" component={CreatePassRedSocial} />
+
         </Stack.Navigator>
 
     );

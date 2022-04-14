@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {View} from 'react-native';
-import Register from './RegisterScreen';
 import LogInScreen from './LogInScreen';
 import UserProfileScreen from './UserProfileScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,7 +15,6 @@ const MiddleScreen = () => {
       try {
         let responseToken = await AsyncStorage.getItem(token_storage);
         let responseUser = await AsyncStorage.getItem(user_storage);
-        console.log(responseToken);
         setToken(JSON.parse(responseToken));
         setUser(JSON.parse(responseUser));
       } catch ({err}) {
