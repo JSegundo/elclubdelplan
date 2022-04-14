@@ -31,7 +31,6 @@ const CardEvent = () => {
 
   const {item} = route.params;
   const {
-    time,
     image,
     category,
     name,
@@ -64,6 +63,7 @@ const CardEvent = () => {
                 style={styles.starImgStyle}
                 source={item <= vote ? fullStar : emptyStar}
               />
+              ~
             </View>
           );
         })}
@@ -178,7 +178,7 @@ const CardEvent = () => {
                   Limite de confirmación: {paymentLimitDate?.split('T')[0]}
                 </Text>
               ) : null}
-              <Text style={styles.text}>Hora de inicio: {time} hs</Text>
+              {/* <Text style={styles.text}>Hora de inicio: {time} hs</Text> */}
             </View>
           </View>
           {/* SECCION DE FECHAS  */}
@@ -218,7 +218,7 @@ const CardEvent = () => {
           </View>
 
           <Text style={styles.text}>
-            Precio: ARS ${pricePerPerson ? pricePerPerson : 0}
+            Precio por persona: ARS ${pricePerPerson ? pricePerPerson : 0}
           </Text>
 
           {/* CARROUSEL */}
@@ -382,6 +382,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     marginTop: 30,
+  },
+  textButton: {
+    color: 'white',
   },
 
   // SECCIONES DE INFORMACIÓN

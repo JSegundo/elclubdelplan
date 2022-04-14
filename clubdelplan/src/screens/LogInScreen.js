@@ -87,7 +87,7 @@ const Log = () => {
           onChangeText={onChangeNumber}
           value={psw}
           secureTextEntry={true}
-          placeholder="password"
+          placeholder="contraseña"
           placeholderTextColor="#808080"
         />
 
@@ -109,7 +109,7 @@ const Log = () => {
           </Text>
         </TouchableOpacity>
 
-        <View style={styles.marginB}>
+        <View style={styles.buttonGoogle}>
           <RedSocialButton />
         </View> 
         
@@ -185,7 +185,7 @@ const styles = {
     borderRadius: 6,
     marginBottom: 80,
   },
-  marginB:{
+  buttonGoogle:{
     marginBottom: 100,
   }
 };

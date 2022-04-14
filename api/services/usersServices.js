@@ -62,6 +62,8 @@ class UsersService {
     }
   }
 
+  
+
   static async serviceEditUser(req, next) {
     try {
       const { id } = req.params
@@ -78,6 +80,18 @@ class UsersService {
       return user
     } catch (err) {
       next(err)
+    }
+  }
+
+  static async serviceGetUserGoogle(req) {
+    console.log("REQ SERVICE_GET_USER_GOOGLE",req.body);
+    const { email } = req.body
+    try {
+      let user = await User.findOne({ email })
+      // console.log(user)
+      return user
+    } catch (err) {
+      console.error(err)
     }
   }
 }
