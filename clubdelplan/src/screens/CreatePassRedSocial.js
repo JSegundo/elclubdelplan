@@ -66,6 +66,7 @@ const CreatePassRedSocial = ({route}) => {
         city: '',
         password: psw,
         preferences: [],
+        // photo,
       };
 
       try {
