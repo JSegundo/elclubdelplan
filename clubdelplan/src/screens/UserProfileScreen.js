@@ -92,12 +92,20 @@ const UserProfileScreen = () => {
       contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
       {userInfo?._id ? (
         <>
+        {user.photo ? (
           <Image
+          source={{
+            uri: user.photo,
+          }}
+          style={styles.imagen}
+        />
+        ) : ( <Image
             source={{
               uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FUser-Profile-PNG-High-Quality-Image.png&f=1&nofb=1',
             }}
             style={styles.imagen}
-          />
+          />)}
+         
           <View>
             <Button title={'Seleccionar foto de perfil'} />
           </View>
