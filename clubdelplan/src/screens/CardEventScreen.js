@@ -18,7 +18,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getOwnerPastEvents} from '../store/user/ownerPastEvents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {addGuest} from '../../store/singleEvent';
+import {addGuest} from '../store/singleEvent';
 
 
 const CardEvent = () => {
@@ -64,7 +64,7 @@ const CardEvent = () => {
               <Image
                 style={styles.starImgStyle}
                 source={item <= vote ? fullStar : emptyStar}
-              />
+              />~
             </View>
           );
         })}
@@ -225,7 +225,7 @@ const CardEvent = () => {
           </View>
 
           <Text style={styles.text}>
-            Precio: ARS ${pricePerPerson ? pricePerPerson : 0}
+            Precio por persona: ARS ${pricePerPerson ? pricePerPerson : 0}
           </Text>
 
           {/* CARROUSEL */}
@@ -251,7 +251,7 @@ const CardEvent = () => {
                 <Text style={styles.textButton}>ASISTIR</Text> 
               </TouchableOpacity>
 
-              <ButtonShare item={item} />
+              <ButtonShare item={item} /> 
             </View>
           )}
           {user?._id && eventDate.getTime() < dateNow.getTime() ? (
@@ -389,6 +389,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     marginTop: 30,
+  },
+  textButton : {
+    color: "white"
   },
 
   // SECCIONES DE INFORMACIÓN
