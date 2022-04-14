@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
+import {
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useRoute} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
@@ -8,6 +15,7 @@ import {getEvent} from '../store/singleEvent';
 import emptyStar from '../assets/star_corner.png';
 import fullStar from '../assets/star_filled.png';
 import {useNavigation} from '@react-navigation/native';
+
 const token_storage = '@Token';
 const user_storage = '@userData';
 
@@ -23,7 +31,6 @@ const Coment = () => {
   const navigation = useNavigation();
 
   const {id} = route.params;
-  console.log('ID->', id);
   useEffect(() => {
     dispatch(getEvent(id));
     async function getTokenAndUser() {
@@ -48,7 +55,7 @@ const Coment = () => {
           vote: defaultRating,
         }),
       ).then(() => {
-        alert('Gracias por dejar tu reseña!');
+        Alert.alert(`${user.name}`, 'Gracias por dejar tu reseña!');
         navigation.navigate('Perfil');
       });
     } catch (e) {

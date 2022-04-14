@@ -29,7 +29,6 @@ class UsersService {
     try {
       if (email && password) {
         let user = await User.findOne({ email })
-        console.log(user)
         if (!user) {
           return { msg: "No such user found", user }
         }
@@ -37,7 +36,6 @@ class UsersService {
         let verifyUser = await verifyHash(password, user.password, user.salt)
 
         if (!verifyUser) {
-          console.log("LAS CONTRASEÑAS NO COINCIDEN")
           return { msg: "Password is incorrect" }
         } else {
           let payload = { id: user._id }
@@ -55,20 +53,16 @@ class UsersService {
   static async serviceGetMe(req) {
     try {
       const user = await User.findById(req.user.id)
-      // console.log(user)
       return user
     } catch (err) {
       console.error(err)
     }
   }
 
-  
-
   static async serviceEditUser(req, next) {
     try {
       const { id } = req.params
       const user = await User.findByIdAndUpdate(id, req.body, { new: true })
-      console.log(user)
       return user
     } catch (err) {
       next(err)
@@ -85,11 +79,9 @@ class UsersService {
   }
 
   static async serviceGetUserGoogle(req) {
-    console.log("REQ SERVICE_GET_USER_GOOGLE",req.body);
     const { email } = req.body
     try {
       let user = await User.findOne({ email })
-      // console.log(user)
       return user
     } catch (err) {
       console.error(err)

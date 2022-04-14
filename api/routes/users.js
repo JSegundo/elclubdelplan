@@ -3,9 +3,6 @@ const express = require("express")
 const router = express.Router()
 const UsersController = require("../controllers/usersController")
 
-//RUTA PARA FILTRAR USUARIOS (INVITADOS)
-// router.get("/:username", UsersController.getAllUsers)
-
 //RUTA PARA TRAER TODOS LOS USUARIOS
 router.get("/", checkJWT, UsersController.getAllUsers)
 //RUTA PARA REGISTRAR UN USUARIO

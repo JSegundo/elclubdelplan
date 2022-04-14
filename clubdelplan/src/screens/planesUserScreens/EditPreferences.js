@@ -11,26 +11,23 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import categories from '../../utils/categories';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 const token_storage = '@Token';
 const EditPref = () => {
   const navigation = useNavigation();
   const [arrCategories, setCategories] = React.useState(categories);
   const user = useSelector(state => state.user);
-  const [preferences, setPreferences] = React.useState(user.preferences)
-  const [backColor, setBackColor] = React.useState("#208383")
+  const [preferences, setPreferences] = React.useState(user.preferences);
+  const [backColor, setBackColor] = React.useState('#208383');
   const [token, setToken] = React.useState(null);
-  let arrPreferences = [...preferences]
-
-
+  let arrPreferences = [...preferences];
 
   async function getTokenAndUser() {
     try {
       let responseToken = await AsyncStorage.getItem(token_storage);
       setToken(JSON.parse(responseToken));
-      
     } catch ({err}) {
       console.error({err});
     }
@@ -39,8 +36,6 @@ const EditPref = () => {
 
   useEffect(() => {
     let arr = categories.map((item, index) => {
-      console.log('Dentro del useEffect ==> ', user.preferences);
-
       if (user.preferences.includes(item.categoryName)) {
         item.isSelected = true;
       } else {
@@ -48,7 +43,6 @@ const EditPref = () => {
       }
       return {...item};
     });
-    console.log(arr);
     setCategories(arr);
   }, []);
 
@@ -79,17 +73,20 @@ const EditPref = () => {
       'Desea confirmar las preferencias?',
       'Confirmar preferencia',
       [
-
-        { text: 'No', onPress: () => console.log('No button clicked'), style: 'cancel' },
-        { text: 'Si', onPress: () => handleEdit() },
+        {
+          text: 'No',
+          onPress: () => console.log('No button clicked'),
+          style: 'cancel',
+        },
+        {text: 'Si', onPress: () => handleEdit()},
       ],
       {
-        cancelable: true
-      }
+        cancelable: true,
+      },
     );
-  }
+  };
 
-  handleEdit = () => {  
+  handleEdit = () => {
     const newPreferences = {
       preferences,
     };
@@ -99,14 +96,12 @@ const EditPref = () => {
           `http://localhost:3001/api/users/${user._id}`,
           newPreferences,
           {
-            headers: { authorization: `Bearer ${token}` 
-          }
-        }
-        )
-        navigation.replace('MiddleApp') 
-      }
-      catch (err) {
-        console.log(err);
+            headers: {authorization: `Bearer ${token}`},
+          },
+        );
+        navigation.replace('MiddleApp');
+      } catch (err) {
+        console.error(err);
       }
     }
     sendPreferences();
@@ -140,8 +135,10 @@ const EditPref = () => {
           );
         })}
       </View>
-      <TouchableOpacity onPress={() => handleAlert()} style={styles.buttonRegister}>
-        <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>
+      <TouchableOpacity
+        onPress={() => handleAlert()}
+        style={styles.buttonRegister}>
+        <Text style={{color: 'white', textAlign: 'center', fontSize: 18}}>
           Confirmar Preferencias
         </Text>
       </TouchableOpacity>
@@ -150,13 +147,6 @@ const EditPref = () => {
 };
 
 const styles = {
-  view: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // textAlign: 'center',
-    // width: '90%',
-  },
   buttonRegister: {
     width: 300,
     backgroundColor: '#208383',

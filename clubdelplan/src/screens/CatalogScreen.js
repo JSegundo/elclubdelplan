@@ -179,7 +179,9 @@ const CatalogScreen = () => {
       <View style={styles.contentWrapper}>
         {results[0] ? (
           <Text style={{padding: 5}}>{results.length} Resultados</Text>
-        ) : null}
+        ) : (
+          <Text style={{padding: 4}}>Eventos sugeridos</Text>
+        )}
         <ScrollView>
           <FlatList
             data={results[0] ? results : eventos}
@@ -225,7 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 120,
+    marginBottom: 150,
   },
   infoWrapper: {
     padding: 5,

@@ -1,20 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StyleSheet} from 'react-native';
 
-// Configuracion de Store redux
 import {store} from './src/store/index.js';
 import {Provider} from 'react-redux';
-import HomeScreen from './src/screens/HomeScreen.js';
 import MiddleApp from './src/screens/MiddleApp.js';
-import Tabs from './src/navigation/Tabs';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {userData} from './src/store/user/user';
 import {LogBox} from 'react-native';
-//--------------------------------------
 
 const user_storage = '@userData';
 const token_storage = '@Token';
@@ -54,15 +49,12 @@ function App() {
 
   useEffect(() => {
     if (!token) return;
-    // if (!user?._id) return;
-    console.log('SE RENDERIZO APP');
     dispatch(userData(token));
   }, [user, token]);
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen> */}
         <Stack.Screen
           name="MiddleApp"
           options={{headerShown: false}}

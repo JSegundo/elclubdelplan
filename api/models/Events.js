@@ -11,9 +11,6 @@ const EventSchema = new Schema({
     type: String,
     default: "//add random img",
   },
-  // date: {
-  //   type: Array,
-  // },
   startDate: {
     type: Date,
   },
@@ -36,11 +33,11 @@ const EventSchema = new Schema({
   pricePerPerson: {
     type: Number,
   },
-  category: { type: String }, 
+  category: { type: String },
   guests: [{ type: Schema.ObjectId, ref: "User" }], //invitados con el input q hace Segu
   willAttend: [{ type: Schema.ObjectId, ref: "User" }], //ya funciona sin hardcodeo
-  eventOwner: { type: Schema.ObjectId, ref: "User" }, 
-  coments: [{ type: Schema.ObjectId, ref: "Coments" }]
+  eventOwner: { type: Schema.ObjectId, ref: "User" },
+  coments: [{ type: Schema.ObjectId, ref: "Coments" }],
 })
 
 const EventModel = model("Event", EventSchema)
