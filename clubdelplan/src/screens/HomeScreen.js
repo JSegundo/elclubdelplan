@@ -16,14 +16,16 @@ import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {userData} from '../store/user/user';
 
+
 const token_storage = '@Token';
 
 const HomeScreen = () => {
   const eventos = useSelector(state => state.event);
   let dispatch = useDispatch();
   const navigation = useNavigation();
-
+  const user = useSelector(state => state.user);
   const [token, setToken] = React.useState(null);
+
 
   useEffect(() => {
     async function getTokenAndUser() {
@@ -57,10 +59,15 @@ const HomeScreen = () => {
   const eventosBares = eventos[0]
     ? eventos.filter(ev => ev.category === 'Bar')
     : '';
-  const seleccionEspecial = eventos[0]
-    ? eventos.filter(ev => ev.category === 'Concierto')
+  // const seleccionEspecial = eventos[0]
+  //   ? eventos.filter(ev => ev.category === 'Concierto')
+  //   : '';
+
+  const seleccEspecial = user.preferences !== []  && eventos[0] ? 
+    eventos.filter(ev => user.preferences.includes(ev.category) === true)
     : '';
 
+  
   const renderItem = item => {
     const {
       name,
@@ -106,14 +113,18 @@ const HomeScreen = () => {
         <View style={styles.contentWrapper}>
           <Text style={styles.title}>El Club del Plan</Text>
 
-          <Text style={styles.subtitle}>Nuestra selección para vos</Text>
+        {token && user.preferences?.[0] ?
+        <View>    
+        <Text style={styles.subtitle}>Nuestra selección para vos</Text>
           <FlatList
             contentContainerStyle={{paddingTop: 40}}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={seleccionEspecial}
+            data={seleccEspecial}
             renderItem={({item}) => renderItem(item)}
-          />
+          /> 
+          </View>
+          : null }
         </View>
         <View style={styles.contentWrapper}>
           <Text style={styles.subtitle}>Fiesta</Text>
