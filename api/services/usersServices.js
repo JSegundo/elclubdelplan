@@ -69,6 +69,7 @@ class UsersService {
     try {
       const { id } = req.params
       const user = await User.findByIdAndUpdate(id, req.body, { new: true })
+      console.log(user)
       return user
     } catch (err) {
       next(err)

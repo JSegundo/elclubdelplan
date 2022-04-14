@@ -15,18 +15,28 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-
+const token_storage = '@Token';
 const EditPref = () => {
   const navigation = useNavigation();
   const [arrCategories, setCategories] = React.useState(categories)
   const user = useSelector(state => state.user);
   const [preferences, setPreferences] = React.useState(user.preferences)
   const [backColor, setBackColor] = React.useState("#208383")
+  const [token, setToken] = React.useState(null);
   let arrPreferences = [...preferences]
 
 
 
-
+  async function getTokenAndUser() {
+    try {
+      let responseToken = await AsyncStorage.getItem(token_storage);
+      setToken(JSON.parse(responseToken));
+      
+    } catch ({err}) {
+      console.error({err});
+    }
+  }
+  getTokenAndUser();
 
   useEffect(() => {
     let arr = categories.map((item, index) => {
@@ -72,7 +82,22 @@ const EditPref = () => {
     setPreferences(arrPreferences)
   };
 
-  handleEdit = () => {
+  handleAlert = () => {
+    Alert.alert(
+      'Desea confirmar las preferencias?',
+      'Confirmar preferencia',
+      [
+
+        { text: 'No', onPress: () => console.log('No button clicked'), style: 'cancel' },
+        { text: 'Si', onPress: () => handleEdit() },
+      ],
+      {
+        cancelable: true
+      }
+    );
+  }
+
+  handleEdit = () => {  
     const newPreferences = {
       preferences
     }
@@ -81,20 +106,12 @@ const EditPref = () => {
         const response = await axios.put(
           `http://localhost:3001/api/users/${user._id}`,
           newPreferences,
-        );
-
-        Alert.alert(
-          'Desea confirmar las preferencias?',
-          'Confirmar preferencia',
-          [
-
-            { text: 'No', onPress: () => console.log('No button clicked'), style: 'cancel' },
-            { text: 'Si', onPress: () => navigation.replace('MiddleApp') },
-          ],
           {
-            cancelable: true
+            headers: { authorization: `Bearer ${token}` 
           }
-        );
+        }
+        )
+        navigation.replace('MiddleApp') 
       }
       catch (err) {
         console.log(err);
@@ -125,7 +142,7 @@ const EditPref = () => {
           })}
 
       </View>
-      <TouchableOpacity onPress={() => handleEdit()} style={styles.buttonRegister}>
+      <TouchableOpacity onPress={() => handleAlert()} style={styles.buttonRegister}>
         <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>
           Confirmar Preferencias
         </Text>
