@@ -18,8 +18,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getOwnerPastEvents} from '../store/user/ownerPastEvents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {addGuest} from '../../store/singleEvent';
-
+import {addGuest} from '../store/singleEvent';
 
 const CardEvent = () => {
   const navigation = useNavigation();
@@ -89,13 +88,7 @@ const CardEvent = () => {
     getToken();
   };
   const renderItem = item => {
-    const {
-      name,
-      category,
-      startDate,
-      image,
-      location,
-    } = item;
+    const {name, category, startDate, image, location} = item;
 
     return (
       <View style={styles.itemWrapper}>
@@ -248,7 +241,7 @@ const CardEvent = () => {
                 onPress={() => {
                   dispatch(addGuest(item._id));
                 }}>
-                <Text style={styles.textButton}>ASISTIR</Text> 
+                <Text style={styles.textButton}>ASISTIR</Text>
               </TouchableOpacity>
 
               <ButtonShare item={item} />
