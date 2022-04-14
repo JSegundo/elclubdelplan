@@ -86,7 +86,6 @@ class UsersService {
   static async serviceGetUserGoogle(req) {
     console.log("REQ SERVICE_GET_USER_GOOGLE",req.body);
     const { email } = req.body
-    console.log("EMAIL ", email)
     try {
       let user = await User.findOne({ email })
       // console.log(user)

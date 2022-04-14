@@ -17,7 +17,7 @@ router.post("/logout", UsersController.logOutUsers)
 //RUTA PARA DEVOLVER USUARIO LOGUEADO
 router.get("/me", checkJWT, UsersController.getMe)
 //RUTA PARA EDITAR UN USUARIO
-router.put("/:id", checkJWT, UsersController.editUsers)
+router.put("/:id", UsersController.editUsers)
 //RUTA PARA VER UN USUARIO PARTICULAR
 router.get("/:id", checkJWT, UsersController.getOneUsers)
 //RUTA PARA CHEQUEAR CON GOOGLE
