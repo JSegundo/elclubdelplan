@@ -4,7 +4,7 @@
  </p>
  
  
- ![clubdelplanmuestraport](https://user-images.githubusercontent.com/87492687/164357882-d22e1959-1271-4b04-84ca-7a48b6172fc8.png)
+![agucdpdesk](https://user-images.githubusercontent.com/87492687/166982196-e5c57fee-4319-4875-a3f4-fd2e64c95040.jpg)
 
  <h3>Stack:</h3>
 Utilizamos React Native para el front con Redux para el manejo de estados globales. estilos con CSS in JS y algunos componentes con la librería react-native-elements.
